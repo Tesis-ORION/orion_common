@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Macro for adding two symmetrical spacers -->
+    <xacro:macro name="symmetrical_spacers" 
+                params="name parent base_position offset_from_position mesh_file 
+                        scale:=1.0 rpy:='0 0 0'">
+
+        <!-- Left Spacer -->
+        <link name="${name}_left">
+        <visual>
+            <geometry>
+            <mesh filename="${mesh_file}" scale="${scale} ${scale} ${scale}"/>
+            </geometry>
+        </visual>
+        </link>
+
+        <joint name="${name}_left_joint" type="fixed">
+        <parent link="${parent}"/>
+        <child link="${name}_left"/>
+        <origin xyz="${base_position[0] - offset_from_position} ${base_position[1]} ${base_position[2]}" 
+                rpy="${rpy}"/>
+        </joint>
+
+        <!-- Right Spacer -->
+        <link name="${name}_right">
+        <visual>
+            <geometry>
+            <mesh filename="${mesh_file}" scale="${scale} ${scale} ${scale}"/>
+            </geometry>
+        </visual>
+        </link>
+
+        <joint name="${name}_right_joint" type="fixed">
+        <parent link="${parent}"/>
+        <child link="${name}_right"/>
+        <origin xyz="${base_position[0] + offset_from_position} ${base_position[1]} ${base_position[2]}" 
+                rpy="${rpy}"/>
+        </joint>
+
+    </xacro:macro>
+
+    <!-- Macro for adding four symmetrical spacers -->
+    <xacro:macro name="four_symmetrical_spacers" 
+                params="name parent origin offset_x offset_y mesh_file 
+                        scale:=1.0 rpy:='0 0 0'">
+
+        <!-- Front-Left Spacer -->
+        <link name="${name}_front_left">
+        <visual>
+            <geometry>
+            <mesh filename="${mesh_file}" scale="${scale} ${scale} ${scale}"/>
+            </geometry>
+        </visual>
+        </link>
+
+        <joint name="${name}_front_left_joint" type="fixed">
+        <parent link="${parent}"/>
+        <child link="${name}_front_left"/>
+        <origin xyz="${origin[0] - offset_x} ${origin[1] + offset_y} ${origin[2]}" rpy="${rpy}"/>
+        </joint>
+
+        <!-- Front-Right Spacer -->
+        <link name="${name}_front_right">
+        <visual>
+            <geometry>
+            <mesh filename="${mesh_file}" scale="${scale} ${scale} ${scale}"/>
+            </geometry>
+        </visual>
+        </link>
+
+        <joint name="${name}_front_right_joint" type="fixed">
+        <parent link="${parent}"/>
+        <child link="${name}_front_right"/>
+        <origin xyz="${origin[0] + offset_x} ${origin[1] + offset_y} ${origin[2]}" rpy="${rpy}"/>
+        </joint>
+
+        <!-- Back-Left Spacer -->
+        <link name="${name}_back_left">
+        <visual>
+            <geometry>
+            <mesh filename="${mesh_file}" scale="${scale} ${scale} ${scale}"/>
+            </geometry>
+        </visual>
+        </link>
+
+        <joint name="${name}_back_left_joint" type="fixed">
+        <parent link="${parent}"/>
+        <child link="${name}_back_left"/>
+        <origin xyz="${origin[0] - offset_x} ${origin[1] - offset_y} ${origin[2]}" rpy="${rpy}"/>
+        </joint>
+
+        <!-- Back-Right Spacer -->
+        <link name="${name}_back_right">
+        <visual>
+            <geometry>
+            <mesh filename="${mesh_file}" scale="${scale} ${scale} ${scale}"/>
+            </geometry>
+        </visual>
+        </link>
+
+        <joint name="${name}_back_right_joint" type="fixed">
+        <parent link="${parent}"/>
+        <child link="${name}_back_right"/>
+        <origin xyz="${origin[0] + offset_x} ${origin[1] - offset_y} ${origin[2]}" rpy="${rpy}"/>
+        </joint>
+
+    </xacro:macro>
+    <!--///////////////////// M3 x 10 SPACERS MACROS ///////////////////////-->
+
+    <!-- Hex spacer M3 x 10 macro -->
+    <xacro:macro name="spacer_m3x10" 
+            params="name parent element front side x y z">
+        
+        <!-- Link -->
+        <link name="${name}_${element}_${front}${side}">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/spacer_m3x10.stl" 
+                scale="1 1 1"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/spacer_m3x10.stl" 
+                scale="1 1 1"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <origin xyz="0 0 0"/>
+            <mass value="0.0053"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                    iyy="0.001" iyz="0.0"
+                    izz="0.001"/>
+        </inertial>
+        </link>
+
+        <joint name="${name}_${element}_${front}${side}_joint" type="fixed">
+        <parent link="${parent}"/>
+        <child link="${name}"/>
+        <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
+        </joint>
+    </xacro:macro>
+
+    <!-- 2 symetric hex spacers by considering y axis -->
+    <xacro:macro name="2xspacer_m3x10" 
+                params="name element parent offset_y x y z">
+        <xacro:spacer_m3x10 name="${name}" parent="${parent}" element="${element}" 
+            front="" side="r" x="${x}" y="${y - offset_y}" z="${z}"/>
+        <xacro:spacer_m3x10 name="${name}" parent="${parent}" element="${element}" 
+            front="" side="l" x="${x}" y="${y + offset_y}" z="${z}"/>
+    </xacro:macro>
+
+    <!-- 4 symetric hex spacers by considering x/y axis -->
+    <xacro:macro name="4xspacer_m3x10" 
+                params="name element parent offset_x offset_y x y z">
+        <xacro:spacer_m3x10 name="${name}" parent="${parent}" element="${element}" 
+            front="f" side="r" x="${x + offset_x}" y="${y - offset_y}" z="${z}"/>
+        <xacro:spacer_m3x10 name="${name}" parent="${parent}" element="${element}" 
+            front="f" side="l" x="${x + offset_x}" y="${y + offset_y}" z="${z}"/>
+        <xacro:spacer_m3x10 name="${name}" parent="${parent}" element="${element}" 
+            front="r" side="r" x="${x - offset_x}" y="${y + offset_y}" z="${z}"/>
+        <xacro:spacer_m3x10 name="${name}" parent="${parent}" element="${element}" 
+            front="r" side="l" x="${x - offset_x}" y="${y - offset_y}" z="${z}"/>
+    </xacro:macro>
+
+
+</robot>
