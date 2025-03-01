@@ -107,22 +107,119 @@
 
     </xacro:macro>
 
-    <xacro:macro name="generic_base" params="name parent x y z">
-    
-    <!-- Link -->
-        <link name="${name}">
+    <!--//////////////////// MATH AND NUMS MACROS ///////////////////////-->
+
+    <xacro:property name="pi_2" value="${pi / 2}"/>
+    <xacro:property name="pi_4" value="${pi / 4}"/>
+    <xacro:property name="pi_6" value="${pi / 6}"/>
+    <xacro:property name="pi_8" value="${pi / 8}"/>
+
+    <!--///////////////////// 10 x 80 SPACERS MACROS ///////////////////////-->
+
+    <!-- single custom spacer 10 x 80 mm -->
+    <xacro:macro name="spacer_10x80" params="front side level x y z">
+        <xacro:property name="muls" value="1"/>
+        <xacro:if value="${side == 2}">
+            <xacro:property name="muls" value="-1"/>
+        </xacro:if>
+        <xacro:property name="mulf" value="1"/>
+        <xacro:if value="${side == 2}">
+            <xacro:property name="mulf" value="-1"/>
+        </xacro:if>
+
+        <!-- Link -->
+        <link name="spacer_l${level}_${front}${side}">
         <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="0 0 0" rpy="0 0 ${muls*pi}"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/spacer_10x80.stl" 
+                scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 ${muls*pi}"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/spacer_10x80.stl" 
+                scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <origin xyz="0 0 0"/>
+            <mass value="0.0053"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                    iyy="0.001" iyz="0.0"
+                    izz="0.001"/>
+        </inertial>
+        </link>
+
+        <joint name="spacer_l${level}_${front}${side}_joint" type="fixed">
+            <parent link="base_l${level}_s${side}"/>
+            <child link="spacer_l${level}_${front}${side}"/>
+            <origin xyz="${x*mulf} ${y*muls} ${z+0.0025}" rpy="0 0 0"/>
+        </joint>
+    </xacro:macro>
+    
+    <!--//////////////////// BASES AND LEVELS MACROS ///////////////////////-->
+    <xacro:macro name="half_base" params="level side parent x y z">
+        <xacro:property name="mul" value="1"/>
+        <xacro:if value="${side == 2}">
+            <xacro:property name="mul" value="-1"/>
+        </xacro:if>
+
+        <!-- Link -->
+        <link name="base_l${level}_s${side}">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 ${mul*pi_2}"/>
             <geometry>
             <mesh filename="package://orion_description/meshes/half_platform.stl"
                 scale="0.001 0.001 0.001"/>
             </geometry>
         </visual>
         <collision>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <origin xyz="0 0 0" rpy="0 0 ${mul*pi_2}"/>
             <geometry>
             <mesh filename="package://orion_description/meshes/half_platform.stl" 
                 scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 ${mul*pi_2}"/>
+            <mass value="0.1"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                    iyy="0.001" iyz="0.0"
+                    izz="0.001"/>
+        </inertial>
+        </link>
+
+        <!-- Fixed Joint -->
+        <joint name="base_l${level}_s${side}_joint" type="fixed">
+        <parent link="${parent}"/>
+        <child link="base_l${level}_s${side}"/>
+        <origin xyz="${x + (mul*0.115/2)} ${y} ${z}" rpy="0 0 0"/>
+        </joint>
+    </xacro:macro>
+
+    <xacro:macro name="com_base" params="level parent x y z">
+        <xacro:half_base level="${level}" side="1" parent="base_link" x="${x}"
+            y="${y}" z="${z}"/>
+        <xacro:half_base level="${level}" side="2" parent="base_link" x="${x}"
+            y="${y}" z="${z}"/>
+    </xacro:macro>
+
+    <xacro:macro name="generic_sphere" params="name parent x y z">
+    
+    <!-- Link -->
+        <link name="${name}">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <sphere radius="0.005"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <sphere radius="0.005"/>
             </geometry>
         </collision>
         <inertial>
