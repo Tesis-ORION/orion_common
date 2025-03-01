@@ -2,10 +2,10 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="orion">
 
     <!-- Include other files -->
-    <xacro:include filename="$(find orion_desription)/urdf/orion_materials.urdf.xacro"/>
-    <xacro:include filename="$(find orion_desription)/urdf/orion_macros.urdf.xacro"/>
-    <xacro:include filename="$(find orion_desription)/urdf/orion_base.urdf.xacro"/>
-    <xacro:include filename="$(find orion_desription)/urdf/orion_arms.urdf.xacro"/>
-    <xacro:include filename="$(find orion_desription)/urdf/orion_cameras.urdf.xacro"/>
+    <xacro:include filename="$(find orion_description)/urdf/orion_materials.urdf.xacro"/>
+    <xacro:include filename="$(find orion_description)/urdf/orion_macros.urdf.xacro"/>
+    <xacro:include filename="$(find orion_description)/urdf/orion_base.urdf.xacro"/>
+    <xacro:include filename="$(find orion_description)/urdf/orion_arms.urdf.xacro"/>
+    <xacro:include filename="$(find orion_description)/urdf/orion_cameras.urdf.xacro"/>
 
 </robot>

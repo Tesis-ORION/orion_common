@@ -4,4 +4,7 @@
     <!-- This xacro file aims for adding the mobile platform to the robot-->
 
     <!-- FOR NOW IT IS EMPTY-->
+    <link name="base_link"/>
+    
+    <xacro:generic_base name="base1" parent="base_link" x="0" y="0" z="0"/>
 </robot>
