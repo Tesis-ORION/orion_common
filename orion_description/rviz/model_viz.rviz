@@ -61,11 +61,53 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        base1:
+        base_l0_s1:
+          Value: true
+        base_l0_s2:
+          Value: true
+        base_l1_s1:
+          Value: true
+        base_l1_s2:
+          Value: true
+        base_l2_s1:
+          Value: true
+        base_l2_s2:
+          Value: true
+        base_l3_s1:
+          Value: true
+        base_l3_s2:
+          Value: true
+        base_l4_s2:
           Value: true
         base_link:
           Value: true
-        sphere1:
+        spacer_l0_11:
+          Value: true
+        spacer_l0_12:
+          Value: true
+        spacer_l0_21:
+          Value: true
+        spacer_l0_22:
+          Value: true
+        spacer_l1_11:
+          Value: true
+        spacer_l1_12:
+          Value: true
+        spacer_l1_21:
+          Value: true
+        spacer_l1_22:
+          Value: true
+        spacer_l2_11:
+          Value: true
+        spacer_l2_12:
+          Value: true
+        spacer_l2_21:
+          Value: true
+        spacer_l2_22:
+          Value: true
+        spacer_l3_21:
+          Value: true
+        spacer_l3_22:
           Value: true
       Marker Scale: 0.25
       Name: TF
@@ -74,9 +116,44 @@ Visualization Manager:
       Show Names: true
       Tree:
         base_link:
-          base1:
+          base_l0_s1:
+            spacer_l0_11:
+              {}
+            spacer_l0_12:
+              {}
+          base_l0_s2:
+            spacer_l0_21:
+              {}
+            spacer_l0_22:
+              {}
+          base_l1_s1:
+            spacer_l1_11:
+              {}
+            spacer_l1_12:
+              {}
+          base_l1_s2:
+            spacer_l1_21:
+              {}
+            spacer_l1_22:
+              {}
+          base_l2_s1:
+            spacer_l2_11:
+              {}
+            spacer_l2_12:
+              {}
+          base_l2_s2:
+            spacer_l2_21:
+              {}
+            spacer_l2_22:
+              {}
+          base_l3_s1:
             {}
-          sphere1:
+          base_l3_s2:
+            spacer_l3_21:
+              {}
+            spacer_l3_22:
+              {}
+          base_l4_s2:
             {}
       Update Interval: 0
       Value: true
@@ -98,7 +175,47 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        base1:
+        base_l0_s1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_l0_s2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_l1_s1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_l1_s2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_l2_s1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_l2_s2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_l3_s1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_l3_s2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_l4_s2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -107,7 +224,72 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        sphere1:
+        spacer_l0_11:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        spacer_l0_12:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        spacer_l0_21:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        spacer_l0_22:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        spacer_l1_11:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        spacer_l1_12:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        spacer_l1_21:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        spacer_l1_22:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        spacer_l2_11:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        spacer_l2_12:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        spacer_l2_21:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        spacer_l2_22:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        spacer_l3_21:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        spacer_l3_22:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -166,7 +348,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 0.40491238236427307
+      Distance: 0.7135939598083496
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -181,10 +363,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.7753980159759521
+      Pitch: 0.9753978252410889
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.7803980112075806
+      Yaw: 0.5903981924057007
     Saved: ~
 Window Geometry:
   Displays:

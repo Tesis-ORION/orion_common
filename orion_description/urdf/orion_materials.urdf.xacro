@@ -19,7 +19,7 @@
 
     <!-- Equivalent to RGB(26, 26, 26) -->
     <material name="SoftBlack">
-        <color rgba="0.1 0.1 0.1 1.0"/>  
+        <color rgba="0.2 0.2 0.2 1.0"/>  
     </material>
 
     <!-- Equivalent to RGB(255, 255, 255) -->

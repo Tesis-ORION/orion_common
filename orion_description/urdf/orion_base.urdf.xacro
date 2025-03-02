@@ -19,5 +19,24 @@
         z="${level_height*3 + thickness*3}"/>
     <xacro:half_base level="4" side="2" parent="base_link" x="0" y="0"
         z="${level_height*4 + thickness*4}"/>
-    <xacro:spacer_10x80 front="1" side="1" level="0" x="${0.15/2 - 0.0275}" y="${0.21/2 - 0.010}" z="0"/>
+
+    <xacro:double_spacer_10x80 front="1" level="0" x="${0.15/2 - 0.0275}" 
+            y="${0.21/2 - 0.010}" z="0"/>
+    <xacro:double_spacer_10x80 front="2" level="0" x="${0.15/2 - 0.0275}" 
+            y="${0.21/2 - 0.010}" z="0"/>
+    <xacro:double_spacer_10x80 front="1" level="1" x="${0.15/2 - 0.0275}" 
+            y="${0.21/2 - 0.010}" z="0"/>
+    <xacro:double_spacer_10x80 front="2" level="1" x="${0.15/2 - 0.0275}" 
+            y="${0.21/2 - 0.010}" z="0"/>
+    <xacro:double_spacer_10x80 front="1" level="2" x="${0.15/2 - 0.0275}" 
+            y="${0.21/2 - 0.010}" z="0"/>
+    <xacro:double_spacer_10x80 front="2" level="2" x="${0.15/2 - 0.0275}" 
+            y="${0.21/2 - 0.010}" z="0"/>
+    <xacro:double_spacer_10x80 front="2" level="3" x="${0.15/2 - 0.0275}" 
+            y="${0.21/2 - 0.010}" z="0"/>
+    <xacro:double_spacer_10x80 front="1" level="3" x="${-0.15/2 + 0.0075}" 
+            y="${0.21/2 - 0.010}" z="0"/>
+    <xacro:motor_dc front="1" side="1" x="0.005" y="0.0675" z="-0.0225"/>
+    
+
 </robot>

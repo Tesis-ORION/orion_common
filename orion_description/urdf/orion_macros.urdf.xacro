@@ -118,26 +118,38 @@
 
     <!-- single custom spacer 10 x 80 mm -->
     <xacro:macro name="spacer_10x80" params="front side level x y z">
+        <!-- Orientation properties -->
         <xacro:property name="muls" value="1"/>
         <xacro:if value="${side == 2}">
             <xacro:property name="muls" value="-1"/>
         </xacro:if>
         <xacro:property name="mulf" value="1"/>
-        <xacro:if value="${side == 2}">
+        <xacro:if value="${front == 2}">
             <xacro:property name="mulf" value="-1"/>
         </xacro:if>
+        <xacro:property name="gyro" value="${pi}"/>
+        <xacro:if value="${side == 2 and front == 1}">
+            <xacro:property name="gyro" value="${pi_2}"/>
+        </xacro:if>
+        <xacro:if value="${side == 1 and front == 2}">
+            <xacro:property name="gyro" value="${3*pi_2}"/>
+        </xacro:if>
+        <xacro:if value="${side == 2 and front == 2}">
+            <xacro:property name="gyro" value="0"/>
+        </xacro:if>
 
-        <!-- Link -->
+        <!-- Link definition-->
         <link name="spacer_l${level}_${front}${side}">
         <visual>
-            <origin xyz="0 0 0" rpy="0 0 ${muls*pi}"/>
+            <origin xyz="0 0 0" rpy="0 0 ${gyro}"/>
             <geometry>
             <mesh filename="package://orion_description/meshes/spacer_10x80.stl" 
                 scale="0.001 0.001 0.001"/>
             </geometry>
+            <material name="SoftBlack"/>
         </visual>
         <collision>
-            <origin xyz="0 0 0" rpy="0 0 ${muls*pi}"/>
+            <origin xyz="0 0 0" rpy="0 0 ${gyro}"/>
             <geometry>
             <mesh filename="package://orion_description/meshes/spacer_10x80.stl" 
                 scale="0.001 0.001 0.001"/>
@@ -152,11 +164,19 @@
         </inertial>
         </link>
 
+        <!-- Joint definition -->
         <joint name="spacer_l${level}_${front}${side}_joint" type="fixed">
-            <parent link="base_l${level}_s${side}"/>
+            <parent link="base_l${level}_s${front}"/>
             <child link="spacer_l${level}_${front}${side}"/>
             <origin xyz="${x*mulf} ${y*muls} ${z+0.0025}" rpy="0 0 0"/>
         </joint>
+    </xacro:macro>
+
+    <xacro:macro name="double_spacer_10x80" params="front level x y z">
+        <xacro:spacer_10x80 front="${front}" side="1" level="${level}" x="${x}"
+            y="${y}" z="${z}"/>
+        <xacro:spacer_10x80 front="${front}" side="2" level="${level}" x="${x}"
+            y="${y}" z="${z}"/>
     </xacro:macro>
     
     <!--//////////////////// BASES AND LEVELS MACROS ///////////////////////-->
@@ -174,6 +194,7 @@
             <mesh filename="package://orion_description/meshes/half_platform.stl"
                 scale="0.001 0.001 0.001"/>
             </geometry>
+            <material name="SoftBlack"/>
         </visual>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 ${mul*pi_2}"/>
@@ -238,6 +259,43 @@
         <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
         </joint>
 
+    </xacro:macro>
+
+    <!--  /////////////////// MOTOR DC MACROS ///////////////////////////////-->
+    <!--  Motor DC Component Kit -->
+    <xacro:macro name="motor_dc" params="front side x y z">
+        <!-- Link definition-->
+        <link name="motor_support_${front}${side}">
+        <visual>
+            <origin xyz="0 0 0" rpy="${pi} 0 0"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/motor_mount.stl" 
+                scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="MetalGray"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="${pi} 0 0"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/motor_mount.stl" 
+                scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <origin xyz="0 0 0"/>
+            <mass value="0.0053"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                    iyy="0.001" iyz="0.0"
+                    izz="0.001"/>
+        </inertial>
+        </link>
+
+        <!-- Joint definition -->
+        <joint name="motor_support_${front}${side}_joint" type="fixed">
+            <parent link="base_l0_s${front}"/>
+            <child link="motor_support_${front}${side}"/>
+            <origin xyz="${x} ${y} ${z+0.0025}" rpy="0 0 0"/>
+        </joint>
     </xacro:macro>
 
     <!--///////////////////// M3 x 10 SPACERS MACROS ///////////////////////-->
