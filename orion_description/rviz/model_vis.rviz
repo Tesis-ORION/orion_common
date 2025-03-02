@@ -81,11 +81,29 @@ Visualization Manager:
           Value: true
         base_link:
           Value: true
+        bat_platform:
+          Value: true
         caster_base_2:
+          Value: true
+        caster_middle_2:
+          Value: true
+        caster_wheel_2:
           Value: true
         coupling_11:
           Value: true
         coupling_12:
+          Value: true
+        hm3x10_bathol_f:
+          Value: true
+        hm3x10_bathol_fl:
+          Value: true
+        hm3x10_bathol_fr:
+          Value: true
+        hm3x10_bathol_r:
+          Value: true
+        hm3x10_bathol_rl:
+          Value: true
+        hm3x10_bathol_rr:
           Value: true
         hm4x17_caster_fl:
           Value: true
@@ -151,6 +169,20 @@ Visualization Manager:
       Tree:
         base_link:
           base_l0_s1:
+            bat_platform:
+              {}
+            hm3x10_bathol_f:
+              {}
+            hm3x10_bathol_fl:
+              {}
+            hm3x10_bathol_fr:
+              {}
+            hm3x10_bathol_r:
+              {}
+            hm3x10_bathol_rl:
+              {}
+            hm3x10_bathol_rr:
+              {}
             motor_support_11:
               coupling_11:
                 ring_11:
@@ -171,7 +203,9 @@ Visualization Manager:
               {}
           base_l0_s2:
             caster_base_2:
-              {}
+              caster_middle_2:
+                caster_wheel_2:
+                  {}
             hm4x17_caster_fl:
               {}
             hm4x17_caster_fr:
@@ -285,7 +319,22 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        bat_platform:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         caster_base_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        caster_middle_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        caster_wheel_2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -296,6 +345,36 @@ Visualization Manager:
           Show Trail: false
           Value: true
         coupling_12:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_bathol_f:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_bathol_fl:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_bathol_fr:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_bathol_r:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_bathol_rl:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_bathol_rr:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -494,25 +573,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 1.0101263523101807
+      Distance: 0.7135939598083496
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.030903570353984833
-        Y: 0.02871134877204895
-        Z: 0.060556668788194656
+        X: -0.020958131179213524
+        Y: 0.014379892498254776
+        Z: 0.004651525057852268
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.6453974843025208
+      Pitch: 0.3353981375694275
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.083569049835205
+      Yaw: 1.2053978443145752
     Saved: ~
 Window Geometry:
   Displays:

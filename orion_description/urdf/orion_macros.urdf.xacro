@@ -286,7 +286,7 @@
             <material name="MetalGray"/>
         </visual>
         <collision>
-            <origin xyz="0 0 0" rpy="${muls*pi} 0 0"/>
+            <origin xyz="0 0 0" rpy="${pi} 0 ${orin}"/>
             <geometry>
             <mesh filename="package://orion_description/meshes/motor_mount.stl" 
                 scale="0.001 0.001 0.001"/>
@@ -340,7 +340,7 @@
         <!-- Link coupling definition-->
         <link name="coupling_${front}${side}">
         <visual>
-            <origin xyz="0 0 0" rpy="0 0 ${pi_6*muls}"/>
+            <origin xyz="0 0 0" rpy="${orin} 0 ${pi_6*muls}"/>
             <geometry>
             <mesh filename="package://orion_description/meshes/coupling.stl" 
                 scale="0.001 0.001 0.001"/>
@@ -348,7 +348,7 @@
             <material name="Brass"/>
         </visual>
         <collision>
-            <origin xyz="0 0 0" rpy="0 0 ${pi_6*muls}"/>
+            <origin xyz="0 0 0" rpy="${orin} 0 ${pi_6*muls}"/>
             <geometry>
             <mesh filename="package://orion_description/meshes/coupling.stl" 
                 scale="0.001 0.001 0.001"/>
@@ -369,7 +369,7 @@
             <child link="coupling_${front}${side}"/>
             <origin xyz="0 ${(0.01120 + 0.000325)*muls} 0" rpy="${-pi_2*muls+orin} 0 0"/>
         </joint>
-        <!-- Ring coupling definition-->
+        <!-- LInk Ring  definition-->
         <link name="ring_${front}${side}">
         <visual>
             <origin xyz="0 0 0" rpy="0 ${-pi_2*muls} 0"/>
@@ -394,7 +394,7 @@
                     izz="0.001"/>
         </inertial>
         </link>
-        <!-- Ring coupling definition-->
+        <!-- Joint ring definition-->
         <joint name="ring_${front}${side}_joint" type="fixed">
             <parent link="coupling_${front}${side}"/>
             <child link="ring_${front}${side}"/>
@@ -533,6 +533,139 @@
         </joint>
     </xacro:macro>
 
+    <!-- ///////////////////// BATTERIES MACROS ////////////////////////////-->
+    <!-- B18650 Macro-->
+    <xacro:macro name="b18650" params="parent element num x y z">
+        <xacro:property name="inv" value="1"/>
+        <xacro:property name="rot" value="${pi_2}"/>
+        <xacro:if value="${num == 2}">
+            <xacro:property name="rot" value="${pi_2*3}"/>
+            <xacro:property name="inv" value="-1"/>
+        </xacro:if>
+        <xacro:if value="${num == 3}">
+            <xacro:property name="rot" value="${pi_2*5}"/>
+        </xacro:if>
+        <!-- Link -->
+        <link name="${element}_${num}">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 ${rot} 0"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/b18650.stl" 
+                scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="DriverRed"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 ${rot} 0"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/b18650.stl" 
+                scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <origin xyz="0 0 0"/>
+            <mass value="0.0053"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                    iyy="0.001" iyz="0.0"
+                    izz="0.001"/>
+        </inertial>
+        </link>
+
+        <joint name="${element}_${num}_joint" type="fixed">
+            <parent link="${parent}"/>
+            <child link="${element}_${num}"/>
+            <origin xyz="${x*inv} ${y} ${z}" rpy="0 0 0"/>
+        </joint>
+    </xacro:macro>
+
+    <xacro:macro name="bat_hold" params=" parent element num x y z">
+        <!-- Link -->
+        <link name="${element}_${num}">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 ${pi_2}"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/batteryholderx3.stl" 
+                scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="SoftBlack"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 ${pi_2}"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/batteryholderx3.stl" 
+                scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <origin xyz="0 0 0"/>
+            <mass value="0.0053"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                    iyy="0.001" iyz="0.0"
+                    izz="0.001"/>
+        </inertial>
+        </link>
+
+        <joint name="${element}_${num}_joint" type="fixed">
+            <parent link="${parent}"/>
+            <child link="${element}_${num}"/>
+            <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
+        </joint>
+    </xacro:macro>
+
+    <xacro:macro name="stack_bat" params="parent num x y z">
+        <xacro:property name="serie" value="0.009"/>
+        <xacro:bat_hold parent="${parent}" element="bathold" num="${num}" 
+            x="${x}" y="${y}" z="${z}"/>
+        <xacro:b18650 parent="bathold_${num}" element="b18650_${num}" num="1" 
+            x="${-0.065/2}" y="${serie}" z="0.01"/>
+        <xacro:b18650 parent="bathold_${num}" element="b18650_${num}" num="2" 
+            x="${-0.065/2}" y="${-serie}" z="0.01"/>
+        <xacro:b18650 parent="bathold_${num}" element="b18650_${num}" num="3" 
+            x="${-0.065/2}" y="${-serie*3}" z="0.01"/>
+    </xacro:macro>
+
+    <!-- //////////////////// SERVOS MACROS ///////////////////////////////-->
+
+    <xacro:macro name="servo_mounted" params="parent side x y z">
+        <!-- Link -->
+        <xacro:property name="inv" value="1"/>
+        <xacro:property name="flex" value="0"/>
+        <xacro:if value="${side == 2}">
+            <xacro:property name="inv" value="-1"/>
+            <xacro:property name="flex" value="${pi}"/>
+        </xacro:if>
+        <link name="servo_support_${side}">
+        <visual>
+            <origin xyz="0 0 0" rpy="${-pi_2} 0 ${flex}"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/servo_sup.stl" 
+                scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="SoftBlack"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="${-pi_2} 0 ${flex}"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/servo_sup.stl" 
+                scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <origin xyz="0 0 0"/>
+            <mass value="0.0053"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                    iyy="0.001" iyz="0.0"
+                    izz="0.001"/>
+        </inertial>
+        </link>
+
+        <joint name="servo_support_${side}_joint" type="fixed">
+            <parent link="${parent}"/>
+            <child link="servo_support_${side}"/>
+            <origin xyz="${x} ${y*inv} ${z}" rpy="0 0 0"/>
+        </joint>
+    </xacro:macro>
+
     <!--///////////////////// M3 x 10 SPACERS MACROS ///////////////////////-->
 
     <!-- Hex spacer M3 x 10 macro -->
@@ -571,7 +704,6 @@
             <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
         </joint>
     </xacro:macro>
-    
 
     <!-- 2 symetric hex spacers by considering y axis -->
     <xacro:macro name="x2xspacer_m3x10" 

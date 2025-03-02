@@ -54,38 +54,225 @@
         z="${-0.002 - 0.017}"/>
 
     <!-- //////////////// FIRST FLOOR COMPONENTS ///////////////////// -->
+    <!-- Hex spacers for Battery Support -->
     <xacro:x6xspacer_m3x10 id="hm3x10" element="bathol" parent="base_l0_s1"
         offset_x="${0.0855/2}" offset_y="${0.127/2}" x="0.005" y="0" z="0.0025"/>
-
+    
+    <!-- Link Battery Support-->
     <link name="bat_platform">
-        <visual>
-            <origin xyz="0 0 0" rpy="0 0 ${pi_2}"/>
-            <geometry>
-            <mesh filename="package://orion_description/meshes/bathold_support.stl"
-                scale="0.001 0.001 0.001"/>
-            </geometry>
-            <material name="PureWhite"/>
-        </visual>
-        <collision>
-            <origin xyz="0 0 0" rpy="0 0 ${pi_2}"/>
-            <geometry>
-            <mesh filename="package://orion_description/meshes/bathold_support.stl" 
-                scale="0.001 0.001 0.001"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <origin xyz="0 0 0" rpy="0 0 ${pi_2}"/>
-            <mass value="0.1"/>
-            <inertia ixx="0.001" ixy="0.0" ixz="0.0"
-                    iyy="0.001" iyz="0.0"
-                    izz="0.001"/>
-        </inertial>
-        </link>
+    <visual>
+        <origin xyz="0 0 0" rpy="0 0 ${pi_2}"/>
+        <geometry>
+        <mesh filename="package://orion_description/meshes/bathold_support.stl"
+            scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="PureWhite"/>
+    </visual>
+    <collision>
+        <origin xyz="0 0 0" rpy="0 0 ${pi_2}"/>
+        <geometry>
+        <mesh filename="package://orion_description/meshes/bathold_support.stl" 
+            scale="0.001 0.001 0.001"/>
+        </geometry>
+    </collision>
+    <inertial>
+        <origin xyz="0 0 0" rpy="0 0 ${pi_2}"/>
+        <mass value="0.1"/>
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                iyy="0.001" iyz="0.0"
+                izz="0.001"/>
+    </inertial>
+    </link>
 
-        <!-- Fixed Joint -->
-        <joint name="bat_platform_joint" type="fixed">
-            <parent link="base_l0_s1"/>
-            <child link="bat_platform"/>
-            <origin xyz="0.005 0 0.0125" rpy="0 0 0"/>
-        </joint>
+    <!-- Joint Battery Support -->
+    <joint name="bat_platform_joint" type="fixed">
+        <parent link="base_l0_s1"/>
+        <child link="bat_platform"/>
+        <origin xyz="0.005 0 0.0125" rpy="0 0 0"/>
+    </joint>
+
+    <!-- Battery Stacks -->
+    <xacro:stack_bat parent="bat_platform" num="1" x="0" y="-0.023" z="0"/>
+    <xacro:stack_bat parent="bat_platform" num="2" x="0" y="${0.023+0.02}" 
+        z="0"/>
+
+    <!-- Hex spacers for Motor Driver-->
+    <xacro:x4xspacer_m3x10 id="hm3x10" element="driver" parent="base_l0_s2"
+        offset_x="${0.03702/2}" offset_y="${-0.0368/2}" x="-0.023453" 
+        y="0.031351" z="0.0025"/>
+
+    <!-- Link Motor Driver-->
+    <link name="driver_platform">
+    <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+        <mesh filename="package://orion_description/meshes/driver.stl"
+            scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="DriverRed"/>
+    </visual>
+    <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+        <mesh filename="package://orion_description/meshes/driver.stl" 
+            scale="0.001 0.001 0.001"/>
+        </geometry>
+    </collision>
+    <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.1"/>
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                iyy="0.001" iyz="0.0"
+                izz="0.001"/>
+    </inertial>
+    </link>
+
+    <!-- Joint Motor Driver -->
+    <joint name="driver_platform" type="fixed">
+        <parent link="base_l0_s2"/>
+        <child link="driver_platform"/>
+        <origin xyz="-0.023453 0.031351 0.0125" rpy="0 0 0"/>
+    </joint>
+
+    <!-- Link Regulator Support-->
+    <link name="reg_support">
+    <visual>
+        <origin xyz="0 0 0" rpy="0 0 ${-pi_2}"/>
+        <geometry>
+        <mesh filename="package://orion_description/meshes/regulator_sup.stl"
+            scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="SoftBlack"/>
+    </visual>
+    <collision>
+        <origin xyz="0 0 0" rpy="0 0 ${-pi_2}"/>
+        <geometry>
+        <mesh filename="package://orion_description/meshes/regulator_sup.stl" 
+            scale="0.001 0.001 0.001"/>
+        </geometry>
+    </collision>
+    <inertial>
+        <origin xyz="0 0 0" rpy="0 0 ${-pi_2}"/>
+        <mass value="0.1"/>
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                iyy="0.001" iyz="0.0"
+                izz="0.001"/>
+    </inertial>
+    </link>
+
+    <!-- Joint Regulator Support -->
+    <joint name="reg_support_joint" type="fixed">
+        <parent link="base_l0_s2"/>
+        <child link="reg_support"/>
+        <origin xyz="-0.036 -0.0275 0.0025" rpy="0 0 0"/>
+    </joint>
+
+    <!-- Link Regulator Support-->
+    <link name="regulator">
+    <visual>
+        <origin xyz="0 0 0" rpy="${pi_2} 0 ${-pi_2}"/>
+        <geometry>
+        <mesh filename="package://orion_description/meshes/regulator.stl"
+            scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="ArduinoBlue"/>
+    </visual>
+    <collision>
+        <origin xyz="0 0 0" rpy="${pi_2} 0 ${-pi_2}"/>
+        <geometry>
+        <mesh filename="package://orion_description/meshes/regulator.stl" 
+            scale="0.001 0.001 0.001"/>
+        </geometry>
+    </collision>
+    <inertial>
+        <origin xyz="0 0 0" rpy="${pi_2} 0 ${-pi_2}"/>
+        <mass value="0.1"/>
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                iyy="0.001" iyz="0.0"
+                izz="0.001"/>
+    </inertial>
+    </link>
+
+    <!-- Joint Regulator -->
+    <joint name="reg_joint" type="fixed">
+        <parent link="reg_support"/>
+        <child link="regulator"/>
+        <origin xyz="-0.0025 0 ${0.06/2}" rpy="0 0 0"/>
+    </joint>
+
+    <xacro:servo_mounted parent="base_l1_s2" side="1" x="0.00275" y="0.0765"
+        z="-0.026"/>
+    <xacro:servo_mounted parent="base_l1_s2" side="2" x="0.00275" y="0.0765"
+        z="-0.026"/>
+
+    <!-- ///////////////// SECOND FLOOR COMPONENTS /////////////////////// -->
+    <xacro:x4xspacer_m3x10 id="hm3x10" element="espadapter" parent="base_l1_s1"
+        offset_x="${0.0577/2}" offset_y="${0.0607/2}" x="0" y="0" z="-0.01"/>
+
+    <!-- Link Esp32 Adapter -->
+    <link name="esp32_adapter">
+    <visual>
+        <origin xyz="0 0 0" rpy="${pi} 0 0"/>
+        <geometry>
+        <mesh filename="package://orion_description/meshes/esp32_adp.stl"
+            scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="RaspberryGreen"/>
+    </visual>
+    <collision>
+        <origin xyz="0 0 0" rpy="${pi} 0 0"/>
+        <geometry>
+        <mesh filename="package://orion_description/meshes/esp32_adp.stl" 
+            scale="0.001 0.001 0.001"/>
+        </geometry>
+    </collision>
+    <inertial>
+        <origin xyz="0 0 0" rpy="${pi} 0 0"/>
+        <mass value="0.1"/>
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                iyy="0.001" iyz="0.0"
+                izz="0.001"/>
+    </inertial>
+    </link>
+
+    <!-- Joint Esp32 Adapter -->
+    <joint name="esp32_adapter_joint" type="fixed">
+        <parent link="base_l1_s1"/>
+        <child link="esp32_adapter"/>
+        <origin xyz="0 0 -0.01" rpy="0 0 0"/>
+    </joint>
+
+    <!-- Link Esp32 -->
+    <link name="esp32">
+    <visual>
+        <origin xyz="0 0 0" rpy="${pi} 0 ${-pi_2}"/>
+        <geometry>
+        <mesh filename="package://orion_description/meshes/esp32.stl"
+            scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="SoftBlack"/>
+    </visual>
+    <collision>
+        <origin xyz="0 0 0" rpy="${pi} 0 ${-pi_2}"/>
+        <geometry>
+        <mesh filename="package://orion_description/meshes/esp32.stl" 
+            scale="0.001 0.001 0.001"/>
+        </geometry>
+    </collision>
+    <inertial>
+        <origin xyz="0 0 0" rpy="${pi} 0 ${-pi_2}"/>
+        <mass value="0.1"/>
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                iyy="0.001" iyz="0.0"
+                izz="0.001"/>
+    </inertial>
+    </link>
+
+    <!-- Joint Esp32 -->
+    <joint name="esp32_joint" type="fixed">
+        <parent link="esp32_adapter"/>
+        <child link="esp32"/>
+        <origin xyz="0.002 0 -0.01" rpy="0 0 0"/>
+    </joint>
+    
 </robot>

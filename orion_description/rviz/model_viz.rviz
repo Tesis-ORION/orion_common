@@ -6,6 +6,7 @@ Panels:
       Expanded:
         - /Global Options1
         - /TF1
+        - /RobotModel1
       Splitter Ratio: 0.5
     Tree Height: 707
   - Class: rviz_common/Selection
@@ -81,6 +82,54 @@ Visualization Manager:
           Value: true
         base_link:
           Value: true
+        bat_platform:
+          Value: true
+        caster_base_2:
+          Value: true
+        caster_middle_2:
+          Value: true
+        caster_wheel_2:
+          Value: true
+        coupling_11:
+          Value: true
+        coupling_12:
+          Value: true
+        hm3x10_bathol_f:
+          Value: true
+        hm3x10_bathol_fl:
+          Value: true
+        hm3x10_bathol_fr:
+          Value: true
+        hm3x10_bathol_r:
+          Value: true
+        hm3x10_bathol_rl:
+          Value: true
+        hm3x10_bathol_rr:
+          Value: true
+        hm4x17_caster_fl:
+          Value: true
+        hm4x17_caster_fr:
+          Value: true
+        hm4x17_caster_rl:
+          Value: true
+        hm4x17_caster_rr:
+          Value: true
+        motor_dc_11:
+          Value: true
+        motor_dc_12:
+          Value: true
+        motor_support_11:
+          Value: true
+        motor_support_12:
+          Value: true
+        neumatic_11:
+          Value: true
+        neumatic_12:
+          Value: true
+        ring_11:
+          Value: true
+        ring_12:
+          Value: true
         spacer_l0_11:
           Value: true
         spacer_l0_12:
@@ -105,11 +154,15 @@ Visualization Manager:
           Value: true
         spacer_l2_22:
           Value: true
+        spacer_l3_11:
+          Value: true
+        spacer_l3_12:
+          Value: true
         spacer_l3_21:
           Value: true
         spacer_l3_22:
           Value: true
-      Marker Scale: 0.25
+      Marker Scale: 0.10000000149011612
       Name: TF
       Show Arrows: true
       Show Axes: true
@@ -117,11 +170,51 @@ Visualization Manager:
       Tree:
         base_link:
           base_l0_s1:
+            bat_platform:
+              {}
+            hm3x10_bathol_f:
+              {}
+            hm3x10_bathol_fl:
+              {}
+            hm3x10_bathol_fr:
+              {}
+            hm3x10_bathol_r:
+              {}
+            hm3x10_bathol_rl:
+              {}
+            hm3x10_bathol_rr:
+              {}
+            motor_support_11:
+              coupling_11:
+                ring_11:
+                  neumatic_11:
+                    {}
+              motor_dc_11:
+                {}
+            motor_support_12:
+              coupling_12:
+                ring_12:
+                  neumatic_12:
+                    {}
+              motor_dc_12:
+                {}
             spacer_l0_11:
               {}
             spacer_l0_12:
               {}
           base_l0_s2:
+            caster_base_2:
+              caster_middle_2:
+                caster_wheel_2:
+                  {}
+            hm4x17_caster_fl:
+              {}
+            hm4x17_caster_fr:
+              {}
+            hm4x17_caster_rl:
+              {}
+            hm4x17_caster_rr:
+              {}
             spacer_l0_21:
               {}
             spacer_l0_22:
@@ -147,7 +240,10 @@ Visualization Manager:
             spacer_l2_22:
               {}
           base_l3_s1:
-            {}
+            spacer_l3_11:
+              {}
+            spacer_l3_12:
+              {}
           base_l3_s2:
             spacer_l3_21:
               {}
@@ -224,6 +320,126 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        bat_platform:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        caster_base_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        caster_middle_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        caster_wheel_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        coupling_11:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        coupling_12:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_bathol_f:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_bathol_fl:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_bathol_fr:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_bathol_r:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_bathol_rl:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_bathol_rr:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm4x17_caster_fl:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm4x17_caster_fr:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm4x17_caster_rl:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm4x17_caster_rr:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        motor_dc_11:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        motor_dc_12:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        motor_support_11:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        motor_support_12:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        neumatic_11:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        neumatic_12:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ring_11:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ring_12:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         spacer_l0_11:
           Alpha: 1
           Show Axes: false
@@ -280,6 +496,16 @@ Visualization Manager:
           Show Trail: false
           Value: true
         spacer_l2_22:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        spacer_l3_11:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        spacer_l3_12:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -348,25 +574,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 0.7135939598083496
+      Distance: 0.8915451169013977
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.020958131179213524
-        Y: 0.014379892498254776
-        Z: 0.004651525057852268
+        X: -0.05090074986219406
+        Y: -0.01687806472182274
+        Z: 0.09894796460866928
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.9753978252410889
+      Pitch: 0.4203983247280121
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.5903981924057007
+      Yaw: 0.645402729511261
     Saved: ~
 Window Geometry:
   Displays:
