@@ -3,12 +3,14 @@
 
     <!-- This xacro file aims for adding the mobile platform to the robot-->
 
-    <!-- FOR NOW IT IS EMPTY-->
+    <!-- ////////////////////////// BASE LINK //////////////////////////////-->
     <link name="base_link"/>
     
+    <!-- ///////////////////////// PROPERTIES //////////////////////////////-->
     <xacro:property name="level_height" value="0.08"/>
     <xacro:property name="thickness" value="0.0025"/>
 
+    <!-- /////////////////////////// LEVELS ///////////////////////////////-->
     <xacro:com_base level="0" parent="base_link" x="0" y="0"
         z="${level_height*0+ thickness*0}"/>
     <xacro:com_base level="1" parent="base_link" x="0" y="0" 
@@ -20,6 +22,7 @@
     <xacro:half_base level="4" side="2" parent="base_link" x="0" y="0"
         z="${level_height*4 + thickness*4}"/>
 
+    <!-- /////////////////////// LEVEL's SPACERS//////////////////////////-->
     <xacro:double_spacer_10x80 front="1" level="0" x="${0.15/2 - 0.0275}" 
             y="${0.21/2 - 0.010}" z="0"/>
     <xacro:double_spacer_10x80 front="2" level="0" x="${0.15/2 - 0.0275}" 
@@ -36,9 +39,53 @@
             y="${0.21/2 - 0.010}" z="0"/>
     <xacro:double_spacer_10x80 front="1" level="3" x="${-0.15/2 + 0.0075}" 
             y="${0.21/2 - 0.010}" z="0"/>
+    
+    <!-- //////////////////////// MOTORS DC ////////////////////////////-->
     <xacro:motor_dc front="1" side="1" x="-0.0025" y="${0.05718+0.036/2}" 
         z="-0.0225"/>
     <xacro:motor_dc front="1" side="2" x="-0.0025" y="${0.05718+0.036/2}"
         z="-0.0225"/>
 
+    <!-- /////////////////////// CASTER WHEEL //////////////////////////-->
+    <xacro:x4xspacer_m4x17 id="hm4x17" element="caster" parent="base_l0_s2" 
+        offset_x="0.012" offset_y="0.015" x="-0.022" y="0" 
+        z="${-0.001 - 0.017}"/>
+    <xacro:caster_wheel parent="base_l0_s2" front="2" x="-0.022" y="0" 
+        z="${-0.002 - 0.017}"/>
+
+    <!-- //////////////// FIRST FLOOR COMPONENTS ///////////////////// -->
+    <xacro:x6xspacer_m3x10 id="hm3x10" element="bathol" parent="base_l0_s1"
+        offset_x="${0.0855/2}" offset_y="${0.127/2}" x="0.005" y="0" z="0.0025"/>
+
+    <link name="bat_platform">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 ${pi_2}"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/bathold_support.stl"
+                scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="PureWhite"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 ${pi_2}"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/bathold_support.stl" 
+                scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 ${pi_2}"/>
+            <mass value="0.1"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                    iyy="0.001" iyz="0.0"
+                    izz="0.001"/>
+        </inertial>
+        </link>
+
+        <!-- Fixed Joint -->
+        <joint name="bat_platform_joint" type="fixed">
+            <parent link="base_l0_s1"/>
+            <child link="bat_platform"/>
+            <origin xyz="0.005 0 0.0125" rpy="0 0 0"/>
+        </joint>
 </robot>
