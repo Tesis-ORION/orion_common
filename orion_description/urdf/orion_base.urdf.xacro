@@ -36,7 +36,9 @@
             y="${0.21/2 - 0.010}" z="0"/>
     <xacro:double_spacer_10x80 front="1" level="3" x="${-0.15/2 + 0.0075}" 
             y="${0.21/2 - 0.010}" z="0"/>
-    <xacro:motor_dc front="1" side="1" x="0.005" y="0.0675" z="-0.0225"/>
-    
+    <xacro:motor_dc front="1" side="1" x="-0.0025" y="${0.05718+0.036/2}" 
+        z="-0.0225"/>
+    <xacro:motor_dc front="1" side="2" x="-0.0025" y="${0.05718+0.036/2}"
+        z="-0.0225"/>
 
 </robot>

@@ -264,10 +264,21 @@
     <!--  /////////////////// MOTOR DC MACROS ///////////////////////////////-->
     <!--  Motor DC Component Kit -->
     <xacro:macro name="motor_dc" params="front side x y z">
-        <!-- Link definition-->
+        <!-- Properties -->
+        <xacro:property name="mulf" value="1"/>
+        <xacro:if value="${front == 2}">
+            <xacro:property name="mulf" value="-1"/>
+        </xacro:if>
+        <xacro:property name="muls" value="1"/>
+        <xacro:property name="orin" value="0"/>
+        <xacro:if value="${side == 2}">
+            <xacro:property name="muls" value="-1"/>
+            <xacro:property name="orin" value="${pi}"/>
+        </xacro:if>
+        <!-- Link motor mount definition-->
         <link name="motor_support_${front}${side}">
         <visual>
-            <origin xyz="0 0 0" rpy="${pi} 0 0"/>
+            <origin xyz="0 0 0" rpy="${pi} 0 ${orin}"/>
             <geometry>
             <mesh filename="package://orion_description/meshes/motor_mount.stl" 
                 scale="0.001 0.001 0.001"/>
@@ -275,7 +286,7 @@
             <material name="MetalGray"/>
         </visual>
         <collision>
-            <origin xyz="0 0 0" rpy="${pi} 0 0"/>
+            <origin xyz="0 0 0" rpy="${muls*pi} 0 0"/>
             <geometry>
             <mesh filename="package://orion_description/meshes/motor_mount.stl" 
                 scale="0.001 0.001 0.001"/>
@@ -289,12 +300,136 @@
                     izz="0.001"/>
         </inertial>
         </link>
-
-        <!-- Joint definition -->
+        <!-- Joint motor mount definition-->
         <joint name="motor_support_${front}${side}_joint" type="fixed">
             <parent link="base_l0_s${front}"/>
             <child link="motor_support_${front}${side}"/>
-            <origin xyz="${x} ${y} ${z+0.0025}" rpy="0 0 0"/>
+            <origin xyz="${x*mulf} ${y*muls} ${z+0.0025}" rpy="0 0 0"/>
+        </joint>
+        <!-- Link motor dc definition-->
+        <link name="motor_dc_${front}${side}">
+        <visual>
+            <origin xyz="0 0 0" rpy="${-pi_2*muls} 0 0"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/motor_dc.stl" 
+                scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="MetalGray"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="${-pi_2*muls} 0 0"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/motor_dc.stl" 
+                scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <origin xyz="0 0 0"/>
+            <mass value="0.0053"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                    iyy="0.001" iyz="0.0"
+                    izz="0.001"/>
+        </inertial>
+        </link>
+        <!-- Joint motor dc definition-->
+        <joint name="motor_dc_${front}${side}_joint" type="fixed">
+            <parent link="motor_support_${front}${side}"/>
+            <child link="motor_dc_${front}${side}"/>
+            <origin xyz="0 ${-0.05625*muls} 0" rpy="0 0 0"/>
+        </joint>
+        <!-- Link coupling definition-->
+        <link name="coupling_${front}${side}">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 ${pi_6*muls}"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/coupling.stl" 
+                scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="Brass"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 ${pi_6*muls}"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/coupling.stl" 
+                scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <origin xyz="0 0 0"/>
+            <mass value="0.0053"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                    iyy="0.001" iyz="0.0"
+                    izz="0.001"/>
+        </inertial>
+        </link>
+        <!-- Joint coupling definition-->
+        <joint name="coupling_${front}${side}_joint" type="continuous">
+            <axis xyz="0.0 0.0 1.0"/>
+            <parent link="motor_support_${front}${side}"/>
+            <child link="coupling_${front}${side}"/>
+            <origin xyz="0 ${(0.01120 + 0.000325)*muls} 0" rpy="${-pi_2*muls+orin} 0 0"/>
+        </joint>
+        <!-- Ring coupling definition-->
+        <link name="ring_${front}${side}">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 ${-pi_2*muls} 0"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/ring.stl" 
+                scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="ArduinoBlue"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 ${-pi_2*muls} 0"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/ring.stl" 
+                scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <origin xyz="0 0 0"/>
+            <mass value="0.0053"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                    iyy="0.001" iyz="0.0"
+                    izz="0.001"/>
+        </inertial>
+        </link>
+        <!-- Ring coupling definition-->
+        <joint name="ring_${front}${side}_joint" type="fixed">
+            <parent link="coupling_${front}${side}"/>
+            <child link="ring_${front}${side}"/>
+            <origin xyz="0 0 ${0.0068*muls}" rpy="0 0 0"/>
+        </joint>
+        <!-- Link neumatic definition-->
+        <link name="neumatic_${front}${side}">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 ${pi_2*muls} 0"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/neumatic.stl" 
+                scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="SoftBlack"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 ${pi_2*muls} 0"/>
+            <geometry>
+            <mesh filename="package://orion_description/meshes/neumatic.stl" 
+                scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <origin xyz="0 0 0"/>
+            <mass value="0.0053"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                    iyy="0.001" iyz="0.0"
+                    izz="0.001"/>
+        </inertial>
+        </link>
+        <!-- Joint neumatic definition-->
+        <joint name="neumatic_${front}${side}_joint" type="fixed">
+            <parent link="ring_${front}${side}"/>
+            <child link="neumatic_${front}${side}"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
         </joint>
     </xacro:macro>
 
