@@ -62,6 +62,18 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        b18650_1_1:
+          Value: true
+        b18650_1_2:
+          Value: true
+        b18650_1_3:
+          Value: true
+        b18650_2_1:
+          Value: true
+        b18650_2_2:
+          Value: true
+        b18650_2_3:
+          Value: true
         base_l0_s1:
           Value: true
         base_l0_s2:
@@ -84,6 +96,10 @@ Visualization Manager:
           Value: true
         bat_platform:
           Value: true
+        bathold_1:
+          Value: true
+        bathold_2:
+          Value: true
         caster_base_2:
           Value: true
         caster_middle_2:
@@ -93,6 +109,12 @@ Visualization Manager:
         coupling_11:
           Value: true
         coupling_12:
+          Value: true
+        driver_platform:
+          Value: true
+        esp32:
+          Value: true
+        esp32_adapter:
           Value: true
         hm3x10_bathol_f:
           Value: true
@@ -106,6 +128,30 @@ Visualization Manager:
           Value: true
         hm3x10_bathol_rr:
           Value: true
+        hm3x10_driver_fl:
+          Value: true
+        hm3x10_driver_fr:
+          Value: true
+        hm3x10_driver_rl:
+          Value: true
+        hm3x10_driver_rr:
+          Value: true
+        hm3x10_espadapter_fl:
+          Value: true
+        hm3x10_espadapter_fr:
+          Value: true
+        hm3x10_espadapter_rl:
+          Value: true
+        hm3x10_espadapter_rr:
+          Value: true
+        hm3x10_rpi5_fl:
+          Value: true
+        hm3x10_rpi5_fr:
+          Value: true
+        hm3x10_rpi5_rl:
+          Value: true
+        hm3x10_rpi5_rr:
+          Value: true
         hm4x17_caster_fl:
           Value: true
         hm4x17_caster_fr:
@@ -113,6 +159,16 @@ Visualization Manager:
         hm4x17_caster_rl:
           Value: true
         hm4x17_caster_rr:
+          Value: true
+        hs3x10_lidar_fl:
+          Value: true
+        hs3x10_lidar_r:
+          Value: true
+        hs3x10_lidar_rl:
+          Value: true
+        ld19:
+          Value: true
+        lidar_serial:
           Value: true
         motor_dc_11:
           Value: true
@@ -126,9 +182,27 @@ Visualization Manager:
           Value: true
         neumatic_12:
           Value: true
+        reg_support:
+          Value: true
+        regulator:
+          Value: true
         ring_11:
           Value: true
         ring_12:
+          Value: true
+        rpi5:
+          Value: true
+        servo_1:
+          Value: true
+        servo_2:
+          Value: true
+        servo_conn_1:
+          Value: true
+        servo_conn_2:
+          Value: true
+        servo_support_1:
+          Value: true
+        servo_support_2:
           Value: true
         spacer_l0_11:
           Value: true
@@ -162,6 +236,14 @@ Visualization Manager:
           Value: true
         spacer_l3_22:
           Value: true
+        speaker_21:
+          Value: true
+        speaker_22:
+          Value: true
+        speaker_sup_21:
+          Value: true
+        speaker_sup_22:
+          Value: true
       Marker Scale: 0.10000000149011612
       Name: TF
       Show Arrows: true
@@ -171,7 +253,20 @@ Visualization Manager:
         base_link:
           base_l0_s1:
             bat_platform:
-              {}
+              bathold_1:
+                b18650_1_1:
+                  {}
+                b18650_1_2:
+                  {}
+                b18650_1_3:
+                  {}
+              bathold_2:
+                b18650_2_1:
+                  {}
+                b18650_2_2:
+                  {}
+                b18650_2_3:
+                  {}
             hm3x10_bathol_f:
               {}
             hm3x10_bathol_fl:
@@ -207,6 +302,16 @@ Visualization Manager:
               caster_middle_2:
                 caster_wheel_2:
                   {}
+            driver_platform:
+              {}
+            hm3x10_driver_fl:
+              {}
+            hm3x10_driver_fr:
+              {}
+            hm3x10_driver_rl:
+              {}
+            hm3x10_driver_rr:
+              {}
             hm4x17_caster_fl:
               {}
             hm4x17_caster_fr:
@@ -215,16 +320,48 @@ Visualization Manager:
               {}
             hm4x17_caster_rr:
               {}
+            reg_support:
+              regulator:
+                {}
             spacer_l0_21:
               {}
             spacer_l0_22:
               {}
           base_l1_s1:
+            esp32_adapter:
+              esp32:
+                {}
+            hm3x10_espadapter_fl:
+              {}
+            hm3x10_espadapter_fr:
+              {}
+            hm3x10_espadapter_rl:
+              {}
+            hm3x10_espadapter_rr:
+              {}
+            hs3x10_lidar_fl:
+              {}
+            hs3x10_lidar_r:
+              {}
+            hs3x10_lidar_rl:
+              {}
+            ld19:
+              {}
             spacer_l1_11:
               {}
             spacer_l1_12:
               {}
           base_l1_s2:
+            lidar_serial:
+              {}
+            servo_support_1:
+              servo_1:
+                servo_conn_1:
+                  {}
+            servo_support_2:
+              servo_2:
+                servo_conn_2:
+                  {}
             spacer_l1_21:
               {}
             spacer_l1_22:
@@ -239,12 +376,28 @@ Visualization Manager:
               {}
             spacer_l2_22:
               {}
+            speaker_sup_21:
+              speaker_21:
+                {}
+            speaker_sup_22:
+              speaker_22:
+                {}
           base_l3_s1:
             spacer_l3_11:
               {}
             spacer_l3_12:
               {}
           base_l3_s2:
+            hm3x10_rpi5_fl:
+              {}
+            hm3x10_rpi5_fr:
+              {}
+            hm3x10_rpi5_rl:
+              {}
+            hm3x10_rpi5_rr:
+              {}
+            rpi5:
+              {}
             spacer_l3_21:
               {}
             spacer_l3_22:
@@ -271,6 +424,36 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        b18650_1_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        b18650_1_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        b18650_1_3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        b18650_2_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        b18650_2_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        b18650_2_3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         base_l0_s1:
           Alpha: 1
           Show Axes: false
@@ -325,6 +508,16 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        bathold_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        bathold_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         caster_base_2:
           Alpha: 1
           Show Axes: false
@@ -346,6 +539,21 @@ Visualization Manager:
           Show Trail: false
           Value: true
         coupling_12:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        driver_platform:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        esp32:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        esp32_adapter:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -380,6 +588,66 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        hm3x10_driver_fl:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_driver_fr:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_driver_rl:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_driver_rr:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_espadapter_fl:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_espadapter_fr:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_espadapter_rl:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_espadapter_rr:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_rpi5_fl:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_rpi5_fr:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_rpi5_rl:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hm3x10_rpi5_rr:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         hm4x17_caster_fl:
           Alpha: 1
           Show Axes: false
@@ -396,6 +664,31 @@ Visualization Manager:
           Show Trail: false
           Value: true
         hm4x17_caster_rr:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hs3x10_lidar_fl:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hs3x10_lidar_r:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        hs3x10_lidar_rl:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        ld19:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lidar_serial:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -430,12 +723,57 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        reg_support:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        regulator:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         ring_11:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
         ring_12:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        rpi5:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        servo_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        servo_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        servo_conn_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        servo_conn_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        servo_support_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        servo_support_2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -516,6 +854,26 @@ Visualization Manager:
           Show Trail: false
           Value: true
         spacer_l3_22:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        speaker_21:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        speaker_22:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        speaker_sup_21:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        speaker_sup_22:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -574,25 +932,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 0.8915451169013977
+      Distance: 0.48042547702789307
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.05090074986219406
-        Y: -0.01687806472182274
-        Z: 0.09894796460866928
+        X: -0.04967004433274269
+        Y: 0.011141137219965458
+        Z: 0.1383781135082245
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.4203983247280121
+      Pitch: 0.3203979730606079
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.645402729511261
+      Yaw: 0.7604262828826904
     Saved: ~
 Window Geometry:
   Displays:
