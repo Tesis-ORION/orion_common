@@ -200,10 +200,13 @@
         <origin xyz="-0.0025 0 ${0.06/2}" rpy="0 0 0"/>
     </joint>
 
-    <xacro:servo_mounted parent="base_l1_s2" side="1" x="0.00275" y="0.0765"
-        z="-0.026"/>
-    <xacro:servo_mounted parent="base_l1_s2" side="2" x="0.00275" y="0.0765"
-        z="-0.026"/>
+
+    <xacro:if value="${servo}">
+        <xacro:servo_mounted parent="base_l1_s2" side="1" x="0.00275" y="0.0765"
+            z="-0.026"/>
+        <xacro:servo_mounted parent="base_l1_s2" side="2" x="0.00275" y="0.0765"
+            z="-0.026"/>
+    </xacro:if>
 
     <!-- ///////////////// SECOND FLOOR COMPONENTS /////////////////////// -->
     <xacro:x4xspacer_m3x10 id="hm3x10" element="espadapter" parent="base_l1_s1"
@@ -354,7 +357,7 @@
     <xacro:x4xspacer_m3x10 id="hm3x10" element="rpi5" parent="base_l3_s2"
         offset_x="${0.049/2}" offset_y="${0.058/2}" x="0" y="0.0435" z="0.0025"/>
 
-    <!-- Link Lidar Serial -->
+    <!-- Link Rasberry Pi -->
     <link name="rpi5">
     <visual>
         <origin xyz="0 0 0" rpy="0 0 ${-pi_2}"/>
@@ -380,7 +383,7 @@
     </inertial>
     </link>
 
-    <!-- Joint Lidar Serial -->
+    <!-- Joint Rasberry Pi -->
     <joint name="rpi5_joint" type="fixed">
         <parent link="base_l3_s2"/>
         <child link="rpi5"/>

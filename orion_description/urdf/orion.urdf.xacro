@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="orion">
 
+    <xacro:property name="camera" default="$(arg camera)"/>
+    <xacro:property name="servo" default="$(arg servo)"/>
+
     <!-- Include other files -->
     <xacro:include filename="$(find orion_description)/urdf/orion_materials.urdf.xacro"/>
     <xacro:include filename="$(find orion_description)/urdf/orion_macros.urdf.xacro"/>

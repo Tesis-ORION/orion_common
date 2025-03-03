@@ -12,19 +12,46 @@ def generate_launch_description():
     pkg_description = get_package_share_directory('orion_description')
     xacro_file = os.path.join(pkg_description, 'urdf', 'orion.urdf.xacro')
 
-    # Convert Xacro to URDF
-    robot_description_content = Command(['xacro ', xacro_file])
-    robot_description = {'robot_description': robot_description_content}
+    # --------------------------- Configurations -----------------------------
+    use_gui = LaunchConfiguration('use_gui')
+    camera = LaunchConfiguration('camera')
+    servo = LaunchConfiguration('servo')
 
-    # Nodes
-    robot_state_publisher = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        parameters=[robot_description],
-        output='screen'
+    # -------------------------- Launch arguments -----------------------------
+    camera_arg = DeclareLaunchArgument(
+        'camera',
+        default_value='os30a',
+        description="Choose a cam for the robot (os30a, astra_s, a010)"
     )
 
-    joint_state_publisher_gui = Node(
+    use_servo_arg = DeclareLaunchArgument(
+        'servo',
+        default_value='true',
+        description="Boolean to include or not the servos"
+    )
+
+    gui_arg = DeclareLaunchArgument(
+        "use_gui", 
+        default_value="true", 
+        description="Use joint_state_publisher_gui"
+    )
+
+    # -------------------------- Nodes ----------------------------------------
+    rsp_node = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        name="robot_state_publisher",
+        output='screen',
+        parameters=[{
+            'robot_description': Command([
+                'xacro ', xacro_file, 
+                ' camera:=', camera,
+                ' servo:=', servo,
+            ])
+        }]
+    )
+
+    jsp_gui_node = Node(
         package='joint_state_publisher_gui',
         executable='joint_state_publisher_gui',
         name='joint_state_publisher_gui'
@@ -39,8 +66,10 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-        DeclareLaunchArgument("use_gui", default_value="true", description="Use joint_state_publisher_gui"),
-        robot_state_publisher,
-        joint_state_publisher_gui,
+        camera_arg,
+        use_servo_arg,
+        gui_arg,
+        rsp_node,
+        jsp_gui_node,
         rviz_node
     ])
