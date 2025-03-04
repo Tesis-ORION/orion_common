@@ -208,6 +208,20 @@
             z="-0.026"/>
     </xacro:if>
 
+    <xacro:complete_lateral_wall id="servo" parent="base_l0_s1" side="1" 
+        x="${-0.115/2}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
+        level="0"/>
+
+    <xacro:complete_lateral_wall id="servo" parent="base_l0_s1" side="2" 
+        x="${-0.115/2}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
+        level="0"/>
+
+    <xacro:complete_front_wall id="batteries" parent="base_l0_s1" front="1" 
+        x="${0.115/2}" z="${0.082/2 + 0.0025/2}" level="0"/>
+
+    <xacro:complete_front_wall id="batteries" parent="base_l0_s2" front="2" 
+        x="${0.115/2}" z="${0.082/2 + 0.0025/2}" level="0"/>
+
     <!-- ///////////////// SECOND FLOOR COMPONENTS /////////////////////// -->
     <xacro:x4xspacer_m3x10 id="hm3x10" element="espadapter" parent="base_l1_s1"
         offset_x="${0.0577/2}" offset_y="${0.0607/2}" x="0" y="0" z="-0.01"/>
@@ -347,11 +361,36 @@
         <origin xyz="-0.03 0.025 0.0025" rpy="0 0 0"/>
     </joint>
 
+    <xacro:complete_lateral_wall id="servo" parent="base_l1_s1" side="1" 
+        x="${-0.115/2}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
+        level="1"/>
+
+    <xacro:complete_lateral_wall id="servo" parent="base_l1_s1" side="2" 
+        x="${-0.115/2}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
+        level="1"/>
+
+    <xacro:complete_front_wall id="batteries" parent="base_l1_s1" front="1" 
+        x="${0.115/2}" z="${0.082/2 + 0.0025/2}" level="1"/>
+
+    <xacro:complete_front_wall id="batteries" parent="base_l1_s2" front="2" 
+        x="${0.115/2}" z="${0.082/2 + 0.0025/2}" level="1"/>
+
     <!-- ////////////////// THIRD FLOOR COMPONENTES ////////////////////// -->
     <xacro:speakers_mount parent="base_l2_s2" front="2" side="1" x="-0.0025" 
         y="0.0685" z= "0.0025"/>
     <xacro:speakers_mount parent="base_l2_s2" front="2" side="2" x="-0.0025"
         y="0.0685" z= "0.0025"/>
+
+    <xacro:complete_lateral_wall id="servo" parent="base_l2_s1" side="1" 
+        x="${-0.115/2}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
+        level="2"/>
+
+    <xacro:complete_lateral_wall id="servo" parent="base_l2_s1" side="2" 
+        x="${-0.115/2}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
+        level="2"/>
+
+    <xacro:complete_front_wall id="batteries" parent="base_l2_s2" front="2" 
+        x="${0.115/2}" z="${0.082/2 + 0.0025/2}" level="2"/>
 
     <!-- ////////////////// FOURTH FLOOR COMPONENTES ////////////////////// -->
     <xacro:x4xspacer_m3x10 id="hm3x10" element="rpi5" parent="base_l3_s2"
@@ -389,4 +428,7 @@
         <child link="rpi5"/>
         <origin xyz="0 0.0335 0.0125" rpy="0 0 0"/>
     </joint>
+
+    <xacro:complete_front_wall id="batteries" parent="base_l3_s2" front="2" 
+        x="${0.115/2}" z="${0.082/2 + 0.0025/2}" level="3"/>
 </robot>

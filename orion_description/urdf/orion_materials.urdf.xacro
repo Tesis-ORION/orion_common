@@ -37,4 +37,9 @@
         <color rgba="0.5 0.5 0.5 1.0"/>  
     </material>
 
+    <!-- Equivalent to RGB(39, 39, 39) -->
+    <material name="TransparentBlack">
+        <color rgba="0.3 0.3 0.3 0.8"/>  
+    </material>
+
 </robot>

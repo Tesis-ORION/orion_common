@@ -20,7 +20,7 @@ def generate_launch_description():
     # -------------------------- Launch arguments -----------------------------
     camera_arg = DeclareLaunchArgument(
         'camera',
-        default_value='os30a',
+        default_value='a010',
         description="Choose a cam for the robot (os30a, astra_s, a010)"
     )
 
