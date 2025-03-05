@@ -70,7 +70,7 @@
         <joint name="os30a_sup_joint" type="fixed">
             <parent link="${level_cam}"/>
             <child link="os30a_sup"/>
-            <origin xyz="0.0555 0 0.0025" rpy="0 0 0"/>
+            <origin xyz="${0.0555 - 0.0285} 0 0.0025" rpy="0 0 0"/>
         </joint>
 
         <!-- Link OS30A Support -->
@@ -109,7 +109,7 @@
 
     <!--  //////////////////////// A010 CAM ///////////////////////////// -->
     <xacro:if value="${camera == 'a010'}">
-        <!-- Link OS30A Support -->
+        <!-- Link Maixsense Support -->
         <link name="maixsense_sup">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 ${pi_2}"/>
@@ -135,14 +135,14 @@
         </inertial>
         </link>
 
-        <!-- Joint OS30A Support -->
+        <!-- Joint Maixsense Support -->
         <joint name="maixsense_sup_joint" type="fixed">
             <parent link="${level_cam}"/>
             <child link="maixsense_sup"/>
             <origin xyz="0.038945 -0.030451 0.0125" rpy="0 0 0"/>
         </joint>
 
-        <!-- Link OS30A Support -->
+        <!-- Link Maixsense -->
         <link name="maixsense">
         <visual>
             <origin xyz="0 0 0" rpy="${pi_2} 0 ${pi_2}"/>
@@ -168,7 +168,7 @@
         </inertial>
         </link>
 
-        <!-- Joint OS30A Support -->
+        <!-- Joint Maixsense -->
         <joint name="maixsense_joint" type="fixed">
             <parent link="maixsense_sup"/>
             <child link="maixsense"/>
