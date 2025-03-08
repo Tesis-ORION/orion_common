@@ -3,6 +3,8 @@
 
     <xacro:property name="camera" default="$(arg camera)"/>
     <xacro:property name="servo" default="$(arg servo)"/>
+    <xacro:property name="g_mov" default="$(arg g_mov)"/>
+    <xacro:property name="rasp" default="$(arg rasp)"/>
 
     <!-- Include other files -->
     <xacro:include filename="$(find orion_description)/urdf/orion_materials.urdf.xacro"/>

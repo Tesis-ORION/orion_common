@@ -16,8 +16,16 @@ def generate_launch_description():
     use_gui = LaunchConfiguration('use_gui')
     camera = LaunchConfiguration('camera')
     servo = LaunchConfiguration('servo')
+    g_mov = LaunchConfiguration('g_mov')
+    rasp = LaunchConfiguration('rasp')
 
     # -------------------------- Launch arguments -----------------------------
+    gui_arg = DeclareLaunchArgument(
+        "use_gui", 
+        default_value="true", 
+        description="Use joint_state_publisher_gui"
+    )
+
     camera_arg = DeclareLaunchArgument(
         'camera',
         default_value='a010',
@@ -30,11 +38,18 @@ def generate_launch_description():
         description="Boolean to include or not the servos"
     )
 
-    gui_arg = DeclareLaunchArgument(
-        "use_gui", 
-        default_value="true", 
-        description="Use joint_state_publisher_gui"
+    use_g_mov_arg = DeclareLaunchArgument(
+        'g_mov',
+        default_value='true',
+        description="When using camera a010, whether to include or not G Mov"
     )
+    
+    rasp_arg = DeclareLaunchArgument(
+        'rasp',
+        default_value='rpi5',
+        description="Select 4 for Raspberry Pi 4B, or 5 for Raspberry Pi 5"
+    )
+
 
     # -------------------------- Nodes ----------------------------------------
     rsp_node = Node(
@@ -47,6 +62,8 @@ def generate_launch_description():
                 'xacro ', xacro_file, 
                 ' camera:=', camera,
                 ' servo:=', servo,
+                ' g_mov:=', g_mov,
+                ' rasp:=', rasp,
             ])
         }]
     )
@@ -68,6 +85,8 @@ def generate_launch_description():
     return LaunchDescription([
         camera_arg,
         use_servo_arg,
+        use_g_mov_arg,
+        rasp_arg,
         gui_arg,
         rsp_node,
         jsp_gui_node,

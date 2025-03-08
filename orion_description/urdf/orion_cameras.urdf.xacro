@@ -174,5 +174,11 @@
             <child link="maixsense"/>
             <origin xyz="0 0 0.0205" rpy="0 0 0"/>
         </joint>
+        
+        <xacro:if value="${g_mov}">
+            <xacro:include filename="$(find g_mov_description)/urdf/g_mov_macros.urdf.xacro"/>
+            <xacro:g_mov_assem parent="${level_cam}" spacer="m3x10" offset="${0.033/2}" 
+                x="0.017825" y="0.035" z="0" joint_prefix="g_mov"/>
+        </xacro:if>
     </xacro:if>
 </robot>

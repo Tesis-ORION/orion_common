@@ -376,32 +376,33 @@
         x="${0.115/2}" z="${0.082/2 + 0.0025/2}" level="1"/>
 
     <!-- ////////////////// THIRD FLOOR COMPONENTES ////////////////////// -->
-    <xacro:speakers_mount parent="base_l2_s2" front="2" side="1" x="-0.0025" 
-        y="0.0685" z= "0.0025"/>
-    <xacro:speakers_mount parent="base_l2_s2" front="2" side="2" x="-0.0025"
-        y="0.0685" z= "0.0025"/>
+    <xacro:if value="${rasp == 'rpi4'}">
+        <xacro:speakers_mount parent="base_l2_s2" front="2" side="1" x="-0.0025" 
+            y="0.0685" z= "0.0025"/>
+        <xacro:speakers_mount parent="base_l2_s2" front="2" side="2" x="-0.0025"
+            y="0.0685" z= "0.0025"/>
 
-    <xacro:complete_lateral_wall id="speaker1" parent="base_l2_s1" side="1" 
-        x="${-0.115/2}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
-        level="2"/>
+        <xacro:complete_lateral_wall id="speaker1" parent="base_l2_s1" side="1" 
+            x="${-0.115/2}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
+            level="2"/>
 
-    <xacro:complete_lateral_wall id="speaker2" parent="base_l2_s1" side="2" 
-        x="${-0.115/2}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
-        level="2"/>
+        <xacro:complete_lateral_wall id="speaker2" parent="base_l2_s1" side="2" 
+            x="${-0.115/2}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
+            level="2"/>
 
-    <xacro:complete_front_wall id="fdefault" parent="base_l2_s2" front="2" 
-        x="${0.115/2}" z="${0.082/2 + 0.0025/2}" level="2"/>
-
+        <xacro:complete_front_wall id="fdefault" parent="base_l2_s2" front="2" 
+            x="${0.115/2}" z="${0.082/2 + 0.0025/2}" level="2"/>
+    </xacro:if>
     <!-- ////////////////// FOURTH FLOOR COMPONENTES ////////////////////// -->
     <xacro:x4xspacer_m3x10 id="hm3x10" element="rpi5" parent="base_l3_s2"
         offset_x="${0.049/2}" offset_y="${0.058/2}" x="0" y="0.0435" z="0.0025"/>
 
     <!-- Link Rasberry Pi -->
-    <link name="rpi5">
+    <link name="${rasp}">
     <visual>
         <origin xyz="0 0 0" rpy="0 0 ${-pi_2}"/>
         <geometry>
-        <mesh filename="package://orion_description/meshes/rpi5.stl"
+        <mesh filename="package://orion_description/meshes/${rasp}.stl"
             scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="RaspberryGreen"/>
@@ -409,7 +410,7 @@
     <collision>
         <origin xyz="0 0 0" rpy="0 0 ${-pi_2}"/>
         <geometry>
-        <mesh filename="package://orion_description/meshes/rpi5.stl" 
+        <mesh filename="package://orion_description/meshes/${rasp}.stl" 
             scale="0.001 0.001 0.001"/>
         </geometry>
     </collision>
@@ -422,12 +423,13 @@
     </inertial>
     </link>
 
-    <!-- Joint Rasberry Pi -->
-    <joint name="rpi5_joint" type="fixed">
+    <!-- Joint Rasberry Pi-->
+    <joint name="${rasp}_joint" type="fixed">
         <parent link="base_l3_s2"/>
-        <child link="rpi5"/>
+        <child link="${rasp}"/>
         <origin xyz="0 0.0335 0.0125" rpy="0 0 0"/>
     </joint>
+
 
     <xacro:complete_front_wall id="rpi" parent="base_l3_s2" front="2" 
         x="${0.115/2}" z="${0.082/2 + 0.0025/2}" level="3"/>

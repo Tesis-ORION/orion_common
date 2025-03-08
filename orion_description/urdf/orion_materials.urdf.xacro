@@ -42,4 +42,9 @@
         <color rgba="0.3 0.3 0.3 0.8"/> 
     </material>
 
+    <!-- Equivalent to RGB(141, 141, 141) -->
+    <material name="PLAGray">
+        <color rgba="0.6 0.6 0.6 1.0"/>  
+    </material>
+
 </robot>
