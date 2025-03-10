@@ -817,7 +817,7 @@
             <xacro:property name="muls" value="-1"/>
         </xacro:if>
         <!-- Link -->
-        <link name="wall${id}_${level}_${side}">
+        <link name="wall_${id}_${level}_${side}">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
             <geometry>
@@ -842,9 +842,9 @@
         </inertial>
         </link>
 
-        <joint name="wall${id}_${level}_${side}_joint" type="fixed">
+        <joint name="wall_${id}_${level}_${side}_joint" type="fixed">
         <parent link="${parent}"/>
-        <child link="wall${id}_${level}_${side}"/>
+        <child link="wall_${id}_${level}_${side}"/>
         <origin xyz="${x} ${(y+0.00075)*muls} ${z}" rpy="0 0 0"/>
         </joint>
     </xacro:macro>
@@ -858,7 +858,7 @@
             <xacro:property name="orz" value="${pi}"/>
         </xacro:if>
         <!-- Link -->
-        <link name="wall${id}_${level}_${front}">
+        <link name="wall_${id}_${level}_${front}">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 ${pi_2 + orz}"/>
             <geometry>
@@ -883,9 +883,9 @@
         </inertial>
         </link>
 
-        <joint name="wall${id}_${level}_${front}_joint" type="fixed">
+        <joint name="wall_${id}_${level}_${front}_joint" type="fixed">
         <parent link="${parent}"/>
-        <child link="wall${id}_${level}_${front}"/>
+        <child link="wall_${id}_${level}_${front}"/>
         <origin xyz="${(x+0.00075)*mulf} 0 ${z}" rpy="0 0 0"/>
         </joint>
     </xacro:macro>

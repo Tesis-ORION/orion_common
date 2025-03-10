@@ -39,7 +39,7 @@
 
     <!-- Equivalent to RGB(39, 39, 39) -->
     <material name="TransparentBlack">
-        <color rgba="0.3 0.3 0.3 0.8"/> 
+        <color rgba="0.3 0.3 0.3 1.0"/> 
     </material>
 
     <!-- Equivalent to RGB(141, 141, 141) -->
