@@ -31,7 +31,7 @@
             y="${0.21/2 - 0.010}" z="0"/>
     <xacro:double_spacer_10x80 front="2" level="1" x="${0.15/2 - 0.0275}" 
             y="${0.21/2 - 0.010}" z="0"/>
-    <xacro:double_spacer_10x80 front="1" level="2" x="${0.15/2 - 0.0275}" 
+    <xacro:double_spacer_10x80 front="1" level="2" x="${-0.15/2 + 0.0275 + 0.006}" 
             y="${0.21/2 - 0.010}" z="0"/>
     <xacro:double_spacer_10x80 front="2" level="2" x="${0.15/2 - 0.0275}" 
             y="${0.21/2 - 0.010}" z="0"/>
@@ -47,7 +47,8 @@
         z="-0.0225"/>
 
     <!-- /////////////////////// CASTER WHEEL //////////////////////////-->
-    <xacro:x4xspacer_m4x17 id="hm4x17" element="caster" parent="base_l0_s2" 
+
+    <xacro:x4xmetric_spacer id="m4x17" element="caster" parent="base_l0_s2"
         offset_x="0.012" offset_y="0.015" x="-0.022" y="0" 
         z="${-0.001 - 0.017}"/>
     <xacro:caster_wheel parent="base_l0_s2" front="2" x="-0.022" y="0" 
@@ -55,8 +56,9 @@
 
     <!-- //////////////// FIRST FLOOR COMPONENTS ///////////////////// -->
     <!-- Hex spacers for Battery Support -->
-    <xacro:x6xspacer_m3x10 id="hm3x10" element="bathol" parent="base_l0_s1"
-        offset_x="${0.0855/2}" offset_y="${0.127/2}" x="0.005" y="0" z="0.0025"/>
+    <xacro:x6xmetric_spacer id="m3x10" element="bathol" parent="base_l0_s1"
+        offset_x="${0.0855/2}" offset_y="${0.127/2}" x="0.005" y="0" 
+        z="0.0025"/>
     
     <!-- Link Battery Support-->
     <link name="bat_platform">
@@ -97,7 +99,7 @@
         z="0"/>
 
     <!-- Hex spacers for Motor Driver-->
-    <xacro:x4xspacer_m3x10 id="hm3x10" element="driver" parent="base_l0_s2"
+    <xacro:x4xmetric_spacer id="m3x10" element="driver" parent="base_l0_s2"
         offset_x="${0.03702/2}" offset_y="${-0.0368/2}" x="-0.023453" 
         y="0.031351" z="0.0025"/>
 
@@ -223,7 +225,7 @@
         x="${0.115/2}" z="${0.082/2 + 0.0025/2}" level="0"/>
 
     <!-- ///////////////// SECOND FLOOR COMPONENTS /////////////////////// -->
-    <xacro:x4xspacer_m3x10 id="hm3x10" element="espadapter" parent="base_l1_s1"
+    <xacro:x4xmetric_spacer id="m3x10" element="esp_adapter" parent="base_l1_s1"
         offset_x="${0.0577/2}" offset_y="${0.0607/2}" x="0" y="0" z="-0.01"/>
 
     <!-- Link Esp32 Adapter -->
@@ -292,7 +294,7 @@
         <origin xyz="0.002 0 -0.01" rpy="0 0 0"/>
     </joint>
 
-    <xacro:x3xspacer_m3x10 id="hs3x10" element="lidar" parent="base_l1_s1" 
+    <xacro:x3xmetric_spacer id="m3x10" element="lidar" parent="base_l1_s1" 
         offset_x="0.0234" offset_y="${0.03132/2}" x="-0.0575" y="0" z="0.0025"/>
     
     <!-- Link LD19 -->
@@ -394,7 +396,7 @@
             x="${0.115/2}" z="${0.082/2 + 0.0025/2}" level="2"/>
     </xacro:if>
     <!-- ////////////////// FOURTH FLOOR COMPONENTES ////////////////////// -->
-    <xacro:x4xspacer_m3x10 id="hm3x10" element="rpi5" parent="base_l3_s2"
+    <xacro:x4xmetric_spacer id="m3x10" element="rpi5" parent="base_l3_s2"
         offset_x="${0.049/2}" offset_y="${0.058/2}" x="0" y="0.0435" z="0.0025"/>
 
     <!-- Link Rasberry Pi -->
