@@ -202,13 +202,38 @@
         <origin xyz="-0.0025 0 ${0.06/2}" rpy="0 0 0"/>
     </joint>
 
+    <!-- Link Switch -->
+    <link name="switch">
+    <visual>
+        <origin xyz="0 0 0" rpy="${pi/2} 0 ${pi/2}"/>
+        <geometry>
+        <mesh filename="package://orion_description/meshes/switch_3s_15a.stl"
+            scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="ArduinoBlue"/>
+    </visual>
+    <collision>
+        <origin xyz="0 0 0" rpy="${pi/2} 0 ${pi/2}"/>
+        <geometry>
+        <mesh filename="package://orion_description/meshes/switch_3s_15a.stl" 
+            scale="0.001 0.001 0.001"/>
+        </geometry>
+    </collision>
+    <inertial>
+        <origin xyz="0 0 0" rpy="${pi/2} 0 ${pi/2}"/>
+        <mass value="0.1"/>
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                iyy="0.001" iyz="0.0"
+                izz="0.001"/>
+    </inertial>
+    </link>
 
-    <xacro:if value="${servo}">
-        <xacro:servo_mounted parent="base_l1_s2" side="1" x="0.00275" y="0.0765"
-            z="-0.026"/>
-        <xacro:servo_mounted parent="base_l1_s2" side="2" x="0.00275" y="0.0765"
-            z="-0.026"/>
-    </xacro:if>
+    <!-- Joint Switch -->
+    <joint name="switch_joint" type="fixed">
+        <parent link="base_l1_s1"/>
+        <child link="switch"/>
+        <origin xyz="0.025 0.074 -0.015" rpy="0 0 0"/>
+    </joint>
 
     <xacro:complete_lateral_wall id="servo" parent="base_l0_s1" side="1" 
         x="${-0.115/2}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
@@ -363,6 +388,13 @@
         <origin xyz="-0.03 0.025 0.0025" rpy="0 0 0"/>
     </joint>
 
+    <xacro:if value="${servo}">
+        <xacro:servo_mounted parent="base_l1_s2" side="1" x="0.00275" y="0.0765"
+            z="-0.026"/>
+        <xacro:servo_mounted parent="base_l1_s2" side="2" x="0.00275" y="0.0765"
+            z="-0.026"/>
+    </xacro:if>
+
     <xacro:complete_lateral_wall id="llidar" parent="base_l1_s1" side="1" 
         x="${-0.115/2}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
         level="1"/>
@@ -384,11 +416,24 @@
         <xacro:speakers_mount parent="base_l2_s2" front="2" side="2" x="-0.0025"
             y="0.0685" z= "0.0025"/>
 
-        <xacro:complete_lateral_wall id="speaker1" parent="base_l2_s1" side="1" 
+        <xacro:complete_lateral_wall id="curve_speaker" parent="base_l2_s1" side="1" 
             x="${-0.115/2}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
             level="2"/>
 
-        <xacro:complete_lateral_wall id="speaker2" parent="base_l2_s1" side="2" 
+        <xacro:complete_lateral_wall id="curve_speaker" parent="base_l2_s1" side="2" 
+            x="${-0.115/2}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
+            level="2"/>
+
+        <xacro:complete_front_wall id="fdefault" parent="base_l2_s2" front="2" 
+            x="${0.115/2}" z="${0.082/2 + 0.0025/2}" level="2"/>
+    </xacro:if>
+
+    <xacro:if value="${rasp == 'rpi5'}">
+        <xacro:complete_lateral_wall id="curve" parent="base_l2_s1" side="1" 
+            x="${-0.115/2}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
+            level="2"/>
+
+        <xacro:complete_lateral_wall id="curve" parent="base_l2_s1" side="2" 
             x="${-0.115/2}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
             level="2"/>
 

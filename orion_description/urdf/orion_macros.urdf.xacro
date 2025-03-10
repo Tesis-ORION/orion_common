@@ -813,15 +813,13 @@
     <xacro:macro name="complete_lateral_wall" 
             params="id parent side level x y z">
         <xacro:property name="muls" value="1"/>
-        <xacro:property name="orx" value="${pi}"/>
         <xacro:if value="${side == 2}">
             <xacro:property name="muls" value="-1"/>
-            <xacro:property name="orx" value="0"/>
         </xacro:if>
         <!-- Link -->
         <link name="wall${id}_${level}_${side}">
         <visual>
-            <origin xyz="0 0 0" rpy="${orx} ${pi} 0"/>
+            <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
             <geometry>
             <mesh filename="package://orion_description/meshes/wall_${id}.stl" 
                 scale="0.001 0.001 0.001"/>
@@ -829,7 +827,7 @@
             <material name="TransparentBlack"/>
         </visual>
         <collision>
-            <origin xyz="0 0 0" rpy="${orx} ${pi} 0"/>
+            <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
             <geometry>
             <mesh filename="package://orion_description/meshes/wall_${id}.stl" 
                 scale="0.001 0.001 0.001"/>
@@ -847,7 +845,7 @@
         <joint name="wall${id}_${level}_${side}_joint" type="fixed">
         <parent link="${parent}"/>
         <child link="wall${id}_${level}_${side}"/>
-        <origin xyz="${x} ${y*muls} ${z}" rpy="0 0 0"/>
+        <origin xyz="${x} ${(y+0.00075)*muls} ${z}" rpy="0 0 0"/>
         </joint>
     </xacro:macro>
 
@@ -888,7 +886,7 @@
         <joint name="wall${id}_${level}_${front}_joint" type="fixed">
         <parent link="${parent}"/>
         <child link="wall${id}_${level}_${front}"/>
-        <origin xyz="${x*mulf} 0 ${z}" rpy="0 0 0"/>
+        <origin xyz="${(x+0.00075)*mulf} 0 ${z}" rpy="0 0 0"/>
         </joint>
     </xacro:macro>
 
