@@ -5,6 +5,7 @@
     <xacro:property name="servo" default="$(arg servo)"/>
     <xacro:property name="g_mov" default="$(arg g_mov)"/>
     <xacro:property name="rasp" default="$(arg rasp)"/>
+    <xacro:property name="gazebo" default="$(arg gazebo)"/>
 
     <!-- Include other files -->
     <xacro:include filename="$(find orion_description)/urdf/orion_materials.urdf.xacro"/>
@@ -12,5 +13,9 @@
     <xacro:include filename="$(find orion_description)/urdf/orion_base.urdf.xacro"/>
     <xacro:include filename="$(find orion_description)/urdf/orion_arms.urdf.xacro"/>
     <xacro:include filename="$(find orion_description)/urdf/orion_cameras.urdf.xacro"/>
+
+    <xacro:if value="${gazebo}">
+        <xacro:include filename="$(find orion_description)/urdf/orion_gz.urdf.xacro"/>
+    </xacro:if>
 
 </robot>

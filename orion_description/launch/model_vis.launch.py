@@ -64,6 +64,7 @@ def generate_launch_description():
                 ' servo:=', servo,
                 ' g_mov:=', g_mov,
                 ' rasp:=', rasp,
+                ' gazebo:=false',
             ])
         }]
     )
