@@ -1,4 +1,5 @@
 import os
+import xacro
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
@@ -17,6 +18,7 @@ def generate_launch_description():
     servo = LaunchConfiguration('servo')
     g_mov = LaunchConfiguration('g_mov')
     rasp = LaunchConfiguration('rasp')
+    gazebo = LaunchConfiguration('gazebo')
 
     # -------------------------- Launch arguments -----------------------------
     camera_arg = DeclareLaunchArgument(
@@ -43,6 +45,26 @@ def generate_launch_description():
         description="Select 4 for Raspberry Pi 4B, or 5 for Raspberry Pi 5"
     )
 
+    gazebo_arg = DeclareLaunchArgument(
+        'gazebo',
+        default_value='true',
+        description="True for using gazebo tags, false otherwise"
+    )
+
+    # -------------------------- Additional processes ------------------------
+    mappings = {
+        'camera':'a010',
+        'servo':'true',
+        'g_mov':'false',
+        'rasp':'rpi5',
+        'gazebo':'true'
+        }
+    robot_description_config = xacro.process_file(xacro_file, mappings=mappings)
+    robot_desc = robot_description_config.toprettyxml(indent='  ')
+    # Passing absolute path to the robot description due to Gazebo issues finding andino_description pkg path.
+    robot_desc = robot_desc.replace(
+        'package://orion_description/', f'file://{pkg_description}/'
+    )
 
     # -------------------------- Nodes ----------------------------------------
     rsp_node = Node(
@@ -51,29 +73,8 @@ def generate_launch_description():
         name="robot_state_publisher",
         output='screen',
         parameters=[{
-            'robot_description': Command([
-                'xacro ', xacro_file, 
-                ' camera:=', camera,
-                ' servo:=', servo,
-                ' g_mov:=', g_mov,
-                ' rasp:=', rasp,
-                ' gazebo:=false',
-            ])
+            'robot_description': robot_desc,
         }]
-    )
-
-    jsp_gui_node = Node(
-        package='joint_state_publisher_gui',
-        executable='joint_state_publisher_gui',
-        name='joint_state_publisher_gui'
-    )
-
-    rviz_config_file = os.path.join(pkg_description, 'rviz', 'model_viz.rviz')
-    rviz_node = Node(
-        package='rviz2',
-        executable='rviz2',
-        arguments=['-d', rviz_config_file],
-        output='screen'
     )
 
     return LaunchDescription([
@@ -81,7 +82,6 @@ def generate_launch_description():
         use_servo_arg,
         use_g_mov_arg,
         rasp_arg,
+        gazebo_arg,
         rsp_node,
-        jsp_gui_node,
-        rviz_node
     ])

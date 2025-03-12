@@ -130,7 +130,7 @@
     </link>
 
     <!-- Joint Motor Driver -->
-    <joint name="driver" type="fixed">
+    <joint name="driver_joint" type="fixed">
         <parent link="base_l0_s2"/>
         <child link="driver"/>
         <origin xyz="-0.023453 0.031351 0.0125" rpy="0 0 0"/>
