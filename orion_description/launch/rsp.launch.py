@@ -2,24 +2,62 @@ import os
 import xacro
 
 from ament_index_python.packages import get_package_share_directory
-from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
-from launch.substitutions import Command, LaunchConfiguration
+from launch import LaunchDescription, LaunchContext
+from launch.actions import DeclareLaunchArgument, OpaqueFunction
+from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
+def get_argument(context, arg):
+    return LaunchConfiguration(arg).perform(context)
 
-def generate_launch_description():
-    # Define paths
+def generate_robot_description(context):
+    # -------------------------- Paths --------------------------------------
+    pkg_gmov = get_package_share_directory('g_mov_description')
     pkg_description = get_package_share_directory('orion_description')
     xacro_file = os.path.join(pkg_description, 'urdf', 'orion.urdf.xacro')
 
     # --------------------------- Configurations -----------------------------
-    camera = LaunchConfiguration('camera')
-    servo = LaunchConfiguration('servo')
-    g_mov = LaunchConfiguration('g_mov')
-    rasp = LaunchConfiguration('rasp')
-    gazebo = LaunchConfiguration('gazebo')
+    camera = get_argument(context, "camera")
+    servo = get_argument(context, "servo")
+    g_mov = get_argument(context, "g_mov")
+    rasp = get_argument(context, "rasp")
+    gazebo = get_argument(context, "gazebo")
 
+    mappings = {
+        'camera': camera,
+        'servo': servo,
+        'g_mov': g_mov,
+        'rasp': rasp,
+        'gazebo': gazebo
+    }
+
+    robot_description_config = xacro.process_file(xacro_file, mappings=mappings)
+    robot_desc = robot_description_config.toprettyxml(indent='  ')
+    
+    # Passing absolute path to the robot description due to Gazebo issues finding andino_description pkg path.
+    robot_desc = robot_desc.replace(
+        'package://orion_description/', f'file://{pkg_description}/'
+    )
+    robot_desc = robot_desc.replace(
+        'package://g_mov_description/', f'file://{pkg_gmov}/'
+    )
+
+    # -------------------------- Nodes ----------------------------------------
+    rsp_node = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        name="robot_state_publisher",
+        output='screen',
+        parameters=[{
+            'robot_description': robot_desc,
+            'rate': 200,
+        }]
+    )
+
+    return [rsp_node]
+
+
+def generate_launch_description():
     # -------------------------- Launch arguments -----------------------------
     camera_arg = DeclareLaunchArgument(
         'camera',
@@ -50,32 +88,7 @@ def generate_launch_description():
         default_value='true',
         description="True for using gazebo tags, false otherwise"
     )
-
-    # -------------------------- Additional processes ------------------------
-    mappings = {
-        'camera':'a010',
-        'servo':'true',
-        'g_mov':'false',
-        'rasp':'rpi5',
-        'gazebo':'true'
-        }
-    robot_description_config = xacro.process_file(xacro_file, mappings=mappings)
-    robot_desc = robot_description_config.toprettyxml(indent='  ')
-    # Passing absolute path to the robot description due to Gazebo issues finding andino_description pkg path.
-    robot_desc = robot_desc.replace(
-        'package://orion_description/', f'file://{pkg_description}/'
-    )
-
-    # -------------------------- Nodes ----------------------------------------
-    rsp_node = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        name="robot_state_publisher",
-        output='screen',
-        parameters=[{
-            'robot_description': robot_desc,
-        }]
-    )
+    
 
     return LaunchDescription([
         camera_arg,
@@ -83,5 +96,5 @@ def generate_launch_description():
         use_g_mov_arg,
         rasp_arg,
         gazebo_arg,
-        rsp_node,
+        OpaqueFunction(function=generate_robot_description),
     ])
