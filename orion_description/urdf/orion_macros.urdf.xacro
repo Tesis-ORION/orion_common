@@ -10,7 +10,7 @@
 
     <!--///////////////////// 10 x 80 SPACERS MACROS ///////////////////////-->
 
-    <!-- single custom spacer 10 x 80 mm -->
+    <!-- ......................... Single custom spacer ................... -->
     <xacro:macro name="spacer_10x80" params="front side level x y z">
         <!-- Orientation properties -->
         <xacro:property name="muls" value="1"/>
@@ -57,15 +57,20 @@
                     izz="8e-07"/>
         </inertial>
         </link>
-
-        <!-- Joint definition -->
         <joint name="spacer_l${level}_${front}${side}_joint" type="fixed">
             <parent link="base_l${level}_s${front}"/>
             <child link="spacer_l${level}_${front}${side}"/>
             <origin xyz="${x*mulf} ${y*muls} ${z+0.0025}" rpy="0 0 0"/>
         </joint>
+        <xacro:if value="${gazebo}">
+        <gazebo reference="spacer_l${level}_${front}${side}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+    </xacro:if>
     </xacro:macro>
 
+    <!-- ....................... Double 10x80 Spacer .................... -->
     <xacro:macro name="double_spacer_10x80" params="front level x y z">
         <xacro:spacer_10x80 front="${front}" side="1" level="${level}" x="${x}"
             y="${y}" z="${z}"/>
@@ -74,13 +79,13 @@
     </xacro:macro>
     
     <!--//////////////////// BASES AND LEVELS MACROS ///////////////////////-->
+    
+    <!-- ................... Half base macro .............................. -->
     <xacro:macro name="half_base" params="level side parent x y z">
         <xacro:property name="mul" value="1"/>
         <xacro:if value="${side == 2}">
             <xacro:property name="mul" value="-1"/>
         </xacro:if>
-
-        <!-- Link -->
         <link name="base_l${level}_s${side}">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 ${mul*pi_2}"/>
@@ -105,15 +110,18 @@
                     izz="0.0002531854166666666"/>
         </inertial>
         </link>
-
-        <!-- Fixed Joint -->
         <joint name="base_l${level}_s${side}_joint" type="fixed">
             <parent link="${parent}"/>
             <child link="base_l${level}_s${side}"/>
             <origin xyz="${x + (mul*0.115/2)} ${y} ${z}" rpy="0 0 0"/>
         </joint>
+        <gazebo reference="base_l${level}_s${side}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
     </xacro:macro>
 
+    <!-- ...................... Complete base ............................ -->
     <xacro:macro name="com_base" params="level parent x y z">
         <xacro:half_base level="${level}" side="1" parent="base_link" x="${x}"
             y="${y}" z="${z}"/>
@@ -122,7 +130,7 @@
     </xacro:macro>
 
     <!--  /////////////////// MOTOR DC MACROS ///////////////////////////////-->
-    <!--  Motor DC Component Kit -->
+    <!-- ....................... Motor DC Kit .............................. -->
     <xacro:macro name="motor_dc" params="front side x y z">
         <!-- Properties -->
         <xacro:property name="mulf" value="1"/>
@@ -135,7 +143,7 @@
             <xacro:property name="muls" value="-1"/>
             <xacro:property name="orin" value="${pi}"/>
         </xacro:if>
-        <!-- Link motor mount definition-->
+        <!-- Motor mount definition-->
         <link name="motor_support_${front}${side}">
         <visual>
             <origin xyz="0 0 0" rpy="${pi} 0 ${orin}"/>
@@ -160,12 +168,16 @@
                     izz="1.7440374248620737e-06"/>
         </inertial>
         </link>
-        <!-- Joint motor mount definition-->
         <joint name="motor_support_${front}${side}_joint" type="fixed">
             <parent link="base_l0_s${front}"/>
             <child link="motor_support_${front}${side}"/>
             <origin xyz="${x*mulf} ${y*muls} ${z+0.0025}" rpy="0 0 0"/>
         </joint>
+        <gazebo reference="motor_support_${front}${side}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+
         <!-- Link motor dc definition-->
         <link name="motor_dc_${front}${side}">
         <visual>
@@ -191,13 +203,17 @@
                     izz="1.0309295151084287e-05"/>
         </inertial>
         </link>
-        <!-- Joint motor dc definition-->
         <joint name="motor_dc_${front}${side}_joint" type="fixed">
             <parent link="motor_support_${front}${side}"/>
             <child link="motor_dc_${front}${side}"/>
             <origin xyz="0 ${-0.05625*muls} 0" rpy="0 0 0"/>
         </joint>
-        <!-- Link coupling definition-->
+        <gazebo reference="motor_dc_${front}${side}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+
+        <!-- Coupling definition-->
         <link name="coupling_${front}${side}">
         <visual>
             <origin xyz="0 0 0" rpy="${orin} 0 ${pi_6*muls}"/>
@@ -222,14 +238,18 @@
                     izz="4.994889058430845e-07"/>
         </inertial>
         </link>
-        <!-- Joint coupling definition-->
         <joint name="coupling_${front}${side}_joint" type="continuous">
             <axis xyz="0.0 0.0 1.0"/>
             <parent link="motor_support_${front}${side}"/>
             <child link="coupling_${front}${side}"/>
             <origin xyz="0 ${(0.01120 + 0.000325)*muls} 0" rpy="${-pi_2*muls+orin} 0 0"/>
         </joint>
-        <!-- LInk Ring  definition-->
+        <gazebo reference="coupling_${front}${side}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+
+        <!-- Ring definition -->
         <link name="ring_${front}${side}">
         <visual>
             <origin xyz="0 0 0" rpy="0 ${-pi_2*muls} 0"/>
@@ -254,13 +274,17 @@
                     izz="2.9867490482579234e-06"/>
         </inertial>
         </link>
-        <!-- Joint ring definition-->
         <joint name="ring_${front}${side}_joint" type="fixed">
             <parent link="coupling_${front}${side}"/>
             <child link="ring_${front}${side}"/>
             <origin xyz="0 0 ${0.0068*muls}" rpy="0 0 0"/>
         </joint>
-        <!-- Link neumatic definition-->
+        <gazebo reference="ring_${front}${side}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+
+        <!-- Neumatic definition-->
         <link name="neumatic_${front}${side}">
         <visual>
             <origin xyz="0 0 0" rpy="0 ${pi_2*muls} 0"/>
@@ -285,18 +309,22 @@
                     izz="1.7872841935074492e-05"/>
         </inertial>
         </link>
-        <!-- Joint neumatic definition-->
         <joint name="neumatic_${front}${side}_joint" type="fixed">
             <parent link="ring_${front}${side}"/>
             <child link="neumatic_${front}${side}"/>
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </joint>
+        <gazebo reference="neumatic_${front}${side}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+
     </xacro:macro>
 
     <!--////////////////////////// CASTER WHEEL ////////////////////////////-->
-
+    <!-- ......................... Macro for caster ....................... -->
     <xacro:macro name="caster_wheel" params="parent front x y z">
-        <!-- Link caster base definition-->
+        <!-- Caster base definition-->
         <link name="caster_base_${front}">
         <visual>
             <origin xyz="0 0 0" rpy="${pi} 0 ${pi_2}"/>
@@ -321,13 +349,17 @@
                     izz="2.2314830712000656e-06"/>
         </inertial>
         </link>
-        <!-- Joint caster base definition-->
         <joint name="caster_base_${front}_joint" type="fixed">
             <parent link="${parent}"/>
             <child link="caster_base_${front}"/>
             <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
         </joint>
-        <!-- Link caster middle definition-->
+        <gazebo reference="caster_base_${front}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+        
+        <!-- Caster middle definition-->
         <link name="caster_middle_${front}">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 ${-pi_2}"/>
@@ -352,14 +384,18 @@
                     izz="1.644364587792215e-06"/>
         </inertial>
         </link>
-        <!-- Joint caster middle definition-->
         <joint name="caster_middle_${front}_joint" type="continuous">
             <axis xyz="0.0 0.0 1.0"/>
             <parent link="caster_base_${front}"/>
             <child link="caster_middle_${front}"/>
             <origin xyz="0 0 -0.002" rpy="${pi} 0 0"/>
         </joint>
-        <!-- Link caster wheel definition-->
+        <gazebo reference="caster_middle_${front}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+
+        <!-- Caster wheel definition-->
         <link name="caster_wheel_${front}">
         <visual>
             <origin xyz="0 0 0" rpy="${pi_2} 0 0"/>
@@ -384,17 +420,20 @@
                     izz="5.724272007549117e-07"/>
         </inertial>
         </link>
-        <!-- Joint caster wheel definition-->
         <joint name="caster_wheel_${front}_joint" type="continuous">
             <axis xyz="0.0 0.0 1.0"/>
             <parent link="caster_middle_${front}"/>
             <child link="caster_wheel_${front}"/>
-            <origin xyz="-0.0108 0 0.0185" rpy="${pi/2} 0 0"/>
+            <origin xyz="-0.0108 0 0.0185" rpy="${pi_2} 0 0"/>
         </joint>
+        <gazebo reference="caster_wheel_${front}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
     </xacro:macro>
 
     <!-- ///////////////////// BATTERIES MACROS ////////////////////////////-->
-    <!-- B18650 Macro-->
+    <!-- ...................... B18650 Macro .............................. -->
     <xacro:macro name="b18650" params="parent element num x y z">
         <xacro:property name="inv" value="1"/>
         <xacro:property name="rot" value="${pi_2}"/>
@@ -430,14 +469,18 @@
                     izz="2.5911945526729246e-07"/>
         </inertial>
         </link>
-
         <joint name="${element}_${num}_joint" type="fixed">
             <parent link="${parent}"/>
             <child link="${element}_${num}"/>
             <origin xyz="${x*inv} ${y} ${z}" rpy="0 0 0"/>
         </joint>
+        <gazebo reference="${element}_${num}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
     </xacro:macro>
 
+    <!-- ........................ Battery holder macro ........................ -->
     <xacro:macro name="bat_hold" params=" parent element num x y z">
         <!-- Link -->
         <link name="${element}_${num}">
@@ -464,12 +507,15 @@
                     izz="4.369602916666666e-06"/>
         </inertial>
         </link>
-
         <joint name="${element}_${num}_joint" type="fixed">
             <parent link="${parent}"/>
             <child link="${element}_${num}"/>
             <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
         </joint>
+        <gazebo reference="${element}_${num}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
     </xacro:macro>
 
     <xacro:macro name="stack_bat" params="parent num x y z">
@@ -518,12 +564,15 @@
                     izz="6.60025e-06"/>
         </inertial>
         </link>
-        <!-- Servo Mount Joint -->
         <joint name="servo_support_${side}_joint" type="fixed">
             <parent link="${parent}"/>
             <child link="servo_support_${side}"/>
             <origin xyz="${x} ${y*inv} ${z}" rpy="0 0 0"/>
         </joint>
+        <gazebo reference="servo_support_${side}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
         <!-- Servo Link -->
         <link name="servo_${side}">
         <visual>
@@ -549,13 +598,16 @@
                     izz="1.3568315958913178e-05"/>
         </inertial>
         </link>
-        <!-- Servo Joint -->
         <joint name="servo_${side}_joint" type="fixed">
             <parent link="servo_support_${side}"/>
             <child link="servo_${side}"/>
             <origin xyz="0 ${-0.0216*inv} -0.01375" rpy="0 0 0"/>
         </joint>
-        <!-- Servo Link -->
+        <gazebo reference="servo_${side}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+        <!-- Servo Conn -->
         <link name="servo_conn_${side}">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -580,7 +632,6 @@
                     izz="3.332367339025419e-07"/>
         </inertial>
         </link>
-        <!-- Servo Joint -->
         <joint name="servo_conn${side}_joint" type="revolute">
             <axis xyz="0.0 0.0 1.0"/>
             <parent link="servo_${side}"/>
@@ -589,6 +640,10 @@
             <limit lower="${-pi_2}" upper="${pi_2}" effort="1.0" velocity="1.0"/>
             <dynamics damping="0.1" friction="0.01"/>
         </joint>
+        <gazebo reference="servo_conn_${side}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
     </xacro:macro>
     <!--///////////////////// SPEAKERS MACROS ///////////////////////-->
 
@@ -605,7 +660,7 @@
             <xacro:property name="muls" value="-1"/>
             <xacro:property name="inv" value="0"/>
         </xacro:if>
-        <!-- Link speaker -->
+        <!-- Speaker support -->
         <link name="speaker_sup_${front}${side}">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 ${inv}"/>
@@ -630,13 +685,17 @@
                     izz="1.2926666666666665e-06"/>
         </inertial>
         </link>
-        <!-- Joint speaker support -->
         <joint name="speaker_sup_${front}${side}_joint" type="fixed">
             <parent link="${parent}"/>
             <child link="speaker_sup_${front}${side}"/>
             <origin xyz="${x*mulf} ${y*muls} ${z}" rpy="0 0 0"/>
         </joint>
-        <!-- Link speaker -->
+        <gazebo reference="speaker_sup_${front}${side}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+
+        <!-- Speaker -->
         <link name="speaker_${front}${side}">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 ${inv}"/>
@@ -661,12 +720,15 @@
                     izz="1.102e-05"/>
         </inertial>
         </link>
-        <!-- Joint speaker -->
         <joint name="speaker_${front}${side}_joint" type="fixed">
             <parent link="speaker_sup_${front}${side}"/>
             <child link="speaker_${front}${side}"/>
             <origin xyz="0 ${0.0285*muls/2} 0" rpy="0 0 0"/>
         </joint>
+        <gazebo reference="speaker_${front}${side}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
     </xacro:macro>
 
     <!-- ///////////////////////////// WALL MACROS //////////////////////// -->
@@ -676,7 +738,6 @@
         <xacro:if value="${side == 2}">
             <xacro:property name="muls" value="-1"/>
         </xacro:if>
-        <!-- Link -->
         <link name="wall_${id}_${level}_${side}">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
@@ -701,12 +762,15 @@
                     izz="0.000154357875"/>
         </inertial>
         </link>
-
         <joint name="wall_${id}_${level}_${side}_joint" type="fixed">
         <parent link="${parent}"/>
         <child link="wall_${id}_${level}_${side}"/>
         <origin xyz="${x} ${(y+0.00075)*muls} ${z}" rpy="0 0 0"/>
         </joint>
+        <gazebo reference="wall_${id}_${level}_${side}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
     </xacro:macro>
 
     <xacro:macro name="complete_front_wall" 
@@ -742,12 +806,15 @@
                     izz="0.00011733231249999999"/>
         </inertial>
         </link>
-
         <joint name="wall_${id}_${level}_${front}_joint" type="fixed">
         <parent link="${parent}"/>
         <child link="wall_${id}_${level}_${front}"/>
         <origin xyz="${(x+0.00075)*mulf} 0 ${z}" rpy="0 0 0"/>
         </joint>
+        <gazebo reference="wall_${id}_${level}_${front}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
     </xacro:macro>
 
     <!-- /////////////////////////// Generic Metric Spacer /////////////////-->
@@ -793,6 +860,11 @@
             <child link="${id}_${element}_${front}${side}"/>
             <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
         </joint>
+        <!-- Gazebo Spacer -->
+        <gazebo reference="${id}_${element}_${front}${side}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
     </xacro:macro>
 
     <!-- 2 symetric hex spacers by considering offset -->

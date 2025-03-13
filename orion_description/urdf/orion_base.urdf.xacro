@@ -55,12 +55,12 @@
         z="${-0.002 - 0.017}"/>
 
     <!-- //////////////// FIRST FLOOR COMPONENTS ///////////////////// -->
-    <!-- Hex spacers for Battery Support -->
+    <!-- .................. Hex spacers for stack .................... -->
     <xacro:x6xmetric_spacer id="m3x10" element="bathol" parent="base_l0_s1"
         offset_x="${0.0855/2}" offset_y="${0.127/2}" x="0.005" y="0" 
         z="0.0025"/>
     
-    <!-- Link Battery Support-->
+    <!-- ..................... Battery Platform ....................... -->
     <link name="bat_platform">
     <visual>
         <origin xyz="0 0 0" rpy="0 0 ${pi_2}"/>
@@ -85,25 +85,29 @@
                 izz="3.9091874999999996e-05"/>
     </inertial>
     </link>
-
-    <!-- Joint Battery Support -->
     <joint name="bat_platform_joint" type="fixed">
         <parent link="base_l0_s1"/>
         <child link="bat_platform"/>
         <origin xyz="0.005 0 0.0125" rpy="0 0 0"/>
     </joint>
+    <xacro:if value="${gazebo}">
+        <gazebo reference="bat_platform">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+    </xacro:if>
 
-    <!-- Battery Stacks -->
+    <!-- ....................... Battery Stacks ........................ -->
     <xacro:stack_bat parent="bat_platform" num="1" x="0" y="-0.023" z="0"/>
     <xacro:stack_bat parent="bat_platform" num="2" x="0" y="${0.023+0.02}" 
         z="0"/>
 
-    <!-- Hex spacers for Motor Driver-->
+    <!-- ............... Hex spacers for Motor Driver................... -->
     <xacro:x4xmetric_spacer id="m3x10" element="driver" parent="base_l0_s2"
         offset_x="${0.03702/2}" offset_y="${-0.0368/2}" x="-0.023453" 
         y="0.031351" z="0.0025"/>
 
-    <!-- Link Motor Driver-->
+    <!-- ......................... Motor Driver ........................ -->
     <link name="driver">
     <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -128,15 +132,19 @@
                 izz="8.062726989147962e-06"/>
     </inertial>
     </link>
-
-    <!-- Joint Motor Driver -->
     <joint name="driver_joint" type="fixed">
         <parent link="base_l0_s2"/>
         <child link="driver"/>
         <origin xyz="-0.023453 0.031351 0.0125" rpy="0 0 0"/>
     </joint>
+    <xacro:if value="${gazebo}">
+        <gazebo reference="driver">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+    </xacro:if>
 
-    <!-- Link Regulator Support-->
+    <!-- ........................ Regulator Support ......................... -->
     <link name="reg_support">
     <visual>
         <origin xyz="0 0 0" rpy="0 0 ${-pi_2}"/>
@@ -161,15 +169,19 @@
                 izz="3.872083333333333e-06"/>
     </inertial>
     </link>
-
-    <!-- Joint Regulator Support -->
     <joint name="reg_support_joint" type="fixed">
         <parent link="base_l0_s2"/>
         <child link="reg_support"/>
         <origin xyz="-0.036 -0.0275 0.0025" rpy="0 0 0"/>
     </joint>
+    <xacro:if value="${gazebo}">
+        <gazebo reference="reg_support">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+    </xacro:if>
 
-    <!-- Link Regulator Support-->
+    <!-- ....................... Regulator ............................... -->
     <link name="regulator">
     <visual>
         <origin xyz="0 0 0" rpy="${pi_2} 0 ${-pi_2}"/>
@@ -194,15 +206,19 @@
                 izz="1.1970833333333332e-05"/>
     </inertial>
     </link>
-
-    <!-- Joint Regulator -->
     <joint name="reg_joint" type="fixed">
         <parent link="reg_support"/>
         <child link="regulator"/>
         <origin xyz="-0.0025 0 ${0.06/2}" rpy="0 0 0"/>
     </joint>
+    <xacro:if value="${gazebo}">
+        <gazebo reference="regulator">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+    </xacro:if>
 
-    <!-- Link Switch -->
+    <!-- ......................... Switch ........................... -->
     <link name="switch">
     <visual>
         <origin xyz="0 0 0" rpy="${pi_2} 0 ${pi_2}"/>
@@ -227,14 +243,19 @@
                 izz="6.875354057755155e-06"/>
     </inertial>
     </link>
-
-    <!-- Joint Switch -->
     <joint name="switch_joint" type="fixed">
         <parent link="base_l1_s1"/>
         <child link="switch"/>
         <origin xyz="0.025 0.074 -0.015" rpy="0 0 0"/>
     </joint>
+    <xacro:if value="${gazebo}">
+        <gazebo reference="switch">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+    </xacro:if>
 
+    <!-- ......................... Walls definitions ...................... -->
     <xacro:complete_lateral_wall id="servo" parent="base_l0_s1" side="1" 
         x="${-0.115/2}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
         level="0"/>
@@ -250,10 +271,12 @@
         x="${0.115/2}" z="${0.082/2 + 0.0025/2}" level="0"/>
 
     <!-- ///////////////// SECOND FLOOR COMPONENTS /////////////////////// -->
+
+    <!-- ..................... Spacers for esp32 adp ..................... -->
     <xacro:x4xmetric_spacer id="m3x10" element="esp_adapter" parent="base_l1_s1"
         offset_x="${0.0577/2}" offset_y="${0.0607/2}" x="0" y="0" z="-0.01"/>
 
-    <!-- Link Esp32 Adapter -->
+    <!-- .......................... Esp32 Adapter ....................... -->
     <link name="esp32_adapter">
     <visual>
         <origin xyz="0 0 0" rpy="${pi} 0 0"/>
@@ -278,15 +301,19 @@
                 izz="2.0812499999999994e-05"/>
     </inertial>
     </link>
-
-    <!-- Joint Esp32 Adapter -->
     <joint name="esp32_adapter_joint" type="fixed">
         <parent link="base_l1_s1"/>
         <child link="esp32_adapter"/>
         <origin xyz="0 0 -0.01" rpy="0 0 0"/>
     </joint>
+    <xacro:if value="${gazebo}">
+        <gazebo reference="esp32_adapter">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+    </xacro:if>
 
-    <!-- Link Esp32 -->
+    <!-- ....................... ESP32 ....................................... -->
     <link name="esp32">
     <visual>
         <origin xyz="0 0 0" rpy="${pi} 0 ${-pi_2}"/>
@@ -311,18 +338,23 @@
                 izz="6.0040505352397235e-06"/>
     </inertial>
     </link>
-
-    <!-- Joint Esp32 -->
     <joint name="esp32_joint" type="fixed">
         <parent link="esp32_adapter"/>
         <child link="esp32"/>
         <origin xyz="0.002 0 -0.01" rpy="0 0 0"/>
     </joint>
+    <xacro:if value="${gazebo}">
+        <gazebo reference="esp32">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+    </xacro:if>
 
+    <!-- .......................... LIDAR spacers .......................... -->
     <xacro:x3xmetric_spacer id="m3x10" element="lidar" parent="base_l1_s1" 
         offset_x="0.0234" offset_y="${0.03132/2}" x="-0.0575" y="0" z="0.0025"/>
     
-    <!-- Link LD19 -->
+    <!-- ............................ LD19 ................................. -->
     <link name="ld19">
     <visual>
         <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
@@ -347,15 +379,19 @@
                 izz="1.981213921926534e-05"/>
     </inertial>
     </link>
-
-    <!-- Joint LD19 -->
     <joint name="ld19_joint" type="fixed">
         <parent link="base_l1_s1"/>
         <child link="ld19"/>
         <origin xyz="${-0.0575} -0.0035 0.0125" rpy="0 0 0"/>
     </joint>
+    <xacro:if value="${gazebo}">
+        <gazebo reference="ld19">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+    </xacro:if>
 
-    <!-- Link Lidar Serial -->
+    <!-- ......................... LIDAR serial .......................... -->
     <link name="lidar_serial">
     <visual>
         <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
@@ -380,14 +416,19 @@
                 izz="1.7341666666666667e-06"/>
     </inertial>
     </link>
-
-    <!-- Joint Lidar Serial -->
     <joint name="lidar_serial_joint" type="fixed">
         <parent link="base_l1_s2"/>
         <child link="lidar_serial"/>
         <origin xyz="-0.03 0.025 0.0025" rpy="0 0 0"/>
     </joint>
+    <xacro:if value="${gazebo}">
+        <gazebo reference="lidar_serial">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+    </xacro:if>
 
+    <!-- ....................... Servo Definitions ........................ -->
     <xacro:if value="${servo}">
         <xacro:servo_mounted parent="base_l1_s2" side="1" x="0.00275" y="0.0765"
             z="-0.026"/>
@@ -395,6 +436,7 @@
             z="-0.026"/>
     </xacro:if>
 
+    <!-- ......................... Wall definitions ........................ -->
     <xacro:complete_lateral_wall id="llidar" parent="base_l1_s1" side="1" 
         x="${-0.115/2}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
         level="1"/>
@@ -429,40 +471,44 @@
     </xacro:if>
 
     <xacro:if value="${rasp == 'rpi5'}">
-
-        <!-- Link Stereo Speaker  -->
+        <!-- ....................... Stereo Speaker ............................. -->
         <link name="stereo">
-        <visual>
-            <origin xyz="0 0 0" rpy="0 0 ${-pi_2}"/>
-            <geometry>
-            <mesh filename="package://orion_description/meshes/speaker_stereo.stl"
-                scale="0.001 0.001 0.001"/>
-            </geometry>
-            <material name="SoftBlack"/>
-        </visual>
-        <collision>
-            <origin xyz="0 0 0" rpy="0 0 ${-pi_2}"/>
-            <geometry>
-            <mesh filename="package://orion_description/meshes/speaker_stereo.stl" 
-                scale="0.001 0.001 0.001"/>
-            </geometry>
-        </collision>
-        <inertial>
-            <origin xyz="0 0 0" rpy="0 0 ${-pi_2}"/>
-            <mass value="0.0891"/>
-            <inertia ixx="2.2075679430880743e-05" ixy="0.0" ixz="0.0"
-                    iyy="6.239156111823016e-05" iyz="0.0"
-                    izz="5.4111982712956106e-05"/>
-        </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 ${-pi_2}"/>
+                <geometry>
+                <mesh filename="package://orion_description/meshes/speaker_stereo.stl"
+                    scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="SoftBlack"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 ${-pi_2}"/>
+                <geometry>
+                <mesh filename="package://orion_description/meshes/speaker_stereo.stl" 
+                    scale="0.001 0.001 0.001"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 ${-pi_2}"/>
+                <mass value="0.0891"/>
+                <inertia ixx="2.2075679430880743e-05" ixy="0.0" ixz="0.0"
+                        iyy="6.239156111823016e-05" iyz="0.0"
+                        izz="5.4111982712956106e-05"/>
+            </inertial>
         </link>
-
-        <!-- Joint Stereo Speaker -->
         <joint name="stereo_joint" type="fixed">
             <parent link="base_l2_s2"/>
             <child link="stereo"/>
             <origin xyz="-0.02 0 0.025" rpy="0 0 0"/>
         </joint>
+        <xacro:if value="${gazebo}">
+            <gazebo reference="stereo">
+                <mu1>1.0</mu1>
+                <mu2>1.0</mu2>
+            </gazebo>
+        </xacro:if>
 
+        <!-- ........................ Wall definitions ...................... -->
         <xacro:complete_lateral_wall id="curve" parent="base_l2_s1" side="1" 
             x="${-0.115/2}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
             level="2"/>
@@ -503,14 +549,19 @@
                 izz="4.278463267464035e-05"/>
     </inertial>
     </link>
-
-    <!-- Joint Rasberry Pi-->
     <joint name="${rasp}_joint" type="fixed">
         <parent link="base_l3_s2"/>
         <child link="${rasp}"/>
         <origin xyz="0 0.0335 0.0125" rpy="0 0 0"/>
     </joint>
+    <xacro:if value="${gazebo}">
+        <gazebo reference="${rasp}">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+    </xacro:if>
 
+    <!-- ......................... Walls definitions ............................ -->
     <xacro:complete_lateral_wall id="screen" parent="base_l3_s1" side="1" 
             x="${-0.115/2 + 0.005}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
             level="2"/>
@@ -522,7 +573,7 @@
     <xacro:complete_front_wall id="rpi" parent="base_l3_s2" front="2" 
         x="${0.115/2}" z="${0.082/2 + 0.0025/2}" level="3"/>
 
-    <!-- Link Screen Sup  -->
+    <!-- .......................... Screen Sup ................................ -->
     <link name="screen_sup">
     <visual>
         <origin xyz="0 0 0" rpy="0 0 ${pi_2}"/>
@@ -547,15 +598,19 @@
                 izz="0.0003057352799613475"/>
     </inertial>
     </link>
-
-    <!-- Joint Screen Sup -->
     <joint name="screen_sup_joint" type="fixed">
         <parent link="base_l3_s1"/>
         <child link="screen_sup"/>
         <origin xyz="0 0 0" rpy="0 0 0"/>
     </joint>
+    <xacro:if value="${gazebo}">
+        <gazebo reference="screen_sup">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+    </xacro:if>
 
-    <!-- Link Screen Sup  -->
+    <!-- ...................... Screen Sup ................................. -->
     <link name="screen">
     <visual>
         <origin xyz="0 0 0" rpy="${pi_4} 0 ${pi_2}"/>
@@ -580,12 +635,16 @@
                 izz="2.4489976137886056e-05"/>
     </inertial>
     </link>
-
-    <!-- Joint Screen Sup -->
     <joint name="screen_joint" type="fixed">
         <parent link="screen_sup"/>
         <child link="screen"/>
         <origin xyz="0.0275 0 0.0525" rpy="0 0 0"/>
     </joint>
+    <xacro:if value="${gazebo}">
+        <gazebo reference="screen">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+    </xacro:if>
 
 </robot>
