@@ -550,7 +550,7 @@
         <mu2>1.0</mu2>
     </gazebo>
 
-    <gazebo reference="wall_f_default_0_2">
+    <gazebo reference="wall_regulator_0_2">
         <mu1>1.0</mu1>
         <mu2>1.0</mu2>
     </gazebo>
