@@ -916,4 +916,24 @@
         <xacro:metric_spacer id="${id}" parent="${parent}" element="${element}" 
             front="r" side="" x="${x - offset_x}" y="0" z="${z}"/>
     </xacro:macro>
+
+    <!-- ///////////////////// Cameras macros ////////////////////// -->
+    <xacro:macro name="camera_sensor" params="x y z R P Y parent">
+        <!-- ................... Camera sensors links .................. -->
+        <link name="camera_link"/>
+
+        <joint name="camera_joint" type="fixed">
+            <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
+            <parent link="${parent}"/>
+            <child link="camera_link"/>
+        </joint>
+
+        <link name="camera_link_optical"/>
+
+        <joint name="optical_joint" type="fixed">
+            <origin xyz="0 0 0" rpy="${R} ${P} ${Y}"/>
+            <parent link="camera_link"/>
+            <child link="camera_link_optical"/>
+        </joint>
+    </xacro:macro>
 </robot>
