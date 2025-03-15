@@ -1,9 +1,15 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
     <gazebo>
+        <plugin
+			filename="gz-sim-sensors-system"
+			name="gz::sim::systems::Sensors">
+			<render_engine>ogre2</render_engine>
+        </plugin>
+
         <plugin filename="gz-sim-diff-drive-system" name="gz::sim::systems::DiffDrive">
-            <right_joint>coupling_11_joint</right_joint>
-            <left_joint>coupling_12_joint</left_joint>
+            <right_joint>coupling_12_joint</right_joint>
+            <left_joint>coupling_11_joint</left_joint>
             <wheel_separation>0.21</wheel_separation>
             <wheel_radius>0.03</wheel_radius>
             <max_linear_acceleration>0.1</max_linear_acceleration>
@@ -19,4 +25,32 @@
         </plugin>
     </gazebo>
 
+    <gazebo reference="laser_scan">
+		<sensor name='gpu_lidar' type='gpu_lidar'>
+          <topic>lidar</topic>
+          <update_rate>10</update_rate>
+          <lidar>
+            <scan>
+              <horizontal>
+                <samples>640</samples>
+                <resolution>1</resolution>
+                <min_angle>-1.396263</min_angle>
+                <max_angle>1.396263</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>16</samples>
+                <resolution>1</resolution>
+                <min_angle>-0.261799</min_angle>
+                <max_angle>0.261799</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>0.08</min>
+              <max>10.0</max>
+              <resolution>0.01</resolution>
+            </range>
+          </lidar>
+          <visualize>true</visualize>
+        </sensor>
+    </gazebo>
 </robot>

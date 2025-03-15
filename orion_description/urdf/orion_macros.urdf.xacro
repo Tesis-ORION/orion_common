@@ -322,6 +322,9 @@
     </xacro:macro>
 
     <!--////////////////////////// CASTER WHEEL ////////////////////////////-->
+    <!--xacro:property name="caster_type" value="continuous"/-->
+    <xacro:property name="caster_type" value="fixed"/>
+
     <!-- ......................... Macro for caster ....................... -->
     <xacro:macro name="caster_wheel" params="parent front x y z">
         <!-- Caster base definition-->
@@ -384,7 +387,7 @@
                     izz="1.644364587792215e-06"/>
         </inertial>
         </link>
-        <joint name="caster_middle_${front}_joint" type="continuous">
+        <joint name="caster_middle_${front}_joint" type="${caster_type}">
             <axis xyz="0.0 0.0 1.0"/>
             <parent link="caster_base_${front}"/>
             <child link="caster_middle_${front}"/>
@@ -420,15 +423,15 @@
                     izz="5.724272007549117e-07"/>
         </inertial>
         </link>
-        <joint name="caster_wheel_${front}_joint" type="continuous">
+        <joint name="caster_wheel_${front}_joint" type="${caster_type}">
             <axis xyz="0.0 0.0 1.0"/>
             <parent link="caster_middle_${front}"/>
             <child link="caster_wheel_${front}"/>
             <origin xyz="-0.0108 0 0.0185" rpy="${pi_2} 0 0"/>
         </joint>
         <gazebo reference="caster_wheel_${front}">
-            <mu1>1.0</mu1>
-            <mu2>1.0</mu2>
+            <mu1>0.001</mu1>
+            <mu2>0.001</mu2>
         </gazebo>
     </xacro:macro>
 

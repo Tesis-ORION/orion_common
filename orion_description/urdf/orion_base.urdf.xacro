@@ -386,10 +386,18 @@
     </joint>
     <xacro:if value="${gazebo}">
         <gazebo reference="ld19">
-            <mu1>1.0</mu1>
-            <mu2>1.0</mu2>
+            <selfCollide>false</selfCollide>
+            <mu1 value="0.05" />
+            <mu2 value="0.05" />
         </gazebo>
     </xacro:if>
+
+    <link name="laser_scan"/>
+    <joint name="laser_joint" type="fixed">
+        <parent link="ld19"/>
+        <child link="laser_scan"/>
+        <origin xyz="0 0 0.03" rpy="0 0 0"/>
+    </joint>
 
     <!-- ......................... LIDAR serial .......................... -->
     <link name="lidar_serial">
