@@ -40,7 +40,7 @@
             <mesh filename="package://orion_description/meshes/spacer_10x80.stl" 
                 scale="0.001 0.001 0.001"/>
             </geometry>
-            <material name="SoftBlack"/>
+            <material name="PLAWhite"/>
         </visual>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 ${gyro}"/>
@@ -93,7 +93,15 @@
             <mesh filename="package://orion_description/meshes/half_platform.stl"
                 scale="0.001 0.001 0.001"/>
             </geometry>
-            <material name="PureWhite"/>
+            <xacro:if value="${color == 'mdf'}">
+                <material name="MDF"/>
+            </xacro:if>
+            <xacro:if value="${color == 'transparent'}">
+                <material name="TransparentBlack"/>
+            </xacro:if>
+            <xacro:if value="${color == 'pla'}">
+                <material name="PLAWhite"/>
+            </xacro:if>
         </visual>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 ${mul*pi_2}"/>
@@ -550,7 +558,7 @@
             <mesh filename="package://orion_description/meshes/servo_sup.stl" 
                 scale="0.001 0.001 0.001"/>
             </geometry>
-            <material name="SoftBlack"/>
+            <material name="PLAWhite"/>
         </visual>
         <collision>
             <origin xyz="0 0 0" rpy="${-pi_2} 0 ${flex}"/>
@@ -671,7 +679,7 @@
             <mesh filename="package://orion_description/meshes/speaker_sup.stl" 
                 scale="0.001 0.001 0.001"/>
             </geometry>
-            <material name="SoftBlack"/>
+            <material name="PLAWhite"/>
         </visual>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 ${inv}"/>
@@ -748,7 +756,15 @@
             <mesh filename="package://orion_description/meshes/wall_${id}.stl" 
                 scale="0.001 0.001 0.001"/>
             </geometry>
-            <material name="TransparentBlack"/>
+            <xacro:if value="${color == 'mdf'}">
+                <material name="MDF"/>
+            </xacro:if>
+            <xacro:if value="${color == 'transparent'}">
+                <material name="TransparentBlack"/>
+            </xacro:if>
+            <xacro:if value="${color == 'pla'}">
+                <material name="PLAWhite"/>
+            </xacro:if>
         </visual>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
@@ -792,7 +808,15 @@
             <mesh filename="package://orion_description/meshes/wall_${id}.stl" 
                 scale="0.001 0.001 0.001"/>
             </geometry>
-            <material name="TransparentBlack"/>
+            <xacro:if value="${color == 'mdf'}">
+                <material name="MDF"/>
+            </xacro:if>
+            <xacro:if value="${color == 'transparent'}">
+                <material name="TransparentBlack"/>
+            </xacro:if>
+            <xacro:if value="${color == 'pla'}">
+                <material name="PLAWhite"/>
+            </xacro:if>
         </visual>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 ${pi_2 + orz}"/>

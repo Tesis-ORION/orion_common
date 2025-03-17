@@ -68,7 +68,15 @@
         <mesh filename="package://orion_description/meshes/bathold_support.stl"
             scale="0.001 0.001 0.001"/>
         </geometry>
-        <material name="PureWhite"/>
+        <xacro:if value="${color == 'mdf'}">
+                <material name="MDF"/>
+            </xacro:if>
+            <xacro:if value="${color == 'transparent'}">
+                <material name="TransparentBlack"/>
+            </xacro:if>
+            <xacro:if value="${color == 'pla'}">
+                <material name="PLAWhite"/>
+            </xacro:if>
     </visual>
     <collision>
         <origin xyz="0 0 0" rpy="0 0 ${pi_2}"/>
@@ -152,7 +160,7 @@
         <mesh filename="package://orion_description/meshes/regulator_sup.stl"
             scale="0.001 0.001 0.001"/>
         </geometry>
-        <material name="SoftBlack"/>
+        <material name="PLAWhite"/>
     </visual>
     <collision>
         <origin xyz="0 0 0" rpy="0 0 ${-pi_2}"/>
@@ -589,7 +597,15 @@
         <mesh filename="package://orion_description/meshes/screen_sup.stl"
             scale="0.001 0.001 0.001"/>
         </geometry>
-        <material name="TransparentBlack"/>
+        <xacro:if value="${color == 'mdf'}">
+                <material name="MDF"/>
+            </xacro:if>
+            <xacro:if value="${color == 'transparent'}">
+                <material name="TransparentBlack"/>
+            </xacro:if>
+            <xacro:if value="${color == 'pla'}">
+                <material name="PLAWhite"/>
+            </xacro:if>
     </visual>
     <collision>
         <origin xyz="0 0 0" rpy="0 0 ${pi_2}"/>
@@ -618,7 +634,7 @@
         </gazebo>
     </xacro:if>
 
-    <!-- ...................... Screen Sup ................................. -->
+    <!-- ...................... Screen ................................. -->
     <link name="screen">
     <visual>
         <origin xyz="0 0 0" rpy="${pi_4} 0 ${pi_2}"/>

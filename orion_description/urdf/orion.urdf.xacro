@@ -7,6 +7,9 @@
     <xacro:property name="rasp" default="$(arg rasp)"/>
     <xacro:property name="gazebo" default="$(arg gazebo)"/>
 
+    <!-- For colors consider mdf, transparent or pla -->
+    <xacro:property name="color" default="mdf"/>
+
     <!-- Include other files -->
     <xacro:include filename="$(find orion_description)/urdf/orion_materials.urdf.xacro"/>
     <xacro:include filename="$(find orion_description)/urdf/orion_macros.urdf.xacro"/>

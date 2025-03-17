@@ -16,61 +16,19 @@
 
     <!-- ////////////////////// JOINT PLUGINS /////////////////////////// -->
     <gazebo>
-        <!-- ...................... Differential Controller ..............-->
-        <plugin filename="gz-sim-diff-drive-system" 
-            name="gz::sim::systems::DiffDrive">
-            <right_joint>coupling_12_joint</right_joint>
-            <left_joint>coupling_11_joint</left_joint>
-            <wheel_separation>0.21</wheel_separation>
-            <wheel_radius>0.03</wheel_radius>
-            <max_linear_acceleration>0.1</max_linear_acceleration>
-            <odom_publish_frequency>100</odom_publish_frequency>
-            <topic>cmd_vel</topic>
-            <odom_topic>odom</odom_topic>
-        </plugin>
-
-        <plugin
-            filename="gz-sim-joint-position-controller-system"
-            name="gz::sim::systems::JointPositionController">
-            <joint_name>servo_conn1_joint</joint_name>
-            <topic>servo_conn1</topic>
-            <p_gain>1</p_gain>
-            <i_gain>0.1</i_gain>
-            <d_gain>0.01</d_gain>
-            <i_max>1</i_max>
-            <i_min>-1</i_min>
-            <cmd_max>1000</cmd_max>
-            <cmd_min>-1000</cmd_min>
-        </plugin>
-
-        <plugin
-            filename="gz-sim-joint-position-controller-system"
-            name="gz::sim::systems::JointPositionController">
-            <joint_name>servo_conn2_joint</joint_name>
-            <topic>servo_conn2</topic>
-            <p_gain>1</p_gain>
-            <i_gain>0.1</i_gain>
-            <d_gain>0.01</d_gain>
-            <i_max>1</i_max>
-            <i_min>-1</i_min>
-            <cmd_max>1000</cmd_max>
-            <cmd_min>-1000</cmd_min>
-        </plugin>
-
         <!-- ...................... Joint state publisher ................ -->
         <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
             <topic>joint_states</topic>
             <joint_name>coupling_11_joint</joint_name>
             <joint_name>coupling_12_joint</joint_name>
-            <xacro:if value="${servo}">
-                <joint_name>servo_conn1_joint</joint_name>
-                <joint_name>servo_conn2_joint</joint_name>
-            </xacro:if>
-            <xacro:if value="${camera == 'a010' and g_mov}">
-                <joint_name>g_mov_servo_conn_joint</joint_name>
-            </xacro:if>
+        <xacro:if value="${servo}">
+            <joint_name>servo_conn1_joint</joint_name>
+            <joint_name>servo_conn2_joint</joint_name>
+        </xacro:if>
+        <xacro:if value="${camera == 'a010' and g_mov}">
+            <joint_name>g_mov_servo_conn_joint</joint_name>
+        </xacro:if>
         </plugin>
-
 
     </gazebo>
 
