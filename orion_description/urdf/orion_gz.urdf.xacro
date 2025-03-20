@@ -14,13 +14,60 @@
         </plugin>
     </gazebo>
 
+    <!-- ......................... Scene Broadcaster .................... -->
+    <gazebo>
+        <plugin
+            filename="gz-sim-scene-broadcaster-system"
+            name="gz::sim::systems::SceneBroadcaster">
+        </plugin>
+    </gazebo>
+
     <!-- ////////////////////// JOINT PLUGINS /////////////////////////// -->
     <gazebo>
+        <!-- ...................... Diff Drive Controller ............... -->
+        <plugin
+            filename="gz-sim-diff-drive-system"
+            name="gz::sim::systems::DiffDrive">
+            <left_joint>coupling_11_joint</left_joint>
+            <right_joint>coupling_12_joint</right_joint>
+            <wheel_separation>0.1597</wheel_separation>
+            <wheel_radius>${0.0335/2}</wheel_radius>
+            <odom_publish_frequency>1</odom_publish_frequency>
+            <max_linear_acceleration>1</max_linear_acceleration>
+            <min_linear_acceleration>-1</min_linear_acceleration>
+            <max_angular_acceleration>2</max_angular_acceleration>
+            <min_angular_acceleration>-2</min_angular_acceleration>
+            <max_linear_velocity>2.791666667</max_linear_velocity>
+            <min_linear_velocity>-2.791666667</min_linear_velocity>
+            <max_angular_velocity>2.791666667</max_angular_velocity>
+            <min_angular_velocity>-2.791666667</min_angular_velocity>
+            <odom_topic>/unused/diff_drive_odometry</odom_topic>
+            <tf_topic>/unused/diff_drive_tf</tf_topic>
+            <odom_publish_frequency>1</odom_publish_frequency>
+            <frame_id>odom_diff_drive</frame_id>
+            <child_frame_id>base_link</child_frame_id>
+
+        <!-- ..................... Odometry Publisher ................. -->
+        <gazebo>
+            <plugin
+            filename="ignition-gazebo-odometry-publisher-system"
+            name="gz::sim::systems::OdometryPublisher">
+            <odom_publish_frequency>20</odom_publish_frequency>
+            <robot_base_frame>base_link</robot_base_frame>
+            <odom_frame>odom</odom_frame>
+            </plugin>
+        </gazebo>
+
+        </plugin>
+
+
         <!-- ...................... Joint state publisher ................ -->
         <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
             <topic>joint_states</topic>
             <joint_name>coupling_11_joint</joint_name>
             <joint_name>coupling_12_joint</joint_name>
+            <joint_name>caster_middle_2_joint</joint_name>
+            <joint_name>caster_wheel_2_joint</joint_name>
         <xacro:if value="${servo}">
             <joint_name>servo_conn1_joint</joint_name>
             <joint_name>servo_conn2_joint</joint_name>
@@ -36,9 +83,8 @@
     <!-- .......................... LIDARs ............................. -->
     <gazebo reference="laser_scan">
 		<sensor name='gpu_lidar' type='gpu_lidar'>
-            <topic>lidar</topic>
             <update_rate>10</update_rate>
-            <!-- Inof based on: -->
+            <!-- Info based on: -->
             <!-- https://www.ldrobot.com/images/2023/05/23/LDROBOT_LD19_Datasheet_EN_v2.6_Q1JXIRVq.pdf -->
             <ray>
                 <scan>
@@ -108,7 +154,6 @@
                 <always_on>1</always_on>
                 <update_rate>30</update_rate>
                 <visualize>true</visualize>
-                <topic>rgbd_camera</topic>
             </sensor>
         </gazebo>
     </xacro:if>
@@ -149,7 +194,6 @@
                 <always_on>1</always_on>
                 <update_rate>30</update_rate>
                 <visualize>true</visualize>
-                <topic>rgbd_camera</topic>
             </sensor>
         </gazebo>
     </xacro:if>
@@ -190,7 +234,6 @@
                 <always_on>1</always_on>
                 <update_rate>20</update_rate>
                 <visualize>true</visualize>
-                <topic>depth_camera</topic>
             </sensor>
         </gazebo>
     </xacro:if>

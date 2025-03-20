@@ -524,6 +524,16 @@
             </gazebo>
         </xacro:if>
 
+        <!-- ........................ Touch sensors ........................ -->
+        <xacro:touch_sensor x="0.005" y="0.1075" z="0.0825" upper="0" side="1" 
+            parent="base_l2_s2" prefix="2"/>
+        <xacro:touch_sensor x="0.005" y="-0.1075" z="0.0825" upper="0" side="2" 
+            parent="base_l2_s2" prefix="2"/>
+        <xacro:touch_sensor x="0.0425" y="0.0335" z="0.0025" upper="1" side="1" 
+            parent="base_l4_s2" prefix="4"/>
+        <xacro:touch_sensor x="0.0425" y="-0.0335" z="0.0025" upper="1" side="2" 
+            parent="base_l4_s2" prefix="4"/>
+
         <!-- ........................ Wall definitions ...................... -->
         <xacro:complete_lateral_wall id="curve" parent="base_l2_s1" side="1" 
             x="${-0.115/2}" y="${0.21/2 + 0.0005}" z="${0.082/2 + 0.0025/2}"
