@@ -986,6 +986,12 @@
             <parent link="${parent}"/>
             <child link="touch_sensor_${prefix}${side}"/>
         </joint>
+        <xacro:if value="${gazebo}">
+            <gazebo reference="touch_sensor_${prefix}${side}">
+                <mu1>1.0</mu1>
+                <mu2>1.0</mu2>
+            </gazebo>
+        </xacro:if>
 
         <xacro:property name="rotR" value="0"/>
         <xacro:property name="rotP" value="0"/>
@@ -1034,6 +1040,12 @@
             <parent link="touch_sensor_${prefix}${side}"/>
             <child link="touch_sup_${prefix}${side}"/>
         </joint>
+        <xacro:if value="${gazebo}">
+            <gazebo reference="touch_sup_${prefix}${side}">
+                <mu1>1.0</mu1>
+                <mu2>1.0</mu2>
+            </gazebo>
+        </xacro:if>
     </xacro:macro>
 
     <!-- /////////////////////// Cameras macros //////////////////////// -->

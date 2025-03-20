@@ -106,9 +106,9 @@
     </xacro:if>
 
     <!-- ....................... Battery Stacks ........................ -->
-    <xacro:stack_bat parent="bat_platform" num="1" x="0" y="-0.023" z="0"/>
+    <xacro:stack_bat parent="bat_platform" num="1" x="0" y="-0.023" z="0.0025"/>
     <xacro:stack_bat parent="bat_platform" num="2" x="0" y="${0.023+0.02}" 
-        z="0"/>
+        z="0.0025"/>
 
     <!-- ............... Hex spacers for Motor Driver................... -->
     <xacro:x4xmetric_spacer id="m3x10" element="driver" parent="base_l0_s2"
