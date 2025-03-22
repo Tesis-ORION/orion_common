@@ -37,14 +37,14 @@
             <!-- Gazebo Spacer -->
             <xacro:if value="${gazebo}">
                 <gazebo reference="simple_arm_${side}">
-                    <mu1>1.0</mu1>
-                    <mu2>1.0</mu2>
+                    <mu1>0.0005</mu1>
+                    <mu2>0.0005</mu2>
                 </gazebo>
             </xacro:if>
         </xacro:macro>
 
-        <xacro:simple_arm x="0" y="0" z="0.003" parent="servo_conn_1" side="1"/>
-        <xacro:simple_arm x="0" y="0" z="0.003" parent="servo_conn_2" side="2"/>
+        <xacro:simple_arm x="0" y="0" z="0.004" parent="servo_conn_1" side="1"/>
+        <xacro:simple_arm x="0" y="0" z="0.004" parent="servo_conn_2" side="2"/>
 
     </xacro:if>
 </robot>

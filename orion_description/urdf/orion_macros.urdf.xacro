@@ -615,8 +615,8 @@
             <origin xyz="0 ${-0.0216*inv} -0.01375" rpy="0 0 0"/>
         </joint>
         <gazebo reference="servo_${side}">
-            <mu1>1.0</mu1>
-            <mu2>1.0</mu2>
+            <mu1>0.05</mu1>
+            <mu2>0.05</mu2>
         </gazebo>
         <!-- Servo Conn -->
         <link name="servo_conn_${side}">
@@ -647,13 +647,13 @@
             <axis xyz="0.0 0.0 1.0"/>
             <parent link="servo_${side}"/>
             <child link="servo_conn_${side}"/>
-            <origin xyz="0.0115 ${0.0431*inv} 0" rpy="${-pi_2*inv} 0 0"/>
-            <limit lower="${-pi_2}" upper="${pi_2}" effort="1.0" velocity="1.0"/>
-            <dynamics damping="0.1" friction="0.01"/>
+            <origin xyz="0.01 ${0.0431*inv} 0" rpy="${-pi_2*inv} 0 0"/>
+            <limit lower="${-pi_2}" upper="${pi_2}" effort="0.92" velocity="6.0"/>
+            <dynamics damping="0.05" friction="0.002"/>
         </joint>
         <gazebo reference="servo_conn_${side}">
-            <mu1>1.0</mu1>
-            <mu2>1.0</mu2>
+            <mu1>0.05</mu1>
+            <mu2>0.05</mu2>
         </gazebo>
     </xacro:macro>
     <!--///////////////////// SPEAKERS MACROS ///////////////////////-->
@@ -787,8 +787,8 @@
         <origin xyz="${x} ${(y+0.00075)*muls} ${z}" rpy="0 0 0"/>
         </joint>
         <gazebo reference="wall_${id}_${level}_${side}">
-            <mu1>1.0</mu1>
-            <mu2>1.0</mu2>
+            <mu1>0.05</mu1>
+            <mu2>0.05</mu2>
         </gazebo>
     </xacro:macro>
 

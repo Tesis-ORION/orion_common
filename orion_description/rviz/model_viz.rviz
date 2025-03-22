@@ -104,6 +104,10 @@ Visualization Manager:
           Value: true
         bathold_2:
           Value: true
+        camera_link:
+          Value: true
+        camera_link_optical:
+          Value: true
         caster_base_2:
           Value: true
         caster_middle_2:
@@ -119,6 +123,14 @@ Visualization Manager:
         esp32:
           Value: true
         esp32_adapter:
+          Value: true
+        g_mov_cam_link:
+          Value: true
+        g_mov_cam_link_optical:
+          Value: true
+        imu:
+          Value: true
+        laser_scan:
           Value: true
         ld19:
           Value: true
@@ -218,7 +230,7 @@ Visualization Manager:
           Value: true
         ring_12:
           Value: true
-        rpi4:
+        rpi5:
           Value: true
         screen:
           Value: true
@@ -241,6 +253,10 @@ Visualization Manager:
         servo_support_1:
           Value: true
         servo_support_2:
+          Value: true
+        simple_arm_1:
+          Value: true
+        simple_arm_2:
           Value: true
         spacer_l0_11:
           Value: true
@@ -274,25 +290,31 @@ Visualization Manager:
           Value: true
         spacer_l3_22:
           Value: true
-        speaker_21:
-          Value: true
-        speaker_22:
-          Value: true
-        speaker_sup_21:
-          Value: true
-        speaker_sup_22:
+        stereo:
           Value: true
         switch:
           Value: true
+        touch_sensor_21:
+          Value: true
+        touch_sensor_22:
+          Value: true
+        touch_sensor_41:
+          Value: true
+        touch_sensor_42:
+          Value: true
+        touch_sup_21:
+          Value: true
+        touch_sup_22:
+          Value: true
+        touch_sup_41:
+          Value: true
+        touch_sup_42:
+          Value: true
         wall_batteries_0_1:
           Value: true
-        wall_curve_speaker_2_1:
+        wall_curve_2_1:
           Value: true
-        wall_curve_speaker_2_2:
-          Value: true
-        wall_fdefault_0_2:
-          Value: true
-        wall_fdefault_2_2:
+        wall_curve_2_2:
           Value: true
         wall_flidar_1_1:
           Value: true
@@ -301,6 +323,8 @@ Visualization Manager:
         wall_llidar_1_1:
           Value: true
         wall_llidar_1_2:
+          Value: true
+        wall_regulator_0_2:
           Value: true
         wall_rpi_3_2:
           Value: true
@@ -311,6 +335,8 @@ Visualization Manager:
         wall_servo_0_1:
           Value: true
         wall_servo_0_2:
+          Value: true
+        wall_stereo_2_2:
           Value: true
       Marker Scale: 0.07500000298023224
       Name: TF
@@ -401,14 +427,15 @@ Visualization Manager:
               {}
             spacer_l0_22:
               {}
-            wall_fdefault_0_2:
+            wall_regulator_0_2:
               {}
           base_l1_s1:
             esp32_adapter:
               esp32:
                 {}
             ld19:
-              {}
+              laser_scan:
+                {}
             m3x10_esp_adapter_fl:
               {}
             m3x10_esp_adapter_fr:
@@ -441,11 +468,13 @@ Visualization Manager:
             servo_support_1:
               servo_1:
                 servo_conn_1:
-                  {}
+                  simple_arm_1:
+                    {}
             servo_support_2:
               servo_2:
                 servo_conn_2:
-                  {}
+                  simple_arm_2:
+                    {}
             spacer_l1_21:
               {}
             spacer_l1_22:
@@ -455,7 +484,8 @@ Visualization Manager:
           base_l2_s1:
             accel_base:
               accel:
-                {}
+                imu:
+                  {}
               m3x10_accel_base_fl:
                 {}
               m3x10_accel_base_fr:
@@ -469,7 +499,9 @@ Visualization Manager:
                   servo_conn:
                     picam_sup:
                       picam:
-                        {}
+                        g_mov_cam_link:
+                          g_mov_cam_link_optical:
+                            {}
             m3x10_base_l2_s1_fl:
               {}
             m3x10_base_l2_s1_fr:
@@ -480,27 +512,31 @@ Visualization Manager:
               {}
             maixsense_sup:
               maixsense:
-                {}
+                camera_link:
+                  camera_link_optical:
+                    {}
             spacer_l2_11:
               {}
             spacer_l2_12:
               {}
-            wall_curve_speaker_2_1:
+            wall_curve_2_1:
               {}
-            wall_curve_speaker_2_2:
+            wall_curve_2_2:
               {}
           base_l2_s2:
             spacer_l2_21:
               {}
             spacer_l2_22:
               {}
-            speaker_sup_21:
-              speaker_21:
+            stereo:
+              {}
+            touch_sensor_21:
+              touch_sup_21:
                 {}
-            speaker_sup_22:
-              speaker_22:
+            touch_sensor_22:
+              touch_sup_22:
                 {}
-            wall_fdefault_2_2:
+            wall_stereo_2_2:
               {}
           base_l3_s1:
             screen_sup:
@@ -523,7 +559,7 @@ Visualization Manager:
               {}
             m3x10_rpi5_rr:
               {}
-            rpi4:
+            rpi5:
               {}
             spacer_l3_21:
               {}
@@ -532,7 +568,12 @@ Visualization Manager:
             wall_rpi_3_2:
               {}
           base_l4_s2:
-            {}
+            touch_sensor_41:
+              touch_sup_41:
+                {}
+            touch_sensor_42:
+              touch_sup_42:
+                {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -657,6 +698,14 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        camera_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        camera_link_optical:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         caster_base_2:
           Alpha: 1
           Show Axes: false
@@ -697,6 +746,22 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        g_mov_cam_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        g_mov_cam_link_optical:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        imu:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        laser_scan:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         ld19:
           Alpha: 1
           Show Axes: false
@@ -942,7 +1007,7 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        rpi4:
+        rpi5:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -998,6 +1063,16 @@ Visualization Manager:
           Show Trail: false
           Value: true
         servo_support_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        simple_arm_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        simple_arm_2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -1082,22 +1157,7 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        speaker_21:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        speaker_22:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        speaker_sup_21:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        speaker_sup_22:
+        stereo:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -1107,27 +1167,57 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        touch_sensor_21:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        touch_sensor_22:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        touch_sensor_41:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        touch_sensor_42:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        touch_sup_21:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        touch_sup_22:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        touch_sup_41:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        touch_sup_42:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         wall_batteries_0_1:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        wall_curve_speaker_2_1:
+        wall_curve_2_1:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        wall_curve_speaker_2_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        wall_fdefault_0_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        wall_fdefault_2_2:
+        wall_curve_2_2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -1148,6 +1238,11 @@ Visualization Manager:
           Show Trail: false
           Value: true
         wall_llidar_1_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        wall_regulator_0_2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -1173,6 +1268,11 @@ Visualization Manager:
           Show Trail: false
           Value: true
         wall_servo_0_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        wall_stereo_2_2:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -1231,25 +1331,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 0.6749631762504578
+      Distance: 0.03275217115879059
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.033545833081007004
-        Y: -0.005628630053251982
-        Z: 0.13041238486766815
+        X: -0.049830444157123566
+        Y: 0.09404747933149338
+        Z: 0.03546812757849693
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.3753979206085205
+      Pitch: -1.4997963905334473
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.6304264068603516
+      Yaw: 1.5485566854476929
     Saved: ~
 Window Geometry:
   Displays:
