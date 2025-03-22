@@ -218,6 +218,10 @@ Visualization Manager:
           Value: true
         neumatic_12:
           Value: true
+        orion/base_link:
+          Value: true
+        orion/odom:
+          Value: true
         picam:
           Value: true
         picam_sup:
@@ -1331,25 +1335,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 0.03275217115879059
+      Distance: 0.8225036263465881
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.049830444157123566
-        Y: 0.09404747933149338
-        Z: 0.03546812757849693
+        X: -0.04456503689289093
+        Y: 0.0193772055208683
+        Z: 0.10192158073186874
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: -1.4997963905334473
+      Pitch: 0.5552033185958862
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.5485566854476929
+      Yaw: 0.6535571813583374
     Saved: ~
 Window Geometry:
   Displays:
