@@ -1,87 +1,73 @@
+# ///////////////////////////// REQUIRED LIBRARIES //////////////////////////////
+# .............................. Python libraries ...............................
 import os
 
+# ............................ Launch dependencies .............................
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import Command, LaunchConfiguration
 from launch_ros.actions import Node
 
+# //////////////////////////// GLOBAL DEFINITIONS //////////////////////////////
+ARGS = [
+    DeclareLaunchArgument('camera', default_value='a010',
+        description="Choose a cam for the robot (os30a, astra_s, a010)"),
+    DeclareLaunchArgument('servo',default_value='true',
+        description="Boolean to include or not the servos"),
+    DeclareLaunchArgument('g_mov',default_value='true',
+        description="When using camera a010, whether to include or not G Mov"),
+    DeclareLaunchArgument('rasp', default_value='rpi5',
+        description="Select 4 for Raspberry Pi 4B, or 5 for Raspberry Pi 5"),
+]
 
+# //////////////////////////// LAUNCH DEFINITION //////////////////////////////
 def generate_launch_description():
+    # Generate launch description
+    ld = LaunchDescription(ARGS)
+    
     # Define paths
     pkg_description = get_package_share_directory('orion_description')
     xacro_file = os.path.join(pkg_description, 'urdf', 'orion.urdf.xacro')
-
-    # --------------------------- Configurations -----------------------------
-    camera = LaunchConfiguration('camera')
-    servo = LaunchConfiguration('servo')
-    g_mov = LaunchConfiguration('g_mov')
-    rasp = LaunchConfiguration('rasp')
-
-    # -------------------------- Launch arguments -----------------------------
-    camera_arg = DeclareLaunchArgument(
-        'camera',
-        default_value='a010',
-        description="Choose a cam for the robot (os30a, astra_s, a010)"
-    )
-
-    use_servo_arg = DeclareLaunchArgument(
-        'servo',
-        default_value='true',
-        description="Boolean to include or not the servos"
-    )
-
-    use_g_mov_arg = DeclareLaunchArgument(
-        'g_mov',
-        default_value='true',
-        description="When using camera a010, whether to include or not G Mov"
-    )
-    
-    rasp_arg = DeclareLaunchArgument(
-        'rasp',
-        default_value='rpi5',
-        description="Select 4 for Raspberry Pi 4B, or 5 for Raspberry Pi 5"
-    )
-
-
-    # -------------------------- Nodes ----------------------------------------
-    rsp_node = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        name="robot_state_publisher",
-        output='screen',
-        parameters=[{
-            'robot_description': Command([
-                'xacro ', xacro_file, 
-                ' camera:=', camera,
-                ' servo:=', servo,
-                ' g_mov:=', g_mov,
-                ' rasp:=', rasp,
-                ' gazebo:=false',
-            ])
-        }]
-    )
-
-    jsp_gui_node = Node(
-        package='joint_state_publisher_gui',
-        executable='joint_state_publisher_gui',
-        name='joint_state_publisher_gui'
-    )
-
     rviz_config_file = os.path.join(pkg_description, 'rviz', 'model_viz.rviz')
-    rviz_node = Node(
-        package='rviz2',
-        executable='rviz2',
-        arguments=['-d', rviz_config_file],
-        output='screen'
+
+    # Node for robot state publisher
+    ld.add_action(
+        Node(
+            package='robot_state_publisher',
+            executable='robot_state_publisher',
+            name="robot_state_publisher",
+            output='screen',
+            parameters=[{
+                'robot_description': Command([
+                    'xacro ', xacro_file, 
+                    ' camera:=', LaunchConfiguration('camera'),
+                    ' servo:=', LaunchConfiguration('servo'),
+                    ' g_mov:=', LaunchConfiguration('g_mov'),
+                    ' rasp:=', LaunchConfiguration('rasp'),
+                    ' gazebo:=false',
+                ])
+            }]
+        )
     )
 
-    return LaunchDescription([
-        camera_arg,
-        use_servo_arg,
-        use_g_mov_arg,
-        rasp_arg,
-        rsp_node,
-        jsp_gui_node,
-        rviz_node
-    ])
+    # Node for joint state publisher gui
+    ld.add_action(
+        Node(
+            package='joint_state_publisher_gui',
+            executable='joint_state_publisher_gui',
+            name='joint_state_publisher_gui'
+        )
+    )
+
+    # Node for RVIZ2
+    ld.add_action(
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            arguments=['-d', rviz_config_file],
+            output='screen'
+        )
+    )
+
+    return ld
