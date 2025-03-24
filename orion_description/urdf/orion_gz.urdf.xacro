@@ -14,14 +14,6 @@
         </plugin>
     </gazebo>
 
-    <!-- ......................... Scene Broadcaster .................... -->
-    <gazebo>
-        <plugin
-            filename="gz-sim-scene-broadcaster-system"
-            name="gz::sim::systems::SceneBroadcaster">
-        </plugin>
-    </gazebo>
-
     <!-- ////////////////////// JOINT PLUGINS /////////////////////////// -->
     <!-- ...................... Diff Drive Controller ............... -->
     <gazebo>
@@ -57,6 +49,7 @@
             <odom_publish_frequency>20</odom_publish_frequency>
             <robot_base_frame>base_link</robot_base_frame>
             <odom_frame>odom</odom_frame>
+            <dimensions>2</dimensions>
         </plugin>
     </gazebo>
 
@@ -133,6 +126,7 @@
     <gazebo reference="laser_scan">
 		<sensor name='gpu_lidar' type='gpu_lidar'>
             <update_rate>10</update_rate>
+            <gz_frame_id>laser_scan</gz_frame_id>
             <!-- Info based on: -->
             <!-- https://www.ldrobot.com/images/2023/05/23/LDROBOT_LD19_Datasheet_EN_v2.6_Q1JXIRVq.pdf -->
             <ray>
@@ -171,6 +165,7 @@
     <xacro:if value="${camera== 'astra_s'}">
         <gazebo reference="camera_link">
             <sensor name="camera" type="rgbd_camera">
+                <gz_frame_id>camera_link_optical</gz_frame_id>
                 <!-- Data based on https://store.orbbec.com/products/astra-s -->
                 <camera>
                     <horizontal_fov>1.1013</horizontal_fov>
@@ -210,6 +205,7 @@
     <xacro:if value="${camera== 'os30a'}">
         <gazebo reference="camera_link">
             <sensor name="camera" type="rgbd_camera">
+                <gz_frame_id>camera_link_optical</gz_frame_id>
                 <!-- Data based on : -->
                 <!-- https://www.ydlidar.com/Public/upload/files/2022-11-30/BMVM-OS30A%20Data%20Sheet%20V1.0%20(221130).pdf -->
                 <camera>
@@ -249,9 +245,10 @@
 
     <xacro:if value="${camera== 'a010'}">
         <gazebo reference="camera_link">
-            <!-- Data based on: -->
-            <!-- https://pdf.direnc.net/upload/1-14-inc-lcd-ekranli-3d-tof-derinlik-sensoru-kamera-datasheet.pdf -->
             <sensor name="camera" type="depth_camera">
+                <gz_frame_id>camera_link_optical</gz_frame_id>
+                <!-- Data based on: -->
+                <!-- https://pdf.direnc.net/upload/1-14-inc-lcd-ekranli-3d-tof-derinlik-sensoru-kamera-datasheet.pdf -->
                 <camera>
                     <horizontal_fov>1.22</horizontal_fov>
                     <image>
@@ -287,41 +284,42 @@
         </gazebo>
 
         <gazebo reference="g_mov_cam_link">
-        <sensor name="camera" type="camera">
-            <!-- Data based on : -->
-            <!-- https://static.chipdip.ru/lib/664/DOC001664108.pdf -->
-            <camera>
-                <horizontal_fov>1.361357</horizontal_fov>
-                <image>
-                <width>1080</width>
-                <height>810</height>
-                </image>
-                <clip>
-                    <near>0.2</near>
-                    <far>10.0</far>
-                </clip>
-                <xacro:if value="true">
-                    <!-- Noise addition -->
-                    <noise>
-                        <type>gaussian</type>
-                        <mean>0.0</mean>
-                        <stddev>0.015</stddev>
-                    </noise>
-                    <!-- Distorsion addition -->
-                    <distortion>
-                        <k1>-0.1</k1>
-                        <k2>0.02</k2>
-                        <k3>0.01</k3>
-                        <p1>0.0</p1>
-                        <p2>0.0</p2>
-                        <center>0.5 0.5</center>
-                    </distortion>
-                </xacro:if>
-            </camera>
-            <always_on>1</always_on>
-            <update_rate>30</update_rate>
-            <visualize>true</visualize>
-        </sensor>
+            <sensor name="camera" type="camera">
+                <gz_frame_id>g_mov_cam_link_optical</gz_frame_id>
+                <!-- Data based on : -->
+                <!-- https://static.chipdip.ru/lib/664/DOC001664108.pdf -->
+                <camera>
+                    <horizontal_fov>1.361357</horizontal_fov>
+                    <image>
+                    <width>1080</width>
+                    <height>810</height>
+                    </image>
+                    <clip>
+                        <near>0.2</near>
+                        <far>10.0</far>
+                    </clip>
+                    <xacro:if value="true">
+                        <!-- Noise addition -->
+                        <noise>
+                            <type>gaussian</type>
+                            <mean>0.0</mean>
+                            <stddev>0.015</stddev>
+                        </noise>
+                        <!-- Distorsion addition -->
+                        <distortion>
+                            <k1>-0.1</k1>
+                            <k2>0.02</k2>
+                            <k3>0.01</k3>
+                            <p1>0.0</p1>
+                            <p2>0.0</p2>
+                            <center>0.5 0.5</center>
+                        </distortion>
+                    </xacro:if>
+                </camera>
+                <always_on>1</always_on>
+                <update_rate>30</update_rate>
+                <visualize>true</visualize>
+            </sensor>
         </gazebo>
         <xacro:if value="${g_mov}">
             <gazebo>
