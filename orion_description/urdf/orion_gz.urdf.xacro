@@ -61,50 +61,54 @@
     </gazebo>
 
     <!-- .................... Servo controllers ................ -->
-    <gazebo>
-        <plugin
-            filename="gz-sim-joint-position-controller-system"
-            name="gz::sim::systems::JointPositionController">
-            <joint_name>servo_conn1_joint</joint_name>
-            <p_gain>10</p_gain>
-            <i_gain>0.1</i_gain>
-            <d_gain>0.01</d_gain>
-            <i_max>1</i_max>
-            <i_min>-1</i_min>
-            <cmd_max>1000</cmd_max>
-            <cmd_min>-1000</cmd_min>
-        </plugin>
-    </gazebo>
+    <xacro:if value="${servo}">
+        <gazebo>
+            <plugin
+                filename="gz-sim-joint-position-controller-system"
+                name="gz::sim::systems::JointPositionController">
+                <joint_name>servo_conn1_joint</joint_name>
+                <p_gain>10</p_gain>
+                <i_gain>0.1</i_gain>
+                <d_gain>0.01</d_gain>
+                <i_max>1</i_max>
+                <i_min>-1</i_min>
+                <cmd_max>1000</cmd_max>
+                <cmd_min>-1000</cmd_min>
+            </plugin>
+        </gazebo>
 
-    <gazebo>
-        <plugin
-            filename="gz-sim-joint-position-controller-system"
-            name="gz::sim::systems::JointPositionController">
-            <joint_name>servo_conn2_joint</joint_name>
-            <p_gain>10</p_gain>
-            <i_gain>0.1</i_gain>
-            <d_gain>0.01</d_gain>
-            <i_max>1</i_max>
-            <i_min>-1</i_min>
-            <cmd_max>1000</cmd_max>
-            <cmd_min>-1000</cmd_min>
-        </plugin>
-    </gazebo>
+        <gazebo>
+            <plugin
+                filename="gz-sim-joint-position-controller-system"
+                name="gz::sim::systems::JointPositionController">
+                <joint_name>servo_conn2_joint</joint_name>
+                <p_gain>10</p_gain>
+                <i_gain>0.1</i_gain>
+                <d_gain>0.01</d_gain>
+                <i_max>1</i_max>
+                <i_min>-1</i_min>
+                <cmd_max>1000</cmd_max>
+                <cmd_min>-1000</cmd_min>
+            </plugin>
+        </gazebo>
+    </xacro:if>
 
-    <gazebo>
-        <plugin
-            filename="gz-sim-joint-position-controller-system"
-            name="gz::sim::systems::JointPositionController">
-            <joint_name>g_mov_servo_conn_joint</joint_name>
-            <p_gain>10</p_gain>
-            <i_gain>0.1</i_gain>
-            <d_gain>0.01</d_gain>
-            <i_max>1</i_max>
-            <i_min>-1</i_min>
-            <cmd_max>1000</cmd_max>
-            <cmd_min>-1000</cmd_min>
-        </plugin>
-    </gazebo>
+    <xacro:if value="${camera == 'a010' and g_mov}">
+        <gazebo>
+            <plugin
+                filename="gz-sim-joint-position-controller-system"
+                name="gz::sim::systems::JointPositionController">
+                <joint_name>g_mov_servo_conn_joint</joint_name>
+                <p_gain>10</p_gain>
+                <i_gain>0.1</i_gain>
+                <d_gain>0.01</d_gain>
+                <i_max>1</i_max>
+                <i_min>-1</i_min>
+                <cmd_max>1000</cmd_max>
+                <cmd_min>-1000</cmd_min>
+            </plugin>
+        </gazebo>
+    </xacro:if>
 
         <!-- ...................... Joint state publisher ................ -->
     <gazebo>
@@ -114,7 +118,7 @@
             <joint_name>coupling_12_joint</joint_name>
             <joint_name>caster_middle_2_joint</joint_name>
             <joint_name>caster_wheel_2_joint</joint_name>
-            <xacro:if value="${servo}">
+        <xacro:if value="${servo}">
             <joint_name>servo_conn1_joint</joint_name>
             <joint_name>servo_conn2_joint</joint_name>
         </xacro:if>
