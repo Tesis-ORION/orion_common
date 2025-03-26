@@ -6,6 +6,7 @@
     <xacro:property name="g_mov" default="$(arg g_mov)"/>
     <xacro:property name="rasp" default="$(arg rasp)"/>
     <xacro:property name="gazebo" default="$(arg gazebo)"/>
+    <xacro:property name="ros2_control" default="true"/>
 
     <!-- For colors consider mdf, transparent or pla -->
     <xacro:property name="color" default="mdf"/>
@@ -18,7 +19,8 @@
     <xacro:include filename="$(find orion_description)/urdf/orion_cameras.urdf.xacro"/>
 
     <xacro:if value="${gazebo}">
-        <xacro:include filename="$(find orion_description)/urdf/orion_gz.urdf.xacro"/>
+        <xacro:include filename="$(find orion_description)/urdf/orion_gz_sensors.urdf.xacro"/>
+        <xacro:include filename="$(find orion_description)/urdf/orion_gz_actuators.urdf.xacro"/>
     </xacro:if>
 
 </robot>
