@@ -30,6 +30,7 @@ You can visualize the */robot_description* of the robot with the [model_vis.laun
 #   g_mov : Boolean (true/false) to use g_mov module when using 'a010' depth cam.
 #   rasp : Whether to use 'rpi4' or 'rpi5', this will imply a change in the sound hardware.
 #   servo : Boolean (true/false) to indicate if use servo arms
+#   ros2_control : Boolean (true/false) to indicate usage of ros2_controllers
 #   
 ros2 launch orion_description model_vis.launch.py camera:=os30a 
 ~~~

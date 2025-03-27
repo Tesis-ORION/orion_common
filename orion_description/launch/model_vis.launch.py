@@ -19,6 +19,8 @@ ARGS = [
         description="When using camera a010, whether to include or not G Mov"),
     DeclareLaunchArgument('rasp', default_value='rpi5',
         description="Select 4 for Raspberry Pi 4B, or 5 for Raspberry Pi 5"),
+    DeclareLaunchArgument('ros2_control', default_value='false',
+        description="Whether to use ros2_control tags for motor controllers")
 ]
 
 # //////////////////////////// LAUNCH DEFINITION //////////////////////////////
@@ -46,6 +48,7 @@ def generate_launch_description():
                     ' g_mov:=', LaunchConfiguration('g_mov'),
                     ' rasp:=', LaunchConfiguration('rasp'),
                     ' gazebo:=false',
+                    ' ros2_control:=', LaunchConfiguration('ros2_control')
                 ])
             }]
         )

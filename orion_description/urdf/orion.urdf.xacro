@@ -6,7 +6,7 @@
     <xacro:property name="g_mov" default="$(arg g_mov)"/>
     <xacro:property name="rasp" default="$(arg rasp)"/>
     <xacro:property name="gazebo" default="$(arg gazebo)"/>
-    <xacro:property name="ros2_control" default="false"/>
+    <xacro:property name="ros2_control" default="$(arg ros2_control)"/>
 
     <!-- For colors consider mdf, transparent or pla -->
     <xacro:property name="color" default="mdf"/>
