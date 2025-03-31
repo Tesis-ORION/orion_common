@@ -131,11 +131,33 @@
                 <state_interface name="velocity"/>
                 <state_interface name="position"/>
             </joint>
+        <xacro:if value="${servo}">
+            <joint name="servo_conn1_joint">
+                <command_interface name="position" />
+                <command_interface name="velocity" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+            <joint name="servo_conn2_joint">
+                <command_interface name="position" />
+                <command_interface name="velocity" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+        </xacro:if>
+        <xacro:if value="${camera == 'a010' and g_mov}">
+            <joint name="g_mov_servo_conn_joint">
+                <command_interface name="position" />
+                <command_interface name="velocity" />
+                <state_interface name="position" />
+                <state_interface name="velocity" />
+            </joint>
+        </xacro:if>
         </ros2_control>
 
         <gazebo>
             <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-                <parameters>$(find orion_control)/config/controllers.yaml</parameters>
+                <parameters>$(find orion_control)/config/gz_ros_control.yaml</parameters>
             </plugin>
         </gazebo>
 
