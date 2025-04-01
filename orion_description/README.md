@@ -1,4 +1,4 @@
-# orion_description
+# ORION Description
 
 ## Overview
 
@@ -12,13 +12,11 @@ The source code is released under a [BSD 3-Clause license](/LICENSE).
 
 The *orion_description* package has been tested under [ROS](https://www.ros.org/) Jazzy.
 
-## Installation
-
-...
-
 ## Usage
 
-### Model visualization:
+Make sure you have followed the [installation process](/README.md) and have sourced your installation before following to the next steps:
+
+### Model visualization
 
 You can visualize the */robot_description* of the robot with the [model_vis.launch.py](/orion_description/launch/model_vis.launch.py), which provide a visualization window with RViz and the usage of the **robot_state_publisher_gui**.
 
@@ -35,7 +33,7 @@ You can visualize the */robot_description* of the robot with the [model_vis.laun
 ros2 launch orion_description model_vis.launch.py camera:=os30a 
 ~~~
 
-### Robot State Publisher:
+### Robot State Publisher
 
 To launch the */robot_description* of the robot with the [rsp.launch.py](/orion_description/launch/rsp.launch.py), which will allow you to have the topic and the transforms of the model for simulations or raw visualizations.
 
