@@ -36,7 +36,7 @@
             <origin xyz="0.023 0 0.0325" rpy="0 0 0"/>
         </joint>
         <!-- ....................... Camera sensor defs ..................... -->
-        <xacro:camera_sensor x="0.02" y="0" z="0" R="${pi_2}" P="0" Y="${pi_2}"
+        <xacro:camera_sensor x="0.02" y="0" z="0" R="${-pi_2}" P="0" Y="${-pi_2}"
           parent="astra"/>
     </xacro:if>
     <!--  //////////////////////// OS30A CAM ///////////////////////////// -->
@@ -104,7 +104,7 @@
         </joint>
 
         <!-- ....................... Camera sensor defs ..................... -->
-        <xacro:camera_sensor x="0" y="0" z="0" R="${pi_2}" P="0" Y="${pi_2}"
+        <xacro:camera_sensor x="0" y="0" z="0" R="${-pi_2}" P="0" Y="${-pi_2}"
           parent="os30a"/>
     </xacro:if>
 
@@ -178,7 +178,7 @@
                 x="0.017825" y="0.035" z="0" joint_prefix="g_mov"/>
         </xacro:if>
         <!-- ......................... Camera sensors links ............................ -->
-        <xacro:camera_sensor x="0.011" y="0" z="0.0025" R="${pi_2}" P="0" Y="${pi_2}"
+        <xacro:camera_sensor x="0.011" y="0" z="0.0025" R="${-pi_2}" P="0" Y="${-pi_2}"
           parent="maixsense"/>
     </xacro:if>
 </robot>
