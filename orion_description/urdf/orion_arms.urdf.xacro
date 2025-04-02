@@ -43,8 +43,8 @@
             </xacro:if>
         </xacro:macro>
 
-        <xacro:simple_arm x="0" y="0" z="0.004" parent="servo_conn_1" side="1"/>
-        <xacro:simple_arm x="0" y="0" z="0.004" parent="servo_conn_2" side="2"/>
+        <xacro:simple_arm x="0" y="0" z="0.0045" parent="servo_conn_1" side="1"/>
+        <xacro:simple_arm x="0" y="0" z="0.0045" parent="servo_conn_2" side="2"/>
 
     </xacro:if>
 </robot>

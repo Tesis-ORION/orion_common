@@ -647,7 +647,7 @@
             <axis xyz="0.0 0.0 1.0"/>
             <parent link="servo_${side}"/>
             <child link="servo_conn_${side}"/>
-            <origin xyz="0.01 ${0.0431*inv} 0" rpy="${-pi_2*inv} 0 0"/>
+            <origin xyz="0.01 ${0.0406*inv} 0" rpy="${-pi_2*inv} 0 0"/>
             <limit lower="${-pi_2}" upper="${pi_2}" effort="0.92" velocity="6.0"/>
             <dynamics damping="0.05" friction="0.002"/>
         </joint>
@@ -734,7 +734,7 @@
         <joint name="speaker_${front}${side}_joint" type="fixed">
             <parent link="speaker_sup_${front}${side}"/>
             <child link="speaker_${front}${side}"/>
-            <origin xyz="0 ${0.0285*muls/2} 0" rpy="0 0 0"/>
+            <origin xyz="0 ${0.0375*muls/2} 0" rpy="0 0 0"/>
         </joint>
         <gazebo reference="speaker_${front}${side}">
             <mu1>1.0</mu1>

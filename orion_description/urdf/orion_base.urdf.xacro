@@ -41,17 +41,17 @@
             y="${0.21/2 - 0.010}" z="0"/>
     
     <!-- //////////////////////// MOTORS DC ////////////////////////////-->
-    <xacro:motor_dc front="1" side="1" x="-0.0025" y="${0.05718+0.036/2}" 
+    <xacro:motor_dc front="1" side="1" x="-0.0025" y="${0.05418+0.036/2}" 
         z="-0.0225"/>
-    <xacro:motor_dc front="1" side="2" x="-0.0025" y="${0.05718+0.036/2}"
+    <xacro:motor_dc front="1" side="2" x="-0.0025" y="${0.05418+0.036/2}"
         z="-0.0225"/>
 
     <!-- /////////////////////// CASTER WHEEL //////////////////////////-->
 
     <xacro:x4xmetric_spacer id="m4x17" element="caster" parent="base_l0_s2"
-        offset_x="0.012" offset_y="0.015" x="-0.022" y="0" 
+        offset_x="0.012" offset_y="0.015" x="-0.023" y="0" 
         z="${-0.001 - 0.017}"/>
-    <xacro:caster_wheel parent="base_l0_s2" front="2" x="-0.022" y="0" 
+    <xacro:caster_wheel parent="base_l0_s2" front="2" x="-0.023" y="0" 
         z="${-0.002 - 0.017}"/>
 
     <!-- //////////////// FIRST FLOOR COMPONENTS ///////////////////// -->
@@ -180,7 +180,7 @@
     <joint name="reg_support_joint" type="fixed">
         <parent link="base_l0_s2"/>
         <child link="reg_support"/>
-        <origin xyz="-0.036 -0.0275 0.0025" rpy="0 0 0"/>
+        <origin xyz="-0.026 -0.0275 0.0025" rpy="0 0 0"/>
     </joint>
     <xacro:if value="${gazebo}">
         <gazebo reference="reg_support">
