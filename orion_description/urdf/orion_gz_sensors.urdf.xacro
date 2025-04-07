@@ -94,6 +94,42 @@
                 <update_rate>30</update_rate>
                 <visualize>true</visualize>
             </sensor>
+            <sensor name="camera_aux" type="depth_camera">
+                <!-- Data based on https://store.orbbec.com/products/astra-s -->
+                <camera>
+                    <horizontal_fov>1.1013</horizontal_fov>
+                    <image>
+                        <format>R8G8B8</format>
+                        <width>640</width>
+                        <height>480</height>
+                    </image>
+                    <clip>
+                        <near>0.4</near>
+                        <far>2</far>
+                    </clip>
+                    <xacro:if value="${noise_and_dist}">
+                        <!-- Noise addition -->
+                        <noise>
+                            <type>gaussian</type>
+                            <mean>0.003</mean>
+                            <stddev>0.01</stddev>
+                        </noise>
+                        <!-- Distorsion addition -->
+                        <distortion>
+                            <k1>0.02</k1>
+                            <k2>0.02</k2>
+                            <k3>0.01</k3>
+                            <p1>0.01</p1>
+                            <p2>0.01</p2>
+                            <center>0.5 0.5</center>
+                        </distortion>
+                    </xacro:if>
+                    <optical_frame_id>camera_link</optical_frame_id>
+                </camera>
+                <always_on>1</always_on>
+                <update_rate>30</update_rate>
+                <visualize>true</visualize>
+            </sensor>
         </gazebo>
     </xacro:if>
 
@@ -137,6 +173,43 @@
                 <update_rate>30</update_rate>
                 <visualize>true</visualize>
             </sensor>
+            <sensor name="camera_aux" type="depth_camera">
+                <!-- Data based on : -->
+                <!-- https://www.ydlidar.com/Public/upload/files/2022-11-30/BMVM-OS30A%20Data%20Sheet%20V1.0%20(221130).pdf -->
+                <camera>
+                    <horizontal_fov>1.263618</horizontal_fov>
+                    <image>
+                        <format>R8G8B8</format>
+                        <width>1080</width>
+                        <height>920</height>
+                    </image>
+                    <clip>
+                        <near>0.2</near>
+                        <far>2.5</far>
+                    </clip>
+                    <xacro:if value="${noise_and_dist}">
+                        <!-- Noise addition -->
+                        <noise>
+                            <type>gaussian</type>
+                            <mean>0.0</mean>
+                            <stddev>0.015</stddev>
+                        </noise>
+                        <!-- Distorsion addition -->
+                        <distortion>
+                            <k1>-0.1</k1>
+                            <k2>0.02</k2>
+                            <k3>0.01</k3>
+                            <p1>0.0</p1>
+                            <p2>0.0</p2>
+                            <center>0.5 0.5</center>
+                        </distortion>
+                    </xacro:if>
+                    <optical_frame_id>camera_link</optical_frame_id>
+                </camera>
+                <always_on>1</always_on>
+                <update_rate>30</update_rate>
+                <visualize>true</visualize>
+            </sensor>
         </gazebo>
     </xacro:if>
 
@@ -175,6 +248,43 @@
                     </xacro:if>
                     <gz_frame_id>camera_link</gz_frame_id>
                     <optical_frame_id>camera_link_optical</optical_frame_id>
+                </camera>
+                <always_on>1</always_on>
+                <update_rate>20</update_rate>
+                <visualize>true</visualize>
+            </sensor>
+            <sensor name="camera" type="depth_camera">
+                <!-- Data based on: -->
+                <!-- https://pdf.direnc.net/upload/1-14-inc-lcd-ekranli-3d-tof-derinlik-sensoru-kamera-datasheet.pdf -->
+                <camera>
+                    <horizontal_fov>1.22</horizontal_fov>
+                    <image>
+                        <format>R8G8B8</format>
+                        <width>100</width>
+                        <height>100</height>
+                    </image>
+                    <clip>
+                        <near>0.15</near>
+                        <far>1.5</far>
+                    </clip>
+                    <xacro:if value="${noise_and_dist}">
+                        <!-- Noise addition -->
+                        <noise>
+                            <type>gaussian</type>
+                            <mean>0.0</mean>
+                            <stddev>0.01</stddev>
+                        </noise>
+                        <!-- Distorsion addition -->
+                        <distortion>
+                            <k1>-0.025</k1>
+                            <k2>0.005</k2>
+                            <k3>0.002</k3>
+                            <p1>0.0</p1>
+                            <p2>0.0</p2>
+                            <center>0.5 0.5</center>
+                        </distortion>
+                    </xacro:if>
+                    <optical_frame_id>camera_link</optical_frame_id>
                 </camera>
                 <always_on>1</always_on>
                 <update_rate>20</update_rate>
