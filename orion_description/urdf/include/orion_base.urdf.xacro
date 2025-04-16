@@ -254,7 +254,7 @@
     <joint name="switch_joint" type="fixed">
         <parent link="base_l1_s1"/>
         <child link="switch"/>
-        <origin xyz="0.025 0.074 -0.015" rpy="0 0 0"/>
+        <origin xyz="0.035 0.074 -0.015" rpy="0 0 0"/>
     </joint>
     <xacro:if value="${gazebo}">
         <gazebo reference="switch">
@@ -281,8 +281,8 @@
     <!-- ///////////////// SECOND FLOOR COMPONENTS /////////////////////// -->
 
     <!-- ..................... Spacers for esp32 adp ..................... -->
-    <xacro:x4xmetric_spacer id="m3x10" element="esp_adapter" parent="base_l1_s1"
-        offset_x="${0.0577/2}" offset_y="${0.0607/2}" x="0" y="0" z="-0.01"/>
+    <xacro:x4xmetric_spacer id="m3x10" element="esp_adapter" parent="base_l1_s2"
+        offset_x="${0.0577/2}" offset_y="${0.0607/2}" x="0.004" y="0" z="-0.01"/>
 
     <!-- .......................... Esp32 Adapter ....................... -->
     <link name="esp32_adapter">
@@ -310,9 +310,9 @@
     </inertial>
     </link>
     <joint name="esp32_adapter_joint" type="fixed">
-        <parent link="base_l1_s1"/>
+        <parent link="base_l1_s2"/>
         <child link="esp32_adapter"/>
-        <origin xyz="0 0 -0.01" rpy="0 0 0"/>
+        <origin xyz="0.004 0 -0.01" rpy="0 0 0"/>
     </joint>
     <xacro:if value="${gazebo}">
         <gazebo reference="esp32_adapter">
@@ -537,7 +537,9 @@
             x="${0.115/2}" z="${0.082/2 + 0.0025/2}" level="2"/>
     </xacro:if>
     <!-- ////////////////// FOURTH FLOOR COMPONENTES ////////////////////// -->
-    <xacro:x4xmetric_spacer id="m3x10" element="rpi5" parent="base_l3_s2"
+
+    
+    <xacro:x4xmetric_spacer id="m3x10" element="${rasp}" parent="base_l3_s2"
         offset_x="${0.049/2}" offset_y="${0.058/2}" x="0" y="0.0435" z="0.0025"/>
 
     <!-- Link Rasberry Pi -->
@@ -598,6 +600,86 @@
 
     <xacro:complete_front_wall id="rpi" parent="base_l3_s2" front="2" 
         x="${0.115/2}" z="${0.082/2 + 0.0025/2}" level="3"/>
+
+    <!-- ............................ 2° ESP32 ................................ -->
+
+    <!-- ..................... Spacers for esp32 adp ..................... -->
+    <xacro:x4xmetric_spacer id="m3x10" element="esp_2_adapter" parent="base_l3_s1"
+        offset_x="${0.0577/2}" offset_y="${0.0607/2}" x="0.004" y="0" z="0.0025"/>
+
+    <!-- .......................... Esp32 Adapter ....................... -->
+    <link name="esp32_2_adapter">
+    <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+        <mesh filename="package://orion_description/meshes/esp32_adp.stl"
+            scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="RaspberryGreen"/>
+    </visual>
+    <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+        <mesh filename="package://orion_description/meshes/esp32_adp.stl" 
+            scale="0.001 0.001 0.001"/>
+        </geometry>
+    </collision>
+    <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.030"/>
+        <inertia ixx="1.1184306270694732e-05" ixy="0.0" ixz="0.0"
+                iyy="1.021680627069473e-05" iyz="0.0"
+                izz="2.0812499999999994e-05"/>
+    </inertial>
+    </link>
+    <joint name="esp32_2_adapter_joint" type="fixed">
+        <parent link="base_l3_s1"/>
+        <child link="esp32_2_adapter"/>
+        <origin xyz="0.004 0 0.0125" rpy="0 0 0"/>
+    </joint>
+    <xacro:if value="${gazebo}">
+        <gazebo reference="esp32_adapter">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+    </xacro:if>
+
+    <!-- ....................... ESP32 ....................................... -->
+    <link name="esp32_2">
+    <visual>
+        <origin xyz="0 0 0" rpy="0 0 ${-pi_2}"/>
+        <geometry>
+        <mesh filename="package://orion_description/meshes/esp32.stl"
+            scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="SoftBlack"/>
+    </visual>
+    <collision>
+        <origin xyz="0 0 0" rpy="0 0 ${-pi_2}"/>
+        <geometry>
+        <mesh filename="package://orion_description/meshes/esp32.stl" 
+            scale="0.001 0.001 0.001"/>
+        </geometry>
+    </collision>
+    <inertial>
+        <origin xyz="0 0 0" rpy="0 0 ${-pi_2}"/>
+        <mass value="0.0201"/>
+        <inertia ixx="4.904162034278915e-06" ixy="0.0" ixz="0.0"
+                iyy="1.5830928543782435e-06" iyz="0.0"
+                izz="6.0040505352397235e-06"/>
+    </inertial>
+    </link>
+    <joint name="esp32_2_joint" type="fixed">
+        <parent link="esp32_2_adapter"/>
+        <child link="esp32_2"/>
+        <origin xyz="0.002 0 0.01" rpy="0 0 0"/>
+    </joint>
+    <xacro:if value="${gazebo}">
+        <gazebo reference="esp32">
+            <mu1>1.0</mu1>
+            <mu2>1.0</mu2>
+        </gazebo>
+    </xacro:if>
 
     <!-- .......................... Screen Sup ................................ -->
     <link name="screen_sup">
