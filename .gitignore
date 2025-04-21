@@ -52,3 +52,9 @@ CATKIN_IGNORE
 
 # FreeCad Backup Files
 *.FCBak
+
+# Other things to forget about
+.vscode
+orion_docker/install
+orion_docker/log
+orion_docker/src
