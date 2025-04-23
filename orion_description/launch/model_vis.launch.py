@@ -51,7 +51,8 @@ def generate_launch_description():
                     ' rasp:=', LaunchConfiguration('rasp'),
                     ' gazebo:=false',
                     ' ros2_control:=', LaunchConfiguration('ros2_control'),
-                    ' simplified:=', LaunchConfiguration('simplified')
+                    ' simplified:=', LaunchConfiguration('simplified'),
+                    ' ctl_type:=micro_ros'
                 ])
             }]
         )

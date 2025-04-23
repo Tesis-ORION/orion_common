@@ -1,7 +1,7 @@
 <library path="orion_control">
 
-    <class name="orion_control/DiffDriveDiffRobot"
-           type="orion_control::DiffDriveDiffRobot"
+    <class name="orion_control/DiffDriveOrion"
+           type="orion_control::DiffDriveOrion"
            base_class_type="hardware_interface::SystemInterface">
         <description>
             Hardware interface implementation ORION mobile base.

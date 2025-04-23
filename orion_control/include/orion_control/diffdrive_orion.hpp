@@ -49,14 +49,14 @@ namespace orion_control
         const std::string wheel_right_name_param{"right_wheel_name"};
         const std::string wheel_ticks_per_rev_param{"enc_ticks_per_rev"};
 
-        rclcpp::Subscription<std_msgs::msg::Int64>::SharedPtr sub_left_enc;
-        rclcpp::Subscription<std_msgs::msg::Int64>::SharedPtr sub_right_enc;
+        rclcpp::Subscription<std_msgs::msg::Int64>::SharedPtr sub_left_enc_;
+        rclcpp::Subscription<std_msgs::msg::Int64>::SharedPtr sub_right_enc_;
         rclcpp::Publisher<std_msgs::msg::Int64MultiArray>::SharedPtr pub_cmd_speed;
 
         rclcpp::Node::SharedPtr node_;
         std_msgs::msg::Int64MultiArray cmd_speed;
         std_msgs::msg::Int64 left_enc_;
-        std_msgs::msg::Int64 right_pos_;
+        std_msgs::msg::Int64 right_enc_;
 
         struct Config
         {

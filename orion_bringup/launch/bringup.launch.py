@@ -6,9 +6,16 @@ import xacro
 # ............................ Launch dependencies .............................
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, OpaqueFunction
-from launch.substitutions import LaunchConfiguration
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, OpaqueFunction
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import LaunchConfiguration, Command, PathJoinSubstitution
+
 from launch_ros.actions import Node
+from launch_ros.substitutions import FindPackageShare
+from launch_ros.parameter_descriptions import ParameterValue
+
+# ........................... Additional packages dependencies ..................
+from controller_manager.launch_utils import generate_load_controller_launch_description
 
 # //////////////////////////// GLOBAL DEFINITIONS //////////////////////////////
 ARGS = [
@@ -20,24 +27,54 @@ ARGS = [
         description="When using camera a010, whether to include or not G Mov"),
     DeclareLaunchArgument('rasp', default_value='rpi5',
         description="Select 4 for Raspberry Pi 4B, or 5 for Raspberry Pi 5"),
-    DeclareLaunchArgument('gazebo',default_value='true',
-        description="True for using gazebo tags, false otherwise"),
-    DeclareLaunchArgument('ros2_control', default_value='false',
-        description="Whether to use ros2_control tags for motor controllers"),
     DeclareLaunchArgument('simplified', default_value='false',
         description="To ignore no-functional components in the URDF description"),
     DeclareLaunchArgument('ctl_type', default_value='micro_ros',
-        description="Select controller communication option: micro_ros or serial")
+        description="Select controller communication option: micro_ros or serial"),
 ]
 
-# /////////////////////////// FUNCTIONS DEFINITIONS ////////////////////////////
 def get_argument(context, arg):
     """
     Get the context when performing the Launch Configuration
     """
     return LaunchConfiguration(arg).perform(context)
 
-def generate_robot_description(context):
+def load_controllers(context):
+    """
+    Load controllers by considering OpaqueFunctions to allow all of them to load
+    in a asynchronous way.
+
+    It is used as recommended in:
+    https://github.com/pal-robotics/tiago_robot/blob/humble-devel/tiago_controller_configuration/launch/default_controllers.launch.py
+
+    Params
+    ---
+    Context : context
+        Context provided by OpaqueFunction
+
+    Returns
+    ---
+    controller : Array of launch description actions
+        Actions linked to the controllers spawners
+    """
+    pkg_ctl = get_package_share_directory('orion_control')
+    mobile_base_path = os.path.join(pkg_ctl, 'config', 'mobile_base_controller.yaml')
+    joint_broad_path = os.path.join(pkg_ctl, 'config', 'joint_state_broadcaster.yaml')
+
+    controllers = [
+        generate_load_controller_launch_description(
+            controller_name="mobile_base_controller",
+            controller_params_file=mobile_base_path)
+    ]
+
+    controllers.append(generate_load_controller_launch_description(
+        controller_name="joint_state_broadcaster",
+        controller_params_file=joint_broad_path
+    ))
+
+    return controllers 
+
+def generate_robot_bringup(context):
     """
     For generating the robot description, consider the URDF/Xacro file provided,
     but modifying the meshes source path in order to make it available to
@@ -47,6 +84,8 @@ def generate_robot_description(context):
     pkg_gmov = get_package_share_directory('g_mov_description')
     pkg_description = get_package_share_directory('orion_description')
     xacro_file = os.path.join(pkg_description, 'urdf', 'orion.urdf.xacro')
+    pkg_control = get_package_share_directory('orion_control')
+    controller_params = os.path.join(pkg_control, 'config', 'control_manager.yaml')
 
     # Generating mapping in order to allow xacro modularity
     mappings = {
@@ -54,8 +93,8 @@ def generate_robot_description(context):
         'servo': get_argument(context, "servo"),
         'g_mov': get_argument(context, "g_mov"),
         'rasp': get_argument(context, "rasp"),
-        'gazebo': get_argument(context, "gazebo"),
-        'ros2_control': get_argument(context, "ros2_control"),
+        'gazebo': 'false',
+        'ros2_control': 'true',
         'simplified': get_argument(context, 'simplified'),
         'ctl_type':get_argument(context, 'ctl_type')
     }
@@ -82,15 +121,24 @@ def generate_robot_description(context):
         }]
     )
 
-    # Return configuration as a set
-    return [rsp_node]
+    # Launch node for controller manager
+    controller_node = Node(
+        package="controller_manager",
+        executable="ros2_control_node",
+        parameters=[
+                {'robot_description': robot_desc},
+                controller_params
+            ],
+    )
 
-# /////////////////////////// LAUNCH DEFINITIONS //////////////////////////////
+    # Return configuration as a set
+    return [rsp_node, controller_node]
+
 def generate_launch_description():
-    # Generate launch description
     ld = LaunchDescription(ARGS)
 
-    # Add robot description with context
-    ld.add_action(OpaqueFunction(function=generate_robot_description))
-    
+    ld.add_action(OpaqueFunction(function=generate_robot_bringup))
+
+    ld.add_action(OpaqueFunction(function=load_controllers))
+
     return ld

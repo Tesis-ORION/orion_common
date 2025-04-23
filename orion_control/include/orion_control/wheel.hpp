@@ -13,8 +13,7 @@ namespace orion_control
         void Setup(const std::string& joint_name, int ticks_per_rev);
 
         double Angle();
-
-    private:
+        
         std::string name_ = "";
         
         int enc_ = 0;

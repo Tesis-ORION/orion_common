@@ -3,10 +3,10 @@
 
 namespace orion_control
 {
-    void Wheel::SetUp(const std::string& wheel_name, int tickers_per_rev)
+    void Wheel::Setup(const std::string& wheel_name, int tickers_per_rev)
     {
         this->name_ = wheel_name;
-        this->rads_per_tick = (2 * M_PI) / tickers_per_rev;
+        this->rads_per_tick_ = (2 * M_PI) / tickers_per_rev;
     }
 
     double Wheel::Angle()

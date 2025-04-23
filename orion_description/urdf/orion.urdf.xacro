@@ -8,6 +8,7 @@
     <xacro:property name="gazebo" default="$(arg gazebo)"/>
     <xacro:property name="ros2_control" default="$(arg ros2_control)"/>
     <xacro:property name="simplified" default="$(arg simplified)"/>
+    <xacro:property name="ctl_type" default="micro_ros"/>
 
     <!-- For colors consider mdf, transparent or pla -->
     <xacro:property name="color" default="mdf"/>
@@ -18,5 +19,6 @@
     <xacro:include filename="$(find orion_description)/urdf/include/orion_base.urdf.xacro"/>
     <xacro:include filename="$(find orion_description)/urdf/include/orion_arms.urdf.xacro"/>
     <xacro:include filename="$(find orion_description)/urdf/include/orion_cameras.urdf.xacro"/>
+    <xacro:include filename="$(find orion_description)/urdf/include/orion_ros2_control.urdf.xacro"/>
 
 </robot>
