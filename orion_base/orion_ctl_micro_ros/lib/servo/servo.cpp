@@ -32,7 +32,7 @@ namespace fwd
 
     void ServoMotor::setPositionRad(const float& radians)
     {
-        float pos = radians * M_PI / 180;
+        float pos = radians / M_PI * 180;
         if(pos > 180)
         {
             this->servo_.write(180);
@@ -49,6 +49,6 @@ namespace fwd
 
     float ServoMotor::getPositionRad()
     {
-        return (this->servo_.read() * M_PI / 180);
+        return (this->servo_.read() / M_PI * 180);
     }
 }

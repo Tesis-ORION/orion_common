@@ -60,6 +60,9 @@ def load_controllers(context):
     pkg_ctl = get_package_share_directory('orion_control')
     mobile_base_path = os.path.join(pkg_ctl, 'config', 'mobile_base_controller.yaml')
     joint_broad_path = os.path.join(pkg_ctl, 'config', 'joint_state_broadcaster.yaml')
+    left_arm_path = os.path.join(pkg_ctl, 'config', 'simple_left_arm_controller.yaml')
+    right_arm_path = os.path.join(pkg_ctl, 'config', 'simple_right_arm_controller.yaml')
+
 
     controllers = [
         generate_load_controller_launch_description(
@@ -71,6 +74,17 @@ def load_controllers(context):
         controller_name="joint_state_broadcaster",
         controller_params_file=joint_broad_path
     ))
+
+    if LaunchConfiguration('servo').perform(context) == 'true':
+        controllers.append(generate_load_controller_launch_description(
+            controller_name="simple_left_arm_controller",
+            controller_params_file=left_arm_path
+        ))
+
+        controllers.append(generate_load_controller_launch_description(
+            controller_name="simple_right_arm_controller",
+            controller_params_file=right_arm_path
+        ))
 
     return controllers 
 

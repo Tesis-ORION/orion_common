@@ -16,7 +16,7 @@ namespace orion_control
         this->config_.enc_tics_per_rev = std::stoi(info_.hardware_parameters[this->wheel_ticks_per_rev_param]);
 
         rclcpp::NodeOptions options;
-        options.arguments({"--ros-args", "-r", "__node:=orion_ros2_control" + info_.name});
+        options.arguments({"--ros-args", "-r", "__node:=orion_diff_ros2_control" + info_.name});
         
         this->node_ = rclcpp::Node::make_shared("_", options);
         

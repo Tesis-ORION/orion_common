@@ -80,8 +80,6 @@ diff::ControlPID pid_right(diff::ROBOT_CONST::PID_KP, diff::ROBOT_CONST::PID_KD,
 fwd::ServoMotor servo_left(fwd::HARDWARE::SERVO_LEFT);
 fwd::ServoMotor servo_right(fwd::HARDWARE::SERVO_RIGHT);
 
-bool state = false;
-
 void setup()
 {
     Serial.begin(115200);
@@ -93,7 +91,7 @@ void setup()
 
     RCCHECK(rclc_support_init(&support, 0, NULL, &allocator));
 
-    RCCHECK(rclc_node_init_default(&node, "micro_ros_platformio_diff_ctl_node", "", &support));
+    RCCHECK(rclc_node_init_default(&node, "micro_ros_platformio_orion_ctl_node", "", &support));
 
     RCCHECK(rclc_publisher_init_default(
         &enc_left_pub,
@@ -134,14 +132,14 @@ void setup()
         &servo_left_sub,
         &node,
         ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32),
-        "fwd_servo_left_feedback"
+        "fwd_servo_left_cmd"
     ));
 
     RCCHECK(rclc_subscription_init_default(
         &servo_right_sub,
         &node,
         ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32),
-        "fwd_servo_right_feedback"
+        "fwd_servo_right_cmd"
     ));
 
     const unsigned int timer_timeout = 1000 / diff::ROBOT_CONST::PID_RATE;
@@ -180,7 +178,7 @@ void setup()
             cmd_msg_speed.layout.dim.data[i].label.capacity * sizeof(char));
     }
 
-    RCCHECK(rclc_executor_init(&executor, &support.context, 2, &allocator));
+    RCCHECK(rclc_executor_init(&executor, &support.context, 5, &allocator));
 
     RCCHECK(rclc_executor_add_timer(&executor, &timer_diff));
     RCCHECK(rclc_executor_add_timer(&executor, &timer_fwd));

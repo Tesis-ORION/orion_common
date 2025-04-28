@@ -3,7 +3,7 @@
     <xacro:if value="${ros2_control}">
         <xacro:if value="${ctl_type == 'micro_ros'}">
         
-            <ros2_control name="RealRobot" type="system">
+            <ros2_control name="DiffRealRobot" type="system">
                 <hardware>
                     <plugin>orion_control/DiffDriveOrion</plugin>
                     <param name="left_wheel_name">coupling_11_joint</param>
@@ -27,6 +27,33 @@
                     <state_interface name="position"/>
                 </joint>
             </ros2_control>
+
+            <xacro:if value="${servo}">
+                <ros2_control name="FwdLeftRealRobot" type="system">
+                    <hardware>
+                        <plugin>orion_control/ForwardOrion</plugin>
+                        <param name="feedback_topic">fwd_servo_left_feedback</param>
+                        <param name="cmd_topic">fwd_servo_left_cmd</param>
+                        <param name="servo_name">servo_conn1_joint</param>
+                    </hardware>
+                    <joint name="servo_conn1_joint">
+                        <command_interface name="position" />
+                        <state_interface name="position" />
+                    </joint>
+                </ros2_control>
+                <ros2_control name="FwdRightRealRobot" type="system">
+                    <hardware>
+                        <plugin>orion_control/ForwardOrion</plugin>
+                        <param name="feedback_topic">fwd_servo_right_feedback</param>
+                        <param name="cmd_topic">fwd_servo_right_cmd</param>
+                        <param name="servo_name">servo_conn2_joint</param>
+                    </hardware>
+                    <joint name="servo_conn2_joint">
+                        <command_interface name="position" />
+                        <state_interface name="position" />
+                    </joint>
+                </ros2_control>
+            </xacro:if>
         </xacro:if>
     </xacro:if>
 </robot>

@@ -27,6 +27,6 @@ endif()
 
 add_subdirectory(src)
 
-pluginlib_export_plugin_description_file(hardware_interface diff_ctl_micro_ros.xml)
+pluginlib_export_plugin_description_file(hardware_interface ctl_orion.xml)
 
 ament_package()

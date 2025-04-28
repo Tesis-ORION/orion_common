@@ -1,4 +1,4 @@
-add_library(orion_control SHARED diffdrive_orion.cpp wheel.cpp)
+add_library(orion_control SHARED diffdrive_orion.cpp wheel.cpp forward_orion.cpp)
 
 target_include_directories(orion_control PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
