@@ -9,12 +9,14 @@
 #include <std_msgs/msg/int64_multi_array.h>
 #include <std_msgs/msg/multi_array_dimension.h>
 #include <std_msgs/msg/int64.h>
+#include <std_msgs/msg/float32.h>
 
 #include "constants.hpp"
 #include "encoder.hpp"
 #include "hardware.hpp"
 #include "motor.hpp"
 #include "pid.hpp"
+#include "servo.hpp"
 
 #define RCCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){error_loop();}}
 #define RCSOFTCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){}}
@@ -25,22 +27,34 @@ void IRAM_ATTR read_right_enc();
 void adjust_motors_speed();
 void set_motor_speed(int left_speed, int right_speed);
 void error_loop();
-void timer_callback(rcl_timer_t * timer, int64_t last_call_tm);
+void timer_diff_callback(rcl_timer_t * timer, int64_t last_call_tm);
+void timer_fwd_callback(rcl_timer_t * timer, int64_t last_call_tm);
 void cmd_motor_callback(const void *msgin);
+void cmd_servo_left_callback(const void *msgin);
+void cmd_servo_right_callback(const void *msgin);
 
 
 rcl_publisher_t enc_left_pub;
 rcl_publisher_t enc_right_pub;
+rcl_publisher_t servo_left_pub;
+rcl_publisher_t servo_right_pub;
 rcl_subscription_t motor_speed_sub;
+rcl_subscription_t servo_left_sub;
+rcl_subscription_t servo_right_sub;
 
 rclc_executor_t executor;
 rclc_support_t support;
 rcl_allocator_t allocator;
 rcl_node_t node;
-rcl_timer_t timer;
+rcl_timer_t timer_diff;
+rcl_timer_t timer_fwd;
 
 std_msgs__msg__Int64 enc_left_value;
 std_msgs__msg__Int64 enc_right_value;
+std_msgs__msg__Float32 servo_left_cmd;
+std_msgs__msg__Float32 servo_right_cmd;
+std_msgs__msg__Float32 servo_left_feedback;
+std_msgs__msg__Float32 servo_right_feedback;
 
 std_msgs__msg__Int64MultiArray cmd_msg_speed;
 
@@ -62,6 +76,9 @@ diff::ControlPID pid_left(diff::ROBOT_CONST::PID_KP, diff::ROBOT_CONST::PID_KD,
 diff::ControlPID pid_right(diff::ROBOT_CONST::PID_KP, diff::ROBOT_CONST::PID_KD,
     diff::ROBOT_CONST::PID_KI, diff::ROBOT_CONST::PID_KO, 
     diff::ROBOT_CONST::PWM_MAX, diff::ROBOT_CONST::PWM_MIN);
+
+fwd::ServoMotor servo_left(fwd::HARDWARE::SERVO_LEFT);
+fwd::ServoMotor servo_right(fwd::HARDWARE::SERVO_RIGHT);
 
 bool state = false;
 
@@ -92,6 +109,20 @@ void setup()
         "diff_ctl_right_enc"
     ));
 
+    RCCHECK(rclc_publisher_init_default(
+        &servo_left_pub,
+        &node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32),
+        "fwd_servo_left_feedback"
+    ));
+
+    RCCHECK(rclc_publisher_init_default(
+        &servo_right_pub,
+        &node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32),
+        "fwd_servo_right_feedback"
+    ));
+
     RCCHECK(rclc_subscription_init_default(
         &motor_speed_sub,
         &node,
@@ -99,13 +130,36 @@ void setup()
         "diff_ctl_motor_cmd"
     ));
 
+    RCCHECK(rclc_subscription_init_default(
+        &servo_left_sub,
+        &node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32),
+        "fwd_servo_left_feedback"
+    ));
+
+    RCCHECK(rclc_subscription_init_default(
+        &servo_right_sub,
+        &node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32),
+        "fwd_servo_right_feedback"
+    ));
+
     const unsigned int timer_timeout = 1000 / diff::ROBOT_CONST::PID_RATE;
-    
+    const unsigned int servo_timeout = 1000;
+
     RCCHECK(rclc_timer_init_default2(
-        &timer,
+        &timer_diff,
         &support,
         RCL_MS_TO_NS(timer_timeout),
-        timer_callback,
+        timer_diff_callback,
+        true
+    ));
+
+    RCCHECK(rclc_timer_init_default2(
+        &timer_fwd,
+        &support,
+        RCL_MS_TO_NS(servo_timeout),
+        timer_fwd_callback,
         true
     ));
 
@@ -128,12 +182,27 @@ void setup()
 
     RCCHECK(rclc_executor_init(&executor, &support.context, 2, &allocator));
 
-    RCCHECK(rclc_executor_add_timer(&executor, &timer));
+    RCCHECK(rclc_executor_add_timer(&executor, &timer_diff));
+    RCCHECK(rclc_executor_add_timer(&executor, &timer_fwd));
 
     RCCHECK(rclc_executor_add_subscription(&executor,
         &motor_speed_sub,
         &cmd_msg_speed,
         &cmd_motor_callback,
+        ON_NEW_DATA
+    ));
+
+    RCCHECK(rclc_executor_add_subscription(&executor,
+        &servo_left_sub,
+        &servo_left_cmd,
+        &cmd_servo_left_callback,
+        ON_NEW_DATA
+    ));
+
+    RCCHECK(rclc_executor_add_subscription(&executor,
+        &servo_right_sub,
+        &servo_right_cmd,
+        &cmd_servo_right_callback,
         ON_NEW_DATA
     ));
 
@@ -145,6 +214,9 @@ void setup()
 
     enc_left.begin();
     enc_right.begin();
+
+    servo_left.begin();
+    servo_right.begin();
     
     attachInterrupt(diff::HARDWARE::ML_ENCA, &read_left_enc, CHANGE);
     attachInterrupt(diff::HARDWARE::MR_ENCA, &read_right_enc, CHANGE);
@@ -227,7 +299,7 @@ void error_loop()
     }
 }
 
-void timer_callback(rcl_timer_t * timer, int64_t last_call_tm)
+void timer_diff_callback(rcl_timer_t * timer, int64_t last_call_tm)
 {
     RCLC_UNUSED(last_call_tm);
     if(timer != NULL)
@@ -245,4 +317,26 @@ void cmd_motor_callback(const void *msgin)
 {
     const std_msgs__msg__Int64MultiArray * msg = (const std_msgs__msg__Int64MultiArray *) msgin;
     set_motor_speed(msg->data.data[0], msg->data.data[1]);
+}
+
+void timer_fwd_callback(rcl_timer_t * timer, int64_t last_call_tm)
+{
+    RCLC_UNUSED(last_call_tm);
+    if(timer != NULL)
+    {
+        float left_pos = servo_left.getPositionRad();
+        float right_pos = servo_right.getPositionRad();
+        RCSOFTCHECK(rcl_publish(&servo_left_pub, (const void*)&left_pos, NULL));
+        RCSOFTCHECK(rcl_publish(&servo_right_pub, (const void*)&right_pos, NULL));
+    }
+}
+
+void cmd_servo_left_callback(const void *msgin)
+{
+    servo_left.setPositionRad(servo_left_cmd.data);
+}
+
+void cmd_servo_right_callback(const void *msgin)
+{
+    servo_right.setPositionRad(servo_right_cmd.data);
 }

@@ -34,4 +34,16 @@ namespace diff
     };
 }
 
+namespace fwd
+{
+    struct HARDWARE
+    {
+        // Servo left
+        static const unsigned int SERVO_LEFT = 25;
+
+        // Servo right
+        static const unsigned int SERVO_RIGHT = 23;
+    };
+}
+
 #endif
