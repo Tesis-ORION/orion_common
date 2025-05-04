@@ -21,6 +21,8 @@
 #define RCCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){error_loop();}}
 #define RCSOFTCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){}}
 
+const unsigned int max_pos_servo = 150;
+const unsigned int min_pos_servo = 30;
 
 void IRAM_ATTR read_left_enc();
 void IRAM_ATTR read_right_enc();
@@ -76,8 +78,8 @@ diff::ControlPID pid_right(diff::ROBOT_CONST::PID_KP, diff::ROBOT_CONST::PID_KD,
     diff::ROBOT_CONST::PID_KI, diff::ROBOT_CONST::PID_KO, 
     diff::ROBOT_CONST::PWM_MAX, diff::ROBOT_CONST::PWM_MIN);
 
-fwd::ServoMotor servo_left(fwd::HARDWARE::SERVO_LEFT);
-fwd::ServoMotor servo_right(fwd::HARDWARE::SERVO_RIGHT);
+fwd::ServoMotor servo_left(max_pos_servo, min_pos_servo, fwd::HARDWARE::SERVO_LEFT);
+fwd::ServoMotor servo_right(max_pos_servo, min_pos_servo, fwd::HARDWARE::SERVO_RIGHT);
 
 void setup()
 {

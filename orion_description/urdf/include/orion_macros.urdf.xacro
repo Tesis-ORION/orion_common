@@ -331,8 +331,11 @@
     </xacro:macro>
 
     <!--////////////////////////// CASTER WHEEL ////////////////////////////-->
-    <!--xacro:property name="caster_type" value="continuous"/-->
-    <xacro:property name="caster_type" value="continuous"/>
+    <xacro:property name="caster_type" value="fixed"/>
+    
+    <xacro:if value="${gazebo}">
+        <xacro:property name="caster_type" value="continuous"/>
+    </xacro:if>
 
     <!-- ......................... Macro for caster ....................... -->
     <xacro:macro name="caster_wheel" params="parent front x y z">
@@ -649,7 +652,7 @@
             <parent link="servo_${side}"/>
             <child link="servo_conn_${side}"/>
             <origin xyz="0.01 ${0.0406*inv} 0" rpy="${-pi_2*inv} 0 0"/>
-            <limit lower="${-pi_2}" upper="${pi_2}" effort="1.08" velocity="5.24"/>
+            <limit lower="${-pi/3}" upper="${pi/3}" effort="1.08" velocity="5.24"/>
             <dynamics damping="0.05" friction="0.002"/>
         </joint>
         <gazebo reference="servo_conn_${side}">

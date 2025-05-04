@@ -33,6 +33,8 @@ void cmd_motor_callback(const void *msgin);
 void cmd_servo_left_callback(const void *msgin);
 void cmd_servo_right_callback(const void *msgin);
 
+unsigned const int max_servo_pos = 150;
+unsigned const int min_servo_pos = 30;
 
 rcl_publisher_t enc_left_pub;
 rcl_publisher_t enc_right_pub;
@@ -77,8 +79,8 @@ diff::ControlPID pid_right(diff::ROBOT_CONST::PID_KP, diff::ROBOT_CONST::PID_KD,
     diff::ROBOT_CONST::PID_KI, diff::ROBOT_CONST::PID_KO, 
     diff::ROBOT_CONST::PWM_MAX, diff::ROBOT_CONST::PWM_MIN);
 
-fwd::ServoMotor servo_left(fwd::HARDWARE::SERVO_LEFT);
-fwd::ServoMotor servo_right(fwd::HARDWARE::SERVO_RIGHT);
+fwd::ServoMotor servo_left(max_servo_pos, min_servo_pos, fwd::HARDWARE::SERVO_LEFT);
+fwd::ServoMotor servo_right(max_servo_pos, min_servo_pos, fwd::HARDWARE::SERVO_RIGHT);
 
 void setup()
 {
@@ -322,8 +324,8 @@ void timer_fwd_callback(rcl_timer_t * timer, int64_t last_call_tm)
     RCLC_UNUSED(last_call_tm);
     if(timer != NULL)
     {
-        float left_pos = servo_left.getPositionRad();
-        float right_pos = servo_right.getPositionRad();
+        float left_pos = servo_left.getPositionRad() - M_PI_2;
+        float right_pos = servo_right.getPositionRad() - M_PI_2;
         RCSOFTCHECK(rcl_publish(&servo_left_pub, (const void*)&left_pos, NULL));
         RCSOFTCHECK(rcl_publish(&servo_right_pub, (const void*)&right_pos, NULL));
     }
@@ -331,10 +333,10 @@ void timer_fwd_callback(rcl_timer_t * timer, int64_t last_call_tm)
 
 void cmd_servo_left_callback(const void *msgin)
 {
-    servo_left.setPositionRad(servo_left_cmd.data);
+    servo_left.setPositionRad((float) servo_left_cmd.data + M_PI_2);
 }
 
 void cmd_servo_right_callback(const void *msgin)
 {
-    servo_right.setPositionRad(servo_right_cmd.data);
+    servo_right.setPositionRad((float) servo_right_cmd.data + M_PI_2);
 }

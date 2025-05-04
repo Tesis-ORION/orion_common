@@ -11,13 +11,13 @@ namespace fwd
 
     void ServoMotor::setPositionDeg(const float& degrees)
     {
-        if(degrees > 180)
+        if(degrees > this->max_pos_)
         {
-            this->servo_.write(180);
+            this->servo_.write(this->max_pos_);
         }
-        else if (degrees < 0)
+        else if (degrees < this->min_pos_)
         {
-            this->servo_.write(0);
+            this->servo_.write(this->min_pos_);
         }
         else
         {
@@ -32,14 +32,14 @@ namespace fwd
 
     void ServoMotor::setPositionRad(const float& radians)
     {
-        float pos = radians / M_PI * 180;
-        if(pos > 180)
+        float pos = (float) (radians / M_PI * 180.0);
+        if(pos > this->max_pos_)
         {
-            this->servo_.write(180);
+            this->servo_.write(this->max_pos_);
         }
-        else if (pos < 0)
+        else if (pos < this->min_pos_)
         {
-            this->servo_.write(0);
+            this->servo_.write(this->min_pos_);
         }
         else
         {
@@ -49,6 +49,6 @@ namespace fwd
 
     float ServoMotor::getPositionRad()
     {
-        return (this->servo_.read() / M_PI * 180);
+        return ( (float) this->servo_.read() * M_PI / 180.0);
     }
 }
