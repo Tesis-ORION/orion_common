@@ -145,7 +145,7 @@ void setup()
     ));
 
     const unsigned int timer_timeout = 1000 / diff::ROBOT_CONST::PID_RATE;
-    const unsigned int servo_timeout = 1000;
+    const unsigned int servo_timeout = 250;
 
     RCCHECK(rclc_timer_init_default2(
         &timer_diff,
@@ -324,6 +324,8 @@ void timer_fwd_callback(rcl_timer_t * timer, int64_t last_call_tm)
     RCLC_UNUSED(last_call_tm);
     if(timer != NULL)
     {
+        servo_left.approximatePositionDeg();
+        servo_right.approximatePositionDeg();
         float left_pos = servo_left.getPositionRad() - M_PI_2;
         float right_pos = servo_right.getPositionRad() - M_PI_2;
         RCSOFTCHECK(rcl_publish(&servo_left_pub, (const void*)&left_pos, NULL));
@@ -333,10 +335,12 @@ void timer_fwd_callback(rcl_timer_t * timer, int64_t last_call_tm)
 
 void cmd_servo_left_callback(const void *msgin)
 {
-    servo_left.setPositionRad((float) servo_left_cmd.data + M_PI_2);
+    // servo_left.setPositionRad((float) servo_left_cmd.data + M_PI_2);
+    servo_left.setObjectiveRad(servo_left_cmd.data + M_PI_2);
 }
 
 void cmd_servo_right_callback(const void *msgin)
 {
-    servo_right.setPositionRad((float) servo_right_cmd.data + M_PI_2);
+    // servo_right.setPositionRad((float) servo_right_cmd.data + M_PI_2);
+    servo_right.setObjectiveRad(servo_right_cmd.data + M_PI_2);
 }

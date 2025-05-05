@@ -51,4 +51,31 @@ namespace fwd
     {
         return ( (float) this->servo_.read() * M_PI / 180.0);
     }
+
+    void ServoMotor::approximatePositionDeg()
+    {
+        const int pos = this->getPositionDeg();
+        const int diff =  pos - this->objective_;
+        if(!(abs(diff) <= 1.0))
+        {
+            if(diff > 0)
+            {
+                this->setPositionDeg(pos + (diff > 10 ? 10 : diff));
+            }
+            else
+            {
+                this->setPositionDeg(pos - (diff < -10 ? 10 : diff));
+            }
+        }
+    }
+
+    void ServoMotor::setObjectiveDeg(float degrees)
+    {
+        this->objective_ = degrees;
+    }
+
+    void ServoMotor::setObjectiveRad(float radians)
+    {
+        this->setObjectiveDeg(radians * 180 / M_PI);
+    }
 }

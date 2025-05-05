@@ -12,6 +12,7 @@ namespace fwd
         unsigned int min_pos_{0};
         unsigned int pwm_pin_{0};
         float position_{0};
+        float objective_{0};
         Servo servo_;
     public:
         ServoMotor(const unsigned int max_pos, const unsigned int min_pos, 
@@ -23,6 +24,9 @@ namespace fwd
         float getPositionDeg();
         void setPositionRad(const float& radians);
         float getPositionRad();
+        void approximatePositionDeg();
+        void setObjectiveDeg(float degrees);
+        void setObjectiveRad(float radians);
     };
 }
 
