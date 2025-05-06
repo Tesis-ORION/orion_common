@@ -2,7 +2,7 @@
 
 ## Purpose
 
-A demo on using two JGA25-371 DC Motors in order to subscribe to a twist topic in order to move. It considers the usage of the L298N driver and the lecture of the two encoder channel of both motors.
+Code using two JGA25-371 DC Motors in order to subscribe to a twist topic in order to move. It considers the usage of the L298N driver and the lecture of the two encoder channel of both motors, which aims to connect with a Differentil Controller with ros2_control by using topics.. It also connects two servo motors ready for a forward command controller in ros2_control by implementing ROS 2 topics.
 
 This is aimed to mount a code capable for future integrations with ros2_control.
 
@@ -10,25 +10,28 @@ NOTE: The motors are connected in a different way, as OUT1 (+) and OUT2 (-) are 
 
 A brief note on them is shown below:
 
-- **Left:**
+- **Motor Left:**
   - **Encoder A:** GPIO32
   - **Encoder B:** GPIO33
   - **Motor Forward (IN3):** GPIO22
   - **Motor Backward (IN4):** GPIO21
   - **Motor Enable (ENB):** GPIO17
-- **Rght:**
+- **Motor Right:**
   - **Encoder A:** GPIO34
   - **Encoder B:** GPIO35
   - **Motor Forward (IN3):** GPIO19
   - **Motor Backward (IN4):** GPIO18
   - **Motor Enable (ENB):** GPIO16
-
+- **Servo Right:**
+  - **PWM Pin:** GPIO23
+- **Servo Right:**
+  - **PWM Pin:** GPIO25
 
 ## Guide step by step
 
 1. Make sure your PlatformIO installation is ready, do not forget to follow the [official instructions](https://github.com/micro-ROS/micro_ros_platformio) on Github. Also, do not forget to set up your **Micro-ROS** setup as present in this [micros-ros-tutorial](https://micro.ros.org/docs/tutorials/core/first_application_rtos/freertos/)
 
-2. Open the project [01_hello_micro_ros](/m06_hardware_interaction/03_micro_ros_usage/12_diff_ctl_jga25/) by using PlatformIO VS Code extension.
+2. Open the project [orion_ctl_micro_ros](/orion_base/orion_ctl_micro_ros/) by using PlatformIO VS Code extension.
 
 3. Connect the ESP32 to your computer and give the proper permissions, for example:
 
@@ -74,7 +77,7 @@ A brief note on them is shown below:
 
     ~~~bash
     ros2 topic list
-    # Check for tht existence of /diff_ctl_left_enc and /diff_ctl_right_enc
+    # Check for tht existence of /diff_ctl_left_enc, /diff_ctl_right_enc and /fwd... topics.
     ~~~
 
 12. On separated terminals, subscribe with **ros2 topic echo**:
