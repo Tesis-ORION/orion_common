@@ -1,14 +1,19 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:property name="motor" value="100"/>
     <xacro:if value="${ros2_control}">
         <xacro:if value="${ctl_type == 'micro_ros'}">
-        
             <ros2_control name="DiffRealRobot" type="system">
                 <hardware>
                     <plugin>orion_control/DiffDriveOrion</plugin>
                     <param name="left_wheel_name">coupling_11_joint</param>
                     <param name="right_wheel_name">coupling_12_joint</param>
-                    <param name="enc_ticks_per_rev">204</param>
+                    <xacro:if value="${motor == 1000}">
+                        <param name="enc_ticks_per_rev">204</param>
+                    </xacro:if>
+                    <xacro:if value="${motor == 100}">
+                        <param name="enc_ticks_per_rev">1250</param>
+                    </xacro:if>
                 </hardware>
                 <joint name="coupling_11_joint">
                     <command_interface name="velocity">

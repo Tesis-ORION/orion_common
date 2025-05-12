@@ -6,29 +6,42 @@ namespace diff
     struct HARDWARE
     {
         // ------------------- Motor Left --------------------------
-        
+
+        // NOTE: If the feedback received doesn't match the dir,
+	// then proceed to exchange the encoder ports.
+
         // Encoder Channel A
-        static const unsigned int ML_ENCA = 32;
+        static const unsigned int ML_ENCA = 33;
         // Encoder Channel B
-        static const unsigned int ML_ENCB = 33;
+        static const unsigned int ML_ENCB = 32;
+
+	// NOTE: If the direction of the motors is reversed,
+	// then proceed to exchange Forward and Backward ports.
+
         // Driver Forward Pin
-        static const unsigned int ML_FORW = 22;
+        static const unsigned int ML_FORW = 21;
         // Driver Backward Pin
-        static const unsigned int ML_BACW = 21;
+        static const unsigned int ML_BACW = 22;
         // Driver Enable Pin
         static const unsigned int ML_EN = 17;
 
         // ------------------- Motor RIGHT --------------------------
-        
-        // Check if it is valid, or exchange enc ports
+
+        // NOTE: If the feedback received doesn't match the dir,
+        // then proceed to exchange the encoder ports.
+
         // Encoder Channel A
-        static const unsigned int MR_ENCA = 35;
+        static const unsigned int MR_ENCA = 34;
         // Encoder Channel B
-        static const unsigned int MR_ENCB = 34;
+        static const unsigned int MR_ENCB = 35;
         // Driver Forward Pin
-        static const unsigned int MR_FORW = 19;
+
+	// NOTE: If the direction of the motors is reversed,
+        // then proceed to exchange Forward and Backward ports.
+
+        static const unsigned int MR_FORW = 18;
         // Driver Backward Pin
-        static const unsigned int MR_BACW = 18;
+        static const unsigned int MR_BACW = 19;
         // Driver Enable Pin
         static const unsigned int MR_EN = 16;
     };
