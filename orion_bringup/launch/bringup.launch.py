@@ -148,8 +148,20 @@ def generate_robot_bringup(context):
     # Return configuration as a set
     return [rsp_node, controller_node]
 
+
 def generate_launch_description():
     ld = LaunchDescription(ARGS)
+
+    ld.add_action(Node(
+        package="micro_ros_agent",
+        executable="micro_ros_agent",
+        output="screen",
+        arguments=[
+            "serial",
+            "--dev",
+            "/dev/ttyUSB3"
+        ]
+    ))
 
     ld.add_action(OpaqueFunction(function=generate_robot_bringup))
 
