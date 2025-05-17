@@ -11,7 +11,7 @@ find_package(orion_description REQUIRED)
 find_package(orion_control REQUIRED)
 
 install(
-    DIRECTORY launch
+    DIRECTORY launch config
     DESTINATION share/${PROJECT\_NAME}
 )
 

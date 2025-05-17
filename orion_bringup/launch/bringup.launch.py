@@ -6,11 +6,14 @@ import xacro
 # ............................ Launch dependencies .............................
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, OpaqueFunction
+from launch.actions import (DeclareLaunchArgument, IncludeLaunchDescription,
+    OpaqueFunction)
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, Command, PathJoinSubstitution
 
-from launch_ros.actions import Node
+from launch_ros.actions import (Node, ComposableNodeContainer,
+    LoadComposableNodes)
+from launch_ros.descriptions import ComposableNode
 from launch_ros.substitutions import FindPackageShare
 from launch_ros.parameter_descriptions import ParameterValue
 
@@ -148,9 +151,55 @@ def generate_robot_bringup(context):
     # Return configuration as a set
     return [rsp_node, controller_node]
 
+def setup_lidar(context):
+    lidar_elements = []
+    lidar_params = os.path.join(get_package_share_directory('orion_bringup'),
+	'config', 'ldlidar.yaml')
 
+    ldlidar_container = ComposableNodeContainer(
+	name='ldlidar_container',
+        package='rclcpp_components',
+        namespace='',
+        executable='component_container_isolated',
+        composable_node_descriptions=[],
+        output='screen',
+    )
+
+    lidar_elements.append(ldlidar_container)
+
+    ldlidar_component = ComposableNode(
+        package='ldlidar_component',
+        plugin='ldlidar::LdLidarComponent',
+        name='ldlidar_node',
+        parameters=[lidar_params],
+        extra_arguments=[{'use_intra_process_comms': True}]
+    )
+
+    load_composable_node = LoadComposableNodes(
+        target_container='ldlidar_container',
+        composable_node_descriptions=[ldlidar_component]
+    )
+
+    lidar_elements.append(load_composable_node)
+
+    return lidar_elements
 def generate_launch_description():
+    # Paths
+    lidar_config = os.path.join(
+        get_package_share_directory('orion_bringup'),
+        'config', 'lidar_lifecycle_mgr.yaml'
+    )
+
     ld = LaunchDescription(ARGS)
+
+    ld.add_action(Node(
+        package='nav2_lifecycle_manager',
+        executable='lifecycle_manager',
+	output="screen",
+        parameters=[lidar_config]
+    ))
+
+    
 
     ld.add_action(Node(
         package="micro_ros_agent",
@@ -163,8 +212,19 @@ def generate_launch_description():
         ]
     ))
 
+    ld.add_action(Node(
+        package='depth_maixsense_a010',
+        executable='publisher',
+        name='depth_maixsense_a010_publisher',
+        parameters=[{
+        'device': '/dev/ttyUSB1'
+        }]
+    ))
+
     ld.add_action(OpaqueFunction(function=generate_robot_bringup))
 
     ld.add_action(OpaqueFunction(function=load_controllers))
+
+    ld.add_action(OpaqueFunction(function=setup_lidar))
 
     return ld
