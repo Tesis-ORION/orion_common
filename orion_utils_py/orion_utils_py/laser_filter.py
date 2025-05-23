@@ -8,10 +8,10 @@ class LaserFilterNode(Node):
 
         # Declare parameter as a flat list
         self.declare_parameter('filter_ranges', [
-            0.5585054, 0.837758, 
-            2.303835, 2.600541, 
-            3.787364, 4.049164, 
-            5.393067, 5.654867
+            0.5585054, 0.9250245,
+            2.2165685, 2.6878075,
+            3.7000975, 4.1364305,
+            5.393067, 5.7421335
         ])
 
         filter_ranges_flat = self.get_parameter('filter_ranges').get_parameter_value().double_array_value

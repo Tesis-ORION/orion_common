@@ -206,7 +206,7 @@ def generate_launch_description():
     ld.add_action(Node(
         package='micro_ros_agent',
         executable="micro_ros_agent",
-        name='micro_ros_agent_actuators'
+        name='micro_ros_agent_actuators',
         output="screen",
         arguments=[
             "serial",
@@ -218,13 +218,20 @@ def generate_launch_description():
     ld.add_action(Node(
         package='micro_ros_agent',
         executable="micro_ros_agent",
-        name='micro_ros_agent_interaction'
+        name='micro_ros_agent_interaction',
         output="screen",
         arguments=[
             "serial",
             "--dev",
             "/dev/ttyESP32_2"
         ]
+    ))
+
+    ld.add_action(Node(
+        package='orion_utils_py',
+        executable='laser_filer',
+        name='laser_filter',
+        output='screen'
     ))
 
     # A010
