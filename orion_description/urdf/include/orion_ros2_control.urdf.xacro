@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <xacro:property name="motor" value="100"/>
     <xacro:if value="${ros2_control}">
         <xacro:if value="${ctl_type == 'micro_ros'}">
             <ros2_control name="DiffRealRobot" type="system">

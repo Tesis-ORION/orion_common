@@ -250,7 +250,12 @@
             <axis xyz="0.0 0.0 1.0"/>
             <parent link="motor_support_${front}${side}"/>
             <child link="coupling_${front}${side}"/>
-            <limit effort="0.40964" velocity="104.97"/>
+            <xacro:if value="${motor == 1000}">
+                <limit effort="0.01079" velocity="104.97"/>
+            </xacro:if>
+            <xacro:if value="${motor == 100}">
+                <limit effort="0.08336" velocity="10.47"/>
+            </xacro:if>
             <origin xyz="0 ${(0.01120 + 0.000325)*muls} 0" rpy="${-pi_2*muls+orin} 0 0"/>
         </joint>
         <gazebo reference="coupling_${front}${side}">

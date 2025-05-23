@@ -13,21 +13,32 @@ from launch_ros.actions import Node
 # //////////////////////////// GLOBAL DEFINITIONS //////////////////////////////
 ARGS = [
     DeclareLaunchArgument('camera', default_value='os30a',
-        description="Choose a cam for the robot (os30a, astra_s, a010)"),
+        description="Choose a cam for the robot (os30a, astra_s, a010)",
+        choices=['os30a', 'astra_s', 'a010']),
     DeclareLaunchArgument('servo',default_value='true',
-        description="Boolean to include or not the servos"),
+        description="Boolean to include or not the servos",
+        choices=['true', 'false']),
     DeclareLaunchArgument('g_mov',default_value='false',
-        description="When using camera a010, whether to include or not G Mov"),
+        description="When using camera a010, whether to include or not G Mov",
+        choices=['true', 'false']),
     DeclareLaunchArgument('rasp', default_value='rpi5',
-        description="Select 4 for Raspberry Pi 4B, or 5 for Raspberry Pi 5"),
-    DeclareLaunchArgument('gazebo',default_value='true',
-        description="True for using gazebo tags, false otherwise"),
+        description="Select 4 for Raspberry Pi 4B, or 5 for Raspberry Pi 5",
+        choices=['rpi4', 'rpi5']),
     DeclareLaunchArgument('ros2_control', default_value='false',
-        description="Whether to use ros2_control tags for motor controllers"),
+        description="Whether to use ros2_control tags for motor controllers",
+        choices=['true', 'false']),
     DeclareLaunchArgument('simplified', default_value='false',
-        description="To ignore no-functional components in the URDF description"),
+        description="To ignore no-functional components in the URDF description",
+        choices=['true', 'false']),
+    DeclareLaunchArgument('motor', default_value='100',
+        description="Select your  motor nominal speed (rpm) at 12V",
+        choices=['1000', '100']),
     DeclareLaunchArgument('ctl_type', default_value='micro_ros',
-        description="Select controller communication option: micro_ros or serial")
+        description="Select controller communication option",
+        choices=['serial', 'micro_ros']),
+    DeclareLaunchArgument('gazebo', default_value='false',
+        description="To use GZ configurations",
+        choices=['true', 'false'])
 ]
 
 # /////////////////////////// FUNCTIONS DEFINITIONS ////////////////////////////
@@ -57,6 +68,7 @@ def generate_robot_description(context):
         'gazebo': get_argument(context, "gazebo"),
         'ros2_control': get_argument(context, "ros2_control"),
         'simplified': get_argument(context, 'simplified'),
+        'motor': get_argument(context, 'motor'),
         'ctl_type':get_argument(context, 'ctl_type')
     }
 
