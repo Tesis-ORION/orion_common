@@ -9,7 +9,9 @@ from launch import LaunchDescription
 from launch.actions import (DeclareLaunchArgument, IncludeLaunchDescription,
     OpaqueFunction)
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration, Command, PathJoinSubstitution
+from launch.substitutions import (LaunchConfiguration, Command, PathJoinSubstitution,
+    PythonExpression)
+from launch.conditions import IfCondition
 
 from launch_ros.actions import (Node, ComposableNodeContainer,
     LoadComposableNodes)
@@ -183,6 +185,8 @@ def setup_lidar(context):
     lidar_elements.append(load_composable_node)
 
     return lidar_elements
+
+
 def generate_launch_description():
     # Paths
     lidar_config = os.path.join(
@@ -199,26 +203,57 @@ def generate_launch_description():
         parameters=[lidar_config]
     ))
 
-    
-
     ld.add_action(Node(
-        package="micro_ros_agent",
+        package='micro_ros_agent',
         executable="micro_ros_agent",
+        name='micro_ros_agent_actuators'
         output="screen",
         arguments=[
             "serial",
             "--dev",
-            "/dev/ttyUSB3"
+            "/dev/ttyESP32_1"
         ]
     ))
 
     ld.add_action(Node(
+        package='micro_ros_agent',
+        executable="micro_ros_agent",
+        name='micro_ros_agent_interaction'
+        output="screen",
+        arguments=[
+            "serial",
+            "--dev",
+            "/dev/ttyESP32_2"
+        ]
+    ))
+
+    # A010
+    ld.add_action(Node(
         package='depth_maixsense_a010',
         executable='publisher',
         name='depth_maixsense_a010_publisher',
-        parameters=[{
-        'device': '/dev/ttyUSB1'
-        }]
+        parameters=[{'device': '/dev/ttyUSB1'}],
+        condition=IfCondition(LaunchConfiguration('camera').perform(None) == 'a010')
+    ))
+
+    os30a_launch_path = os.path.join(
+        get_package_share_directory('depth_ydlidar_os30a'),
+        'launch',
+        'apc_camera.launch.py'
+    )
+    ld.add_action(IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(os30a_launch_path),
+        condition=IfCondition(PythonExpression(["'", LaunchConfiguration('camera'), "' == 'os30a'"]))
+    ))
+
+    astra_launch_path = os.path.join(
+        get_package_share_directory('orbbec_camera'),
+        'launch',
+        'astra.launch.py'
+    )
+    ld.add_action(IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(astra_launch_path),
+        condition=IfCondition(PythonExpression(["'", LaunchConfiguration('camera'), "' == 'astra_s'"]))
     ))
 
     ld.add_action(OpaqueFunction(function=generate_robot_bringup))
