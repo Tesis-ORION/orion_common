@@ -1,16 +1,20 @@
-# ORION Assets
+# 🤖 ORION Assets
 
-## Overview
+## 🌟 Overview
 
-This directory contains the related files for the design of ORION robot.
+This directory contains the related files for the design, manufacturing and fabrication of the ORION robot.
 
-## License
+---
+
+## 📝 License
 
 The source code is released under a [BSD 3-Clause license](/LICENSE).
 
+The CAD files (refered to the FreeCAD assets, meshes and drawings) are realeased under the Creative Commons Attribution-NonCommercial 4.0 International ([CC BY-NC 4.0](/orion_assets/LICENSE))  
+
 **Author**: Daniel Felipe López Escobar.
 
-The *orion_description* package has been tested under [ROS](https://www.ros.org/) Jazzy.
+---
 
 ## Content
 
