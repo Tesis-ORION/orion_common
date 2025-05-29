@@ -12,7 +12,7 @@
     <xacro:property name="ctl_type" default="micro_ros"/>
 
     <!-- For colors consider mdf, transparent or pla -->
-    <xacro:property name="color" default="mdf"/>
+    <xacro:property name="color" default="pla"/>
 
     <!-- Include other files -->
     <xacro:include filename="$(find orion_description)/urdf/include/orion_materials.urdf.xacro"/>

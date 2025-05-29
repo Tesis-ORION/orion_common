@@ -125,12 +125,6 @@ def generate_robot_bringup(context):
     # Obtaining robot description and making the substitution
     robot_description_config = xacro.process_file(xacro_file, mappings=mappings)
     robot_desc = robot_description_config.toprettyxml(indent='  ')
-    robot_desc = robot_desc.replace(
-        'package://orion_description/', f'file://{pkg_description}/'
-    )
-    robot_desc = robot_desc.replace(
-        'package://g_mov_description/', f'file://{pkg_gmov}/'
-    )
 
     # Launch node for robot state publisher
     rsp_node = Node(

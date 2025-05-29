@@ -46,7 +46,7 @@ The repository is organized into modular ROS 2 packages:
 
 These components provide extended capabilities for sensors, simulation, perception, and interaction:
 
-- **[orion_chat](https://github.com/Tesis-ORION/orion_chat): Natural Language Processing interface for text-based interaction.
+- **[orion_chat](https://github.com/Tesis-ORION/orion_chat):** Natural Language Processing interface for text-based interaction.
 
 - **[orion_gz](https://github.com/Tesis-ORION/orion_gz):** Simulation of the robot in GZ Harmonic.
 
