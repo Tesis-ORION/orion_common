@@ -324,8 +324,10 @@ void timer_fwd_callback(rcl_timer_t * timer, int64_t last_call_tm)
     RCLC_UNUSED(last_call_tm);
     if(timer != NULL)
     {
-        servo_left.approximatePositionDeg();
-        servo_right.approximatePositionDeg();
+        // To use incremental position movement, uncomment the next servo cmd:
+        // servo_left.approximatePositionDeg();
+        // servo_right.approximatePositionDeg();
+
         float left_pos = servo_left.getPositionRad() - M_PI_2;
         float right_pos = servo_right.getPositionRad() - M_PI_2;
         RCSOFTCHECK(rcl_publish(&servo_left_pub, (const void*)&left_pos, NULL));
@@ -335,12 +337,18 @@ void timer_fwd_callback(rcl_timer_t * timer, int64_t last_call_tm)
 
 void cmd_servo_left_callback(const void *msgin)
 {
-    // servo_left.setPositionRad((float) servo_left_cmd.data + M_PI_2);
-    servo_left.setObjectiveRad(servo_left_cmd.data + M_PI_2);
+    // To use direct position movement, uncomment: 
+    servo_left.setPositionRad((float) servo_left_cmd.data + M_PI_2);
+    
+    // To use incremental position movement, uncomment:
+    // servo_left.setObjectiveRad(servo_left_cmd.data + M_PI_2);
 }
 
 void cmd_servo_right_callback(const void *msgin)
 {
-    // servo_right.setPositionRad((float) servo_right_cmd.data + M_PI_2);
-    servo_right.setObjectiveRad(servo_right_cmd.data + M_PI_2);
+    // To use direct position movement, uncomment:
+    servo_right.setPositionRad((float) servo_right_cmd.data + M_PI_2);
+    
+    // To use incremental position movement, uncomment:
+    // servo_right.setObjectiveRad(servo_right_cmd.data + M_PI_2);
 }
