@@ -6,7 +6,7 @@ namespace diff
     class MotorDriver
     {
     private:
-        static constexpr int MAX_SPEED{255};
+        static constexpr int MAX_SPEED{126};
         unsigned int enable_pin_{0};
         unsigned int forw_pin_{0};
         unsigned int back_pin_{0};

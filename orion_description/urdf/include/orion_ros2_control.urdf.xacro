@@ -11,7 +11,7 @@
                         <param name="enc_ticks_per_rev">204</param>
                     </xacro:if>
                     <xacro:if value="${motor == 100}">
-                        <param name="enc_ticks_per_rev">1250</param>
+                        <param name="enc_ticks_per_rev">1248</param>
                     </xacro:if>
                 </hardware>
                 <joint name="coupling_11_joint">

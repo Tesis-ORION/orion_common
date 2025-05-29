@@ -80,6 +80,10 @@ rcl_node_t node;
 // Define timer
 rcl_timer_t timer;
 
+// Time tools
+unsigned long last_ping_time = 0;
+const unsigned long ping_interval_ms = 1000; 
+
 // Define a ROS 2 Checker
 #define RCCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){error_loop();}}
 
@@ -189,8 +193,16 @@ void setup()
 	// Initialize allocator
 	allocator = rcl_get_default_allocator();
 
-	// Create init_options
-	RCCHECK(rclc_support_init(&support, 0, NULL, &allocator));
+    // Retry agent connection
+    unsigned long start = millis();
+    rcl_ret_t ret;
+    do {
+        ret = rclc_support_init(&support, 0, NULL, &allocator);
+        if (ret != RCL_RET_OK) 
+        {
+            delay(500);
+        }
+    } while (ret != RCL_RET_OK && (millis() - start < 120000));
 
 	// Create node
 	RCCHECK(rclc_node_init_default(&node, "micro_ros_platformio_touch_node", "", 
@@ -265,7 +277,7 @@ void setup()
 // /////////////////////////// LOOP IMPLEMENTATION ///////////////////////////
 void loop() 
 {
-	// Delay required to avoid over-heating ESP32
+    // Delay required to avoid over-heating ESP32
 	delay(100);
 
 	// Spin

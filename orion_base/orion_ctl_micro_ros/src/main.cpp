@@ -91,7 +91,16 @@ void setup()
 
     allocator = rcl_get_default_allocator();
 
-    RCCHECK(rclc_support_init(&support, 0, NULL, &allocator));
+    // Retry agent connection
+    unsigned long start = millis();
+    rcl_ret_t ret;
+    do {
+        ret = rclc_support_init(&support, 0, NULL, &allocator);
+        if (ret != RCL_RET_OK) 
+        {
+            delay(500);
+        }
+    } while (ret != RCL_RET_OK && (millis() - start < 120000));
 
     RCCHECK(rclc_node_init_default(&node, "micro_ros_platformio_orion_ctl_node", "", &support));
 
