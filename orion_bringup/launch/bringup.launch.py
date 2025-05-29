@@ -36,6 +36,9 @@ ARGS = [
         description="To ignore no-functional components in the URDF description"),
     DeclareLaunchArgument('ctl_type', default_value='micro_ros',
         description="Select controller communication option: micro_ros or serial"),
+    DeclareLaunchArgument('motor', default_value='100',
+        description="Select your  motor nominal speed (rpm) at 12V",
+        choices=['1000', '100']),
 ]
 
 def get_argument(context, arg):
@@ -115,7 +118,8 @@ def generate_robot_bringup(context):
         'gazebo': 'false',
         'ros2_control': 'true',
         'simplified': get_argument(context, 'simplified'),
-        'ctl_type':get_argument(context, 'ctl_type')
+        'ctl_type': get_argument(context, 'ctl_type'),
+        'motor': get_argument(context, 'motor')
     }
 
     # Obtaining robot description and making the substitution
@@ -229,7 +233,7 @@ def generate_launch_description():
 
     ld.add_action(Node(
         package='orion_utils_py',
-        executable='laser_filer',
+        executable='laser_filter',
         name='laser_filter',
         output='screen'
     ))
@@ -239,8 +243,8 @@ def generate_launch_description():
         package='depth_maixsense_a010',
         executable='publisher',
         name='depth_maixsense_a010_publisher',
-        parameters=[{'device': '/dev/ttyUSB1'}],
-        condition=IfCondition(LaunchConfiguration('camera').perform(None) == 'a010')
+        parameters=[{'device': '/dev/ttyA010'}],
+        condition=IfCondition(PythonExpression(["'", LaunchConfiguration('camera'), "' == 'a010'"]))
     ))
 
     os30a_launch_path = os.path.join(
@@ -258,6 +262,7 @@ def generate_launch_description():
         'launch',
         'astra.launch.py'
     )
+
     ld.add_action(IncludeLaunchDescription(
         PythonLaunchDescriptionSource(astra_launch_path),
         condition=IfCondition(PythonExpression(["'", LaunchConfiguration('camera'), "' == 'astra_s'"]))
