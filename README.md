@@ -40,6 +40,8 @@ The repository is organized into modular ROS 2 packages:
 - **[orion_docker](/orion_docker/README.md):** Docker support for containerized development and deployment.
 - **[orion_utils_py](/orion_utils_py/README.md):** Utility scripts in Python to support ROS 2 development and integration.
 
+To build you robot, review the hardware changes and learn aout the versions of the robot, do not forget to check the [ORION Wiki](https://github.com/Tesis-ORION/orion_common/wiki)
+
 ---
 
 ## 🧩 Other Functionalities

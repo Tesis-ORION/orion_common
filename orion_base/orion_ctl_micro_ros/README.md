@@ -2,11 +2,11 @@
 
 ## Purpose
 
-Code using two JGA25-371 DC Motors in order to subscribe to a twist topic in order to move. It considers the usage of the L298N driver and the lecture of the two encoder channel of both motors, which aims to connect with a Differentil Controller with ros2_control by using topics.. It also connects two servo motors ready for a forward command controller in ros2_control by implementing ROS 2 topics.
+Code using two JGA25-371 DC Motors in order to subscribe to a twist topic in order to move. It considers the usage of the L298N driver and the lecture of the two encoder channel of both motors, which aims to connect with a Differentil Controller with ros2_control by using topics. It also connects two servo motors ready for a forward command controller in ros2_control by implementing ROS 2 topics.
 
-This is aimed to mount a code capable for future integrations with ros2_control.
+This is aimed to mount a code capable for a integration with multiple hardware interfaces of ros2_control (a [DiffDriveController](/orion_control/src/diffdrive_orion.cpp) and two [ForwardCommandControllers](/orion_control/src/forward_orion.cpp)).
 
-NOTE: The motors are connected in a different way, as OUT1 (+) and OUT2 (-) are for the right motor, and OUT3 (+) and OUT4(-) are for the left motor. Check the **hardware** file on the **lib** directory for more about connections.
+NOTE: The motors are connected in a special way in the L298 driver, as OUT1 (+) and OUT2 (-) are for the right motor, and OUT3 (+) and OUT4(-) are for the left motor. Check the **hardware** file on the **lib** directory for more about connections.
 
 A brief note on them is shown below:
 
@@ -27,60 +27,103 @@ A brief note on them is shown below:
 - **Servo Right:**
   - **PWM Pin:** GPIO25
 
-## Guide step by step
+For more information about the connections, check the [ORION Wiki](https://github.com/Tesis-ORION/orion_common/wiki/Building-your-own-ORION-robot#electronics-and-schematics)
 
-1. Make sure your PlatformIO installation is ready, do not forget to follow the [official instructions](https://github.com/micro-ROS/micro_ros_platformio) on Github. Also, do not forget to set up your **Micro-ROS** setup as present in this [micros-ros-tutorial](https://micro.ros.org/docs/tutorials/core/first_application_rtos/freertos/)
+## Uploading and running application
 
-2. Open the project [orion_ctl_micro_ros](/orion_base/orion_ctl_micro_ros/) by using PlatformIO VS Code extension.
-
-3. Connect the ESP32 to your computer and give the proper permissions, for example:
+1. Prepare thw **Platformio** workspace: Install dependencies, build and upload
 
     ~~~bash
-    sudo chmod 666 /dev/ttyUSB0 # Check which interface you are using as in your case it may not be USB0
+    cd /path/to/orion_ctl_micro_ros
+    pio lib install
+    pio run
+    pio run --target upload
     ~~~
 
-4. Upload the code, do not forget to press the **Boot** button and check that the process is done correctly.
+    Do not forget to check the **udev** rules at [orion_base](/orion_base/README.md)
 
-5. Go to your **µ-ros** workspace.
+2. Go to your workspace
 
     ~~~bash
-    cd ~/microros_ws
+    cd ~/ros2_ws
+
+    # If you do not have one, create it
+    mkdir -p ~/ros2_ws/src
+    cd ~/ros2_ws
     ~~~
 
-6. Run the local set up, do not forget to follow the steps from the guide for FreeRTOS systems mentioned in step 1 to access the next steps.
+3. Clone the µ-ROS repository, update and install dependencies, if you haven't done it before.
 
     ~~~bash
-    source instal/local_setup.bash
+    git clone -b $ROS_DISTRO https://github.com/micro-ROS/micro_ros_setup.git src/micro_ros_setup
+    sudo apt update && rosdep update
+    rosdep install --from-paths src --ignore-src -y
+    sudo apt-get install python3-pip
     ~~~
 
-7. Then, create the µ-ros agent
+4. Build your workspace.
 
     ~~~bash
-    ros2 run micro_ros_setup create_agent-ws.sh
+    colcon build
+    source ~/ros2_ws/install/local_setup.bash
     ~~~
 
-8. After that, build the agent. You may see some warnings.
+5. Create a firmware workspace, if you haven't done it before.
+
+    ~~~bash
+    ros2 run micro_ros_setup create_firmware_ws.sh freertos esp32
+    ~~~
+
+6. Create the agent, if you haven't.
+
+    ~~~bash
+    ros2 run micro_ros_setup create_agent_ws.sh
+    ~~~
+
+7. Build the agent if you haven't.
 
     ~~~bash
     ros2 run micro_ros_setup build_agent.sh
+    source install/local_setup.bash
     ~~~
 
-9. Finally, run the agent.
+8. Give the proper permissions to the device.
 
     ~~~bash
-    ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyUSB0 # Change the dev according your set up
+    sudo chmod 777 /dev/ttyESP32_1
+    sudo chmod 666 /dev/ttyUSB0 # Or the proper device
     ~~~
 
-10. If the microcontroller do not seem to connect, reboot it or disconnect/reconnect it.
-
-11. Check the communication:
+9. You are ready to experiment with the application.
 
     ~~~bash
-    ros2 topic list
-    # Check for tht existence of /diff_ctl_left_enc, /diff_ctl_right_enc and /fwd... topics.
+    ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyESP32_1
     ~~~
 
-12. On separated terminals, subscribe with **ros2 topic echo**:
+## Topics
+
+Once the ESP32 is connected and the agent is communicating with it, you should watch the topics that are publishing/subscribing info of the motors (DC motors and servo motors). Let's explore them:
+
+~~~bash
+ros2 topic list -t
+~~~
+
+So you should watch the next topics:
+
+~~~bash
+/diff_ctl_left_enc (std_msgs/msg/Int64)
+diff_ctl_motor_cmd (std_msgs/msg/Int64MultiArray)
+/diff_ctl_right_enc (std_msgs/msg/Int64)
+/fwd_servo_left_cmd (std_msgs/msg/Float32)
+/fwd_servo_left_feedback (std_msgs/msg/Float32)
+/fwd_servo_right_cmd (std_msgs/msg/Float32)
+/fwd_servo_right_feedback (std_msgs/msg/Float32)
+~~~
+
+With this, you can do the next
+    ~~~
+
+- You can check the encoder count changes per wheel, For this, on separated terminals, subscribe with **ros2 topic echo**:
 
     ~~~bash
     # Terminal 1
@@ -90,10 +133,9 @@ A brief note on them is shown below:
     ros2 topic echo /diff_ctl_right_enc
     ~~~
 
-13. Start moving the motors manually and check the increment/decrement of both, based on the front (positive) and back (negative) directions. If they
-are inverted check connections or review ports on code.
+    Start moving the motors manually and check the increment/decrement of both, based on the front (positive) and back (negative) directions. If they are inverted check connections or review ports on code ([harwdare.hpp](/orion_base/orion_ctl_micro_ros/lib/hardware/hardware.hpp))
 
-14. Then, proceed to r publish to the controller, by using a muti array topic as shown below:
+- You can command the motors by using a muti array topic as shown below:
 
     ~~~bash
     ros2 topic pub /diff_ctl_motor_cmd std_msgs/msg/Int64MultiArray "layout:
@@ -102,7 +144,31 @@ are inverted check connections or review ports on code.
     data: [0,0]" --once
     ~~~
 
-15. Send different values and test moving one or two motors, it accept any integer value. However, for considering a case of full range, it should be [-7500,  7500].
+    The data in the message should refer to the encoder count change in position you require to do in a time lapse, this may vary depending of your motor as a 1000 rpm motor may have less encoder counts than a 100 rpm motor due to the reductor configuration.
+
+- You can write a servo position by using:
+
+    ~~~bash
+    # Servo angles must be passed as radians
+    ros2 topic pub /fwd_servo_left_cmd std_msgs/msg/Float32 "data: 1.0"
+    ros2 topic pub /fwd_servo_right_cmd std_msgs/msg/Float32 "data: 1.0"
+    ~~~
+
+    And you can read the servo position by using:
+
+    ~~~bash
+    # Terminal 1
+    ros2 topic echo /fwd_servo_left_feedback
+    # Terminal 2
+    ros2 topic echo /fwd_servo_right_feedback
+    ~~~
+
+## Additional notes
+
+- Do not run the agent while the bringup is active, as you may cause to interrupt it.
+
+- Avoid to publish to the DC motors and servo motors topics when using the proper ros2_controllers as you may affect other nodes processes.
+
 
 ## Additional resources
 
