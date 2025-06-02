@@ -14,7 +14,7 @@
 
 // ------------------------ Required messages ---------------------------------
 #include <std_msgs/msg/bool.h>
-#include <std_msgs/msg/int64.h>
+#include <std_msgs/msg/int32.h>
 
 // //////////////////////// GLOBAL DEFINITIONS ////////////////////////////////
 
@@ -62,7 +62,7 @@ std_msgs__msg__Bool ts_ur_msg;
 std_msgs__msg__Bool ts_ul_msg;
 std_msgs__msg__Bool ts_lr_msg;
 std_msgs__msg__Bool ts_ll_msg;
-std_msgs__msg__Int64 emotion_msg;
+std_msgs__msg__Int32 emotion_msg;
 
 // Define executor
 rclc_executor_t executor;
@@ -126,32 +126,32 @@ void setup()
 		&ts_ur_publisher,
 		&node,
 		ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Bool),
-		"micro_ros_platformio_touch_pub_ur"));
+		"interaction/touch_ur"));
     
     RCCHECK(rclc_publisher_init_default(
 		&ts_ul_publisher,
 		&node,
 		ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Bool),
-		"micro_ros_platformio_touch_pub_ul"));
+		"interaction/touch_ul"));
     
     RCCHECK(rclc_publisher_init_default(
 		&ts_lr_publisher,
 		&node,
 		ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Bool),
-		"micro_ros_platformio_touch_pub_lr"));
+		"interaction/touch_lr"));
     
     RCCHECK(rclc_publisher_init_default(
 		&ts_ll_publisher,
 		&node,
 		ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Bool),
-		"micro_ros_platformio_touch_pub_ll"));
+		"interaction/touch_ll"));
 
     // Create subscriber
     RCCHECK(rclc_subscription_init_default(
 		&emotion_subscriber,
 		&node,
-		ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int64),
-		"micro_ros_platformio_node_emotion_sub"));
+		ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
+		"/emotion/int"));
 
 	// Create timer,
 	const unsigned int timer_timeout = 250;
@@ -239,7 +239,7 @@ void timer_callback(rcl_timer_t * timer, int64_t last_call_time)
 } // void timer_callback()
 
 /**
- * Callback that manages std_msgs/msgs/Int64 in order to desplay an emotion
+ * Callback that manages std_msgs/msgs/Int32 in order to desplay an emotion
  * on screen.
  * 
  * @param msgin Pointer to the message received

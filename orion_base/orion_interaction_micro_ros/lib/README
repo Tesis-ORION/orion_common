@@ -1,3 +1,8 @@
+# ORION Interaction µ-ROS Lib
+
+For now, it is empty.
+
+## PlatfomIO Library Structure
 
 This directory is intended for project specific (private) libraries.
 PlatformIO will compile them to static libraries and link into the executable file.
@@ -15,7 +20,7 @@ For example, see the structure of the following example libraries `Foo` and `Bar
 |  |  |--src
 |  |     |- Bar.c
 |  |     |- Bar.h
-|  |  |- library.json (optional. for custom build options, etc) https://docs.platformio.org/page/librarymanager/config.html
+|  |  |- library.json (optional. for custom build options, etc) More info on [LibraryManager](https://docs.platformio.org/page/librarymanager/config.html)
 |  |
 |  |--Foo
 |  |  |- Foo.c
@@ -28,7 +33,8 @@ For example, see the structure of the following example libraries `Foo` and `Bar
    |- main.c
 
 Example contents of `src/main.c` using Foo and Bar:
-```
+
+```C
 #include <Foo.h>
 #include <Bar.h>
 
@@ -42,5 +48,6 @@ int main (void)
 The PlatformIO Library Dependency Finder will find automatically dependent
 libraries by scanning project source files.
 
-More information about PlatformIO Library Dependency Finder
-- https://docs.platformio.org/page/librarymanager/ldf.html
+More information about PlatformIO Library Dependency Finder:
+
+- [LibraryManager](https://docs.platformio.org/page/librarymanager/config.html)

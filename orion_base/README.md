@@ -243,3 +243,9 @@ The reasons you can consider for this are:
 - You changed the eSP32 and the attributes are therefore differnt.
 - You are using environmental attributes, like ID_PATH, and changed the order connecttions.
 - The device isn't connected, so the udev rules isn't applied. Check the cable and the element in case they are damaged.
+
+### /dev/ttyESP32_2 not uploading program
+
+One possible reasons is the connections on the ESP32_2 (for interaction purposes), as the *lower right* touch sensor is mounted on the GPIO2. If the sensor is pressed while uploading the program, it may fail as in the documentation of the ESP32 Doit Dev Kit you have to avoid HIGH values on that pin in startup / uploading.
+
+More info on [ESP32 Pinout | Last Minute Engineering](https://lastminuteengineers.com/esp32-pinout-reference/)

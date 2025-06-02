@@ -1,4 +1,4 @@
-# Differential controller base with µ-ROS
+# Actuators code with µ-ROS
 
 ## Purpose
 
@@ -26,6 +26,9 @@ A brief note on them is shown below:
   - **PWM Pin:** GPIO23
 - **Servo Right:**
   - **PWM Pin:** GPIO25
+- Connect the servos to 5V and GND.
+- Ensure that the L298N doesn't use the 12V to power on, as you will use the 5V from the ESP32 to power it on.
+- The battery stack should provide between 9.6 V to 12.6 V, although this, make sure to connect this output to the DC motors supply at the L298N.
 
 For more information about the connections, check the [ORION Wiki](https://github.com/Tesis-ORION/orion_common/wiki/Building-your-own-ORION-robot#electronics-and-schematics)
 
@@ -121,7 +124,6 @@ diff_ctl_motor_cmd (std_msgs/msg/Int64MultiArray)
 ~~~
 
 With this, you can do the next
-    ~~~
 
 - You can check the encoder count changes per wheel, For this, on separated terminals, subscribe with **ros2 topic echo**:
 
@@ -169,9 +171,12 @@ With this, you can do the next
 
 - Avoid to publish to the DC motors and servo motors topics when using the proper ros2_controllers as you may affect other nodes processes.
 
-
 ## Additional resources
+
+- [FreeRTOS | µ-ROS](https://micro.ros.org/docs/tutorials/core/first_application_rtos/freertos/)
 
 - [ESP32 with DC Motor and L298N Motor Driver – Control Speed and Direction | Random Nerd Tutorials](https://randomnerdtutorials.com/esp32-dc-motor-l298n-motor-driver-control-speed-direction/)
 
 - [talker_c | riot-ros2 @ Github](https://github.com/astralien3000/riot-ros2/blob/3d0779b920996f4e701830b8248573cd0e23204d/examples/talker_c/main.c#L32)
+
+- [micro_ros_platfomio | micro-ROS @ Github](https://github.com/micro-ROS/micro_ros_platformio)
