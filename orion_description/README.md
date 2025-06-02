@@ -62,6 +62,8 @@ To launch the */robot_description* of the robot with the [rsp.launch.py](/orion_
 #   rasp : Whether to use 'rpi4' or 'rpi5', this will imply a change in the sound hardware.
 #   servo : Boolean (true/false) to indicate if use servo arms
 #   simplified : Boolean (true/false) to indicate the usage of the simplified URDF model.
+#   ctl_type: Control type can be 'micro-ros' or 'serial'.
+#   motor : Motor rpms to select your motor params (for now, '100' or '1000')
 #   
 ros2 launch orion_description rsp.launch.py
 ~~~
