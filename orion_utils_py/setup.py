@@ -21,6 +21,7 @@ setup(
     entry_points={
         'console_scripts': [
             'laser_filter = orion_utils_py.laser_filter:main',
+            'introducing_orion = orion_utils_py.introducing_orion:main',
         ],
     },
 )

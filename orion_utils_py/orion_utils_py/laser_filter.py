@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import LaserScan
@@ -46,7 +47,7 @@ class LaserFilterNode(Node):
         self.filter_ranges = [(filter_ranges_flat[i], filter_ranges_flat[i+1]) for i in range(0, len(filter_ranges_flat), 2)]
 
         # Suscription that will receive unfiltered scans
-        self.scan_sub = self.create_subscription(LaserScan, '/scan', self.scan_callback, 10)
+        self.scan_sub = self.create_subscription(LaserScan, '/ldlidar_node/scan', self.scan_callback, 10)
 
         # Publisher for filtered scans
         self.scan_pub = self.create_publisher(LaserScan, '/scan_filtered', 10)
