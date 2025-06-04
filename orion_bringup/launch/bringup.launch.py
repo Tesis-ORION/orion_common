@@ -198,6 +198,12 @@ def generate_launch_description():
         'config', 'lidar_lifecycle_mgr.yaml'
     )
 
+    orion_chat_launch_path = os.path.join(
+        get_package_share_directory('orion_chat'),
+        'launch',
+        'orion_robot_launch.py'
+    )
+
     ld = LaunchDescription(ARGS)
 
     ld.add_action(Node(
@@ -250,7 +256,7 @@ def generate_launch_description():
     os30a_launch_path = os.path.join(
         get_package_share_directory('depth_ydlidar_os30a'),
         'launch',
-        'apc_camera.launch.py'
+        'apc_camera_launch.py'
     )
     ld.add_action(IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os30a_launch_path),
@@ -273,5 +279,9 @@ def generate_launch_description():
     ld.add_action(OpaqueFunction(function=load_controllers))
 
     ld.add_action(OpaqueFunction(function=setup_lidar))
+
+    ld.add_action(IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(orion_chat_launch_path)
+    ))
 
     return ld
