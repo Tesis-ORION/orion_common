@@ -4,7 +4,7 @@
 
 This directory contians the embedded codes for the **ESP32**s of the **ORION** robot. They were build by using [PlatformIO](https://platformio.org/) and C/C++.
 
-To check the robot electronic connections, review the [ORION Wiki](https://github.com/Tesis-ORION/orion_common/wiki/Building-your-own-ORION-robot#electronics-and-schematics)
+To check the robot electronic connections, review the [Electronics and Schmatics](https://github.com/Tesis-ORION/orion_common/wiki/Building-your-own-ORION-robot#electronics-and-schematics) on the Wiki.
 
 ---
 
@@ -12,7 +12,7 @@ To check the robot electronic connections, review the [ORION Wiki](https://githu
 
 The source code is released under a [BSD 3-Clause license](/LICENSE).
 
-**Authors**: Daniel Felipe López Escobar, Miguel Ángel Gonzalez Rodriguez, and Alejandro Bermúdez.
+**Maintainer**: [Daniel Felipe López Escobar](https://github.com/DanielFLopez1620).
 
 The ORION Commons packages have been tested under [ROS](https://www.ros.org/) **Jazzy** distribution.
 
