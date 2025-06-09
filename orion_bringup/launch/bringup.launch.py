@@ -201,7 +201,7 @@ def generate_launch_description():
     orion_chat_launch_path = os.path.join(
         get_package_share_directory('orion_chat'),
         'launch',
-        'orion_robot_launch.py'
+        'orion_launch.py'
     )
 
     ld = LaunchDescription(ARGS)
@@ -263,16 +263,16 @@ def generate_launch_description():
         condition=IfCondition(PythonExpression(["'", LaunchConfiguration('camera'), "' == 'os30a'"]))
     ))
 
-    astra_launch_path = os.path.join(
-        get_package_share_directory('orbbec_camera'),
-        'launch',
-        'astra.launch.py'
-    )
+    #astra_launch_path = os.path.join(
+    #    get_package_share_directory('orbbec_camera'),
+    #    'launch',
+    #    'astra.launch.py'
+    #)
 
-    ld.add_action(IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(astra_launch_path),
-        condition=IfCondition(PythonExpression(["'", LaunchConfiguration('camera'), "' == 'astra_s'"]))
-    ))
+    #ld.add_action(IncludeLaunchDescription(
+    #    PythonLaunchDescriptionSource(astra_launch_path),
+    #    condition=IfCondition(PythonExpression(["'", LaunchConfiguration('camera'), "' == 'astra_s'"]))
+    #))
 
     ld.add_action(OpaqueFunction(function=generate_robot_bringup))
 
