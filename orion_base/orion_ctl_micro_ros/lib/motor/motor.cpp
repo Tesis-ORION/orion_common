@@ -60,8 +60,8 @@ namespace diff
         else
         {
             // Stop
-            digitalWrite(this->forw_pin_, LOW);
-            digitalWrite(this->back_pin_, LOW);
+            digitalWrite(this->forw_pin_, HIGH);
+            digitalWrite(this->back_pin_, HIGH);
             analogWrite(this->enable_pin_, 0);
         }
 

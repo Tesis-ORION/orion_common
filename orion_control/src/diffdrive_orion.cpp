@@ -149,8 +149,8 @@ namespace orion_control
     {
         RCLCPP_DEBUG(this->logger_, "Diff: Begin [write]...");
 
-        const int left_cmd = static_cast<int>(this->left_wheel_.cmd_ / this->left_wheel_.rads_per_tick_ * 35);
-        const int right_cmd = static_cast<int>(this->right_wheel_.cmd_ / this->right_wheel_.rads_per_tick_ * 35);
+        const int left_cmd = static_cast<int>(this->left_wheel_.cmd_ / this->left_wheel_.rads_per_tick_);
+        const int right_cmd = static_cast<int>(this->right_wheel_.cmd_ / this->right_wheel_.rads_per_tick_);
 
         this->cmd_speed.data = {left_cmd, right_cmd};
 
