@@ -26,13 +26,13 @@ class GestureSequenceNode(Node):
 
         self.publish_cmd_vel_linear(0.2, duration=1.0)
 
-        self.publish_emotion(1)
+        self.publish_emotion(3)
 
-        self.publish_arm_position(1.0)
+        self.publish_arm_position(-1.0)
         time.sleep(0.5)
         self.publish_arm_position(0.0)
         time.sleep(0.5)
-        self.publish_arm_position(1.0)
+        self.publish_arm_position(-1.0)
         time.sleep(0.5)
         self.publish_arm_position(0.0)
 

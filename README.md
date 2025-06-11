@@ -2,6 +2,8 @@
 
 ## 🌟 Overview
 
+![orion_welcome](https://github.com/Tesis-ORION/orion_common/blob/main/docs/readmes/orion_hi.gif)
+
 This repository contains essential packages for the **O**pen-source **R**obot for **I**nteraction **O**bjectives and **N**avigation, also known as **ORION Project**, a ROS 2-based differential mobile robot designed for **Human-Robot Interaction (HRI)** applications.
 
 **Keywords:** ROS 2, Differential Robot, HRI, ROS 2 Jazzy, Low-Cost Robotics.
